@@ -1,5 +1,7 @@
 
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
     body {
         background-color: black;
@@ -32,6 +34,7 @@ body {
   background-color: #333;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
 }
 
 /* Common Button Styles */
@@ -85,9 +88,12 @@ body {
 
 /* Optional: Responsive Design */
 @media (max-width: 500px) {
+
+
   .control-wheel {
     width: 150px;
     height: 150px;
+    display: block;
   }
   
   .control-wheel .btn {
@@ -114,10 +120,10 @@ body {
     </div>
 
     <div class="control-wheel">
-        <button class="btn up">↑</button>
-        <button class="btn left">←</button>
-        <button class="btn down">↓</button>
-        <button class="btn right">→</button>
+        <button class="btn up" id="up">↑</button>
+        <button class="btn left" id="left">←</button>
+        <button class="btn down" id="down">↓</button>
+        <button class="btn right" id="right">→</button>
       </div>
     <script src="collisions.js"></script>
     <script src="index.js"></script>

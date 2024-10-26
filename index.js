@@ -314,45 +314,54 @@ const buttons = {
     right: document.getElementById('right')
 };
 
+// Map button IDs to keyboard keys
+const keyMap = {
+    up: 'w',
+    down: 's',
+    left: 'a',
+    right: 'd'
+};
+
 // Function to handle button press
-const handleButtonPress = (key) => {
+const handleButtonPress = (buttonKey) => {
+    const key = keyMap[buttonKey];
     keys[key].pressed = true;
     lastKey = key;
 };
 
 // Function to handle button release
-const handleButtonRelease = (key) => {
+const handleButtonRelease = (buttonKey) => {
+    const key = keyMap[buttonKey];
     keys[key].pressed = false;
 };
 
 // Add event listeners for touchstart and touchend
-Object.keys(buttons).forEach(key => {
-    buttons[key].addEventListener('touchstart', (e) => {
+Object.keys(buttons).forEach(buttonKey => {
+    console.log(buttonKey)
+    buttons[buttonKey].addEventListener('touchstart', (e) => {
         e.preventDefault(); // Prevent scrolling
-        handleButtonPress(key);
+        handleButtonPress(buttonKey);
     });
 
-    buttons[key].addEventListener('touchend', (e) => {
+    buttons[buttonKey].addEventListener('touchend', (e) => {
         e.preventDefault(); // Prevent scrolling
-        handleButtonRelease(key);
-    });
-});
-
-// Optionally, you can also add mouse events for desktop testing
-Object.keys(buttons).forEach(key => {
-    buttons[key].addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        handleButtonPress(key);
+        handleButtonRelease(buttonKey);
     });
 
-    buttons[key].addEventListener('mouseup', (e) => {
+    // Optionally, you can also add mouse events for desktop testing
+    buttons[buttonKey].addEventListener('mousedown', (e) => {
         e.preventDefault();
-        handleButtonRelease(key);
+        handleButtonPress(buttonKey);
     });
 
-    buttons[key].addEventListener('mouseleave', (e) => {
+    buttons[buttonKey].addEventListener('mouseup', (e) => {
         e.preventDefault();
-        handleButtonRelease(key);
+        handleButtonRelease(buttonKey);
+    });
+
+    buttons[buttonKey].addEventListener('mouseleave', (e) => {
+        e.preventDefault();
+        handleButtonRelease(buttonKey);
     });
 });
 
