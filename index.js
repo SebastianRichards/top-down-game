@@ -303,3 +303,57 @@ window.addEventListener('keyup', (e) => {
 });
 
 animate();
+
+
+// Existing JavaScript code ...
+
+const buttons = {
+    up: document.getElementById('up'),
+    down: document.getElementById('down'),
+    left: document.getElementById('left'),
+    right: document.getElementById('right')
+};
+
+// Function to handle button press
+const handleButtonPress = (key) => {
+    keys[key].pressed = true;
+    lastKey = key;
+};
+
+// Function to handle button release
+const handleButtonRelease = (key) => {
+    keys[key].pressed = false;
+};
+
+// Add event listeners for touchstart and touchend
+Object.keys(buttons).forEach(key => {
+    buttons[key].addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent scrolling
+        handleButtonPress(key);
+    });
+
+    buttons[key].addEventListener('touchend', (e) => {
+        e.preventDefault(); // Prevent scrolling
+        handleButtonRelease(key);
+    });
+});
+
+// Optionally, you can also add mouse events for desktop testing
+Object.keys(buttons).forEach(key => {
+    buttons[key].addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        handleButtonPress(key);
+    });
+
+    buttons[key].addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        handleButtonRelease(key);
+    });
+
+    buttons[key].addEventListener('mouseleave', (e) => {
+        e.preventDefault();
+        handleButtonRelease(key);
+    });
+});
+
+// Existing JavaScript code ...
