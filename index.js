@@ -1,14 +1,5 @@
 const backgroundMusic = new Audio('audio/tunnel.ogg');
 backgroundMusic.loop = true;
-window.addEventListener('load', () => {
-    // Some browsers require user interaction to play audio
-    backgroundMusic.play().catch(() => {
-        // Wait for a user interaction
-        window.addEventListener('click', () => {
-            backgroundMusic.play();
-        }, { once: true });
-    });
-});
 // Set properties if needed
 backgroundMusic.loop = true;       // Loop the background music
 backgroundMusic.volume = 0.5;      // Set volume (0.0 to 1.0)
@@ -364,5 +355,21 @@ Object.keys(buttons).forEach(buttonKey => {
         handleButtonRelease(buttonKey);
     });
 });
+
+const volUp = document.getElementById("volUp");
+
+const volDown = document.getElementById("volDown");
+
+volUp.addEventListener("click", () => {
+    volUp.style.display = 'none';
+    volDown.style.display = 'block';
+    backgroundMusic.play()
+})
+
+volDown.addEventListener("click", () => {
+    volDown.style.display = 'none';
+    volUp.style.display = 'block';
+    backgroundMusic.pause()
+})
 
 // Existing JavaScript code ...
