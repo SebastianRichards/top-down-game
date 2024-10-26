@@ -1,5 +1,4 @@
-const backgroundMusic = new Audio('audio/tunnel.ogg');
-backgroundMusic.loop = true;
+const backgroundMusic = new Audio('audio/gamemusic.mp3');
 // Set properties if needed
 backgroundMusic.loop = true;       // Loop the background music
 backgroundMusic.volume = 0.5;      // Set volume (0.0 to 1.0)
