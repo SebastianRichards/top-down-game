@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body styling */
+body {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Volume Control */
+.volume-control {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Control Wheel Container */
+.control-wheel {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: #333;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none; /* Show or hide based on your preference */
+}
+
+/* Common Button Styles */
+.control-wheel .btn {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: #555;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Positioning the Buttons */
+.control-wheel .up {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.control-wheel .down {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.control-wheel .left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.control-wheel .right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Hover Effects */
+.control-wheel .btn:hover {
+    background-color: #777;
+}
+
+/* Active (Pressed) State */
+.control-wheel .btn:active {
+    background-color: #999;
+}
+
+/* Optional: Responsive Design */
+@media (max-width: 500px) {
+    .control-wheel {
+        width: 150px;
+        height: 150px;
+        display: block; /* Adjust based on your preference */
+    }
+
+    .control-wheel .btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
