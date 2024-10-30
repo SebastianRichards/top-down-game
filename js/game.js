@@ -19,6 +19,7 @@ export function Game(c, canvas, collisions) {
     }
 
     // Create boundaries
+    /*
     const boundaries = [];
     collisionsMap.forEach((row, i) => {
         row.forEach((symbol, j) => {
@@ -34,23 +35,24 @@ export function Game(c, canvas, collisions) {
             }
         });
     });
-
+    */
     // Create sprites
     const backgroundSprite = new Sprite({
         position: {
             x: offset.x,
             y: offset.y
         },
-        image: getImage('background')
+        image: getImage('background'),
+        scale: 2
     });
 
-    const foregroundSprite = new Sprite({
+    /*const foregroundSprite = new Sprite({
         position: {
             x: offset.x + 432,
             y: offset.y + 140
         },
         image: getImage('foreground')
-    });
+    });*/
 
     const player = new Sprite({
         position: {
@@ -64,11 +66,12 @@ export function Game(c, canvas, collisions) {
             down: getImage('playerDown'),
             left: getImage('playerLeft'),
             right: getImage('playerRight')
-        }
+        },
+        scale: 2
     });
 
-    const sprites = [backgroundSprite, ...boundaries, foregroundSprite];
-
+    //const sprites = [backgroundSprite, ...boundaries, foregroundSprite];
+    const sprites = [backgroundSprite]
     const directionMap = {
         w: { axis: 'y', delta: GAME_CONFIG.movementSpeed },
         a: { axis: 'x', delta: GAME_CONFIG.movementSpeed },
@@ -86,6 +89,7 @@ export function Game(c, canvas, collisions) {
             player.moving = true;
 
             // Collision detection
+            /*
             for (let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i];
                 const futurePosition = {
@@ -105,7 +109,7 @@ export function Game(c, canvas, collisions) {
                     break;
                 }
             }
-
+            */
             if (moving) {
                 sprites.forEach((sprite) => {
                     sprite.position[direction.axis] += direction.delta;
@@ -126,6 +130,7 @@ export function Game(c, canvas, collisions) {
     }
 
     function animate() {
+        c.imageSmoothingEnabled = false;
         window.requestAnimationFrame(animate);
         
         // Clear the canvas
@@ -134,9 +139,9 @@ export function Game(c, canvas, collisions) {
 
         // Draw background and boundaries
         backgroundSprite.draw(c);
-        boundaries.forEach((boundary) => boundary.draw(c));
+        //boundaries.forEach((boundary) => boundary.draw(c));
         player.draw(c);
-        foregroundSprite.draw(c);
+        //foregroundSprite.draw(c);
 
         // Move sprites
         moveSprites();

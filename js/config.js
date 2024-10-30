@@ -2,10 +2,10 @@
 export const GAME_CONFIG = {
     canvasWidth: 1024,
     canvasHeight: 576,
-    tileSize: 48,
-    movementSpeed: 3,
+    tileSize: 16,
+    movementSpeed: 2,
     collisionValue: 1025,
     collisionsPerRow: 70,
-    offsetX: -806,
-    offsetY: -615
+    offsetX: 1,
+    offsetY: 1
 };

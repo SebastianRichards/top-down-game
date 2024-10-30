@@ -18,12 +18,12 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 // Load Assets
 Promise.all([
     loadAudio('backgroundMusic', 'assets/audio/gamemusic.mp3'),
-    loadImage('background', 'assets/images/Pellet Town.png'),
+    loadImage('background', 'assets/images/map.png'),
     loadImage('foreground', 'assets/images/foreground.png'),
-    loadImage('playerDown', 'assets/images/playerDown.png'),
-    loadImage('playerUp', 'assets/images/playerUp.png'),
-    loadImage('playerLeft', 'assets/images/playerLeft.png'),
-    loadImage('playerRight', 'assets/images/playerRight.png')
+    loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
+    loadImage('playerUp', 'assets/images/playerSprites/main-player-back.png'),
+    loadImage('playerLeft', 'assets/images/playerSprites/main-player-side.png'),
+    loadImage('playerRight', 'assets/images/playerSprites/main-player-side.png')
 ]).then(() => {
     // Import the collisions data
     // Assuming you have a collisions.js file exporting the collisions array
