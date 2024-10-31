@@ -22,12 +22,12 @@ Promise.all([
     loadImage('foreground', 'assets/images/foreground.png'),
     loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
     loadImage('playerUp', 'assets/images/playerSprites/main-player-back.png'),
-    loadImage('playerLeft', 'assets/images/playerSprites/main-player-side.png'),
-    loadImage('playerRight', 'assets/images/playerSprites/main-player-side.png')
+    loadImage('playerLeft', 'assets/images/playerSprites/main-player-left.png'),
+    loadImage('playerRight', 'assets/images/playerSprites/main-player-right.png')
 ]).then(() => {
     // Import the collisions data
     // Assuming you have a collisions.js file exporting the collisions array
-    import('../json/collisionsData.js').then(({ collisionsData }) => {
+    import('../json/collisions.js').then(({ collisionsData }) => {
         // Start the Game
         const game = Game(c, canvas, collisionsData);
         game.start();

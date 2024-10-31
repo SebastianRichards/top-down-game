@@ -1,6 +1,6 @@
 // js/sprite.js
 export class Sprite {
-    constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1 }) {
+    constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false }) {
         this.position = position;
         this.image = image;
         this.frames = { ...frames, val: 0, elapsed: 0 };
@@ -9,6 +9,7 @@ export class Sprite {
         this.moving = false;
         this.sprites = sprites;
         this.scale = scale;
+        this.flipped = flipped;
 
         if (this.image.complete && this.image.naturalWidth !== 0) {
             // Image is already loaded

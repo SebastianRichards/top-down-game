@@ -1,25 +1,27 @@
 // js/game.js
 import { GAME_CONFIG } from './config.js';
-import { Sprite } from './sprite.js';
+import { Sprite } from './classes/sprite.js';
 import { Boundary } from './boundary.js';
 import { keys, getLastKey, setLastKey } from './inputHandler.js';
 import { rectangularCollision } from './collisionDetection.js';
 import { getImage } from './assetManager.js';
 
 export function Game(c, canvas, collisions) {
+    console.log(collisions, 'is collisions')
     const offset = {
         x: GAME_CONFIG.offsetX,
         y: GAME_CONFIG.offsetY
     };
 
     // Build collision map
+    /*
     let collisionsMap = [];
     for (let i = 0; i < collisions.length; i += GAME_CONFIG.collisionsPerRow) {
         collisionsMap.push(collisions.slice(i, i + GAME_CONFIG.collisionsPerRow));
     }
-
+*/
     // Create boundaries
-    /*
+    
     const boundaries = [];
     collisionsMap.forEach((row, i) => {
         row.forEach((symbol, j) => {
@@ -35,7 +37,7 @@ export function Game(c, canvas, collisions) {
             }
         });
     });
-    */
+    
     // Create sprites
     const backgroundSprite = new Sprite({
         position: {
@@ -53,7 +55,7 @@ export function Game(c, canvas, collisions) {
         },
         image: getImage('foreground')
     });*/
-
+    console.log(getImage('playerRight').style.height, 'player right');
     const player = new Sprite({
         position: {
             x: canvas.width / 2 - 192 / 2,
@@ -117,12 +119,16 @@ export function Game(c, canvas, collisions) {
 
                 // Update player sprite based on direction
                 if (direction.axis === 'y' && direction.delta > 0) {
+                    player.flipped = false
                     player.image = player.sprites.up;
                 } else if (direction.axis === 'y' && direction.delta < 0) {
+                    player.flipped = false
                     player.image = player.sprites.down;
                 } else if (direction.axis === 'x' && direction.delta < 0) {
+                    player.flipped = false
                     player.image = player.sprites.right;
                 } else if (direction.axis === 'x' && direction.delta > 0) {
+                    player.flipped = true
                     player.image = player.sprites.left;
                 }
             }
