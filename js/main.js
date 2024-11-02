@@ -4,6 +4,8 @@ import { loadImage, loadAudio } from './assetManager.js';
 import { Game } from './game.js';
 import { MusicControl } from './musicControl.js';
 import { TouchControls } from './touchControls.js';
+import { storeCollisionsData } from './collisionDetection.js';
+import { setupBoundaries } from './movement.js';
 
 // Canvas Setup
 const canvas = document.getElementById("game-canvas");
@@ -29,6 +31,8 @@ Promise.all([
     // Assuming you have a collisions.js file exporting the collisions array
     import('../json/collisions.js').then(({ collisionsData }) => {
         // Start the Game
+        storeCollisionsData(collisionsData)
+        setupBoundaries();
         const game = Game(c, canvas, collisionsData);
         game.start();
 
