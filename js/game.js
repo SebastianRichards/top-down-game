@@ -1,14 +1,10 @@
 // js/game.js
-import { GAME_CONFIG } from './config.js';
-import { Sprite } from './classes/sprite.js';
-import { Boundary } from './classes/boundary.js';
-import { keys, getLastKey, setLastKey } from './inputHandler.js';
-import { rectangularCollision } from './collisionDetection.js';
-import { getImage } from './assetManager.js';
 import { moveSprites } from './movement.js';
 import { createSprites } from './spriteCreation.js';
+import { createGridBlocks } from './spriteCreation.js';
 
 export function Game(c, canvas) {
+    const gridBlocks = createGridBlocks();
     // Create boundaries
     const sprites = createSprites(canvas);
 
@@ -22,11 +18,12 @@ export function Game(c, canvas) {
 
         // Draw background and boundaries
         sprites.backgroundSprite.draw(c);
-        //boundaries.forEach((boundary) => boundary.draw(c));
+
         sprites.playerSprite.draw(c);
-        //foregroundSprite.draw(c);
+        sprites.foregroundSprite.draw(c);
         // Move sprites
-        moveSprites(sprites.playerSprite);
+        //gridBlocks.forEach(block => {block.draw(c)})
+        moveSprites(sprites.playerSprite, gridBlocks, c);
     }
 
     function start() {

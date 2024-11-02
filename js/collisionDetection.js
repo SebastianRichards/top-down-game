@@ -3,9 +3,7 @@ import { GAME_CONFIG } from "./config.js";
 let collisionsData = "";
 
 export const storeCollisionsData = (collisionsDataInput) => {
-    console.log(collisionsData, 'data')
     collisionsData = collisionsDataInput;
-    console.log(collisionsData, 'data a')
 }
 
 export const getCollisionsData = () => {

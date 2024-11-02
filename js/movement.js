@@ -7,27 +7,29 @@ import { rectangularCollision } from "./collisionDetection.js";
 import { getSprites } from "./spriteCreation.js";
 
 const collisions = getCollisionsData();
-console.log(collisions, 'is')
-
 const boundaries = [];
-
+let distanceCount = 0;
 
 export const setupBoundaries = () => {
+    console.log('called')
     const collisions = getCollisionsData();
-    console.log(collisions, 'is');
-
+    console.log(collisions)
     const boundaryTileObjList = collisions.layers[0].tiles;
     boundaryTileObjList.forEach(tile => {
         boundaries.push(
             new Boundary({
                 position: {
-                    x: tile.x * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetX,
-                    y: tile.y * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetY
+                    x: tile.x * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetX + 96,
+                    y: tile.y * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetY + 96
                 }
             })
         );
     });
 };
+
+export const getBoundaries = () => {
+    return boundaries;
+}
 const directionMap = {
     w: { axis: 'y', delta: GAME_CONFIG.movementSpeed },
     a: { axis: 'x', delta: GAME_CONFIG.movementSpeed },
@@ -35,13 +37,14 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (player) => {
+export const moveSprites = (player, gridBlocks, c) => {
+    //boundaries.forEach(x => x.draw(c));
     let moving = true;
     player.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
     const spritesObj = getSprites();
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries]
+    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite]
 
     if (direction && keys[lastKey].pressed) {
         player.moving = true;
@@ -71,8 +74,12 @@ export const moveSprites = (player) => {
         if (moving) {
             moveableSprites.forEach((sprite) => {
                 sprite.position[direction.axis] += direction.delta;
+                distanceCount += direction.delta;
+                if(Math.abs(distanceCount) > 32) {
+                    distanceCount = 0
+                }
+                console.log(distanceCount)
             });
-
             // Update player sprite based on direction
             if (direction.axis === 'y' && direction.delta > 0) {
                 player.flipped = false
