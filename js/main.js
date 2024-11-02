@@ -20,7 +20,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 // Load Assets
 Promise.all([
-    loadAudio('backgroundMusic', 'assets/audio/gamemusic.mp3'),
+    loadAudio('backgroundMusic', 'assets/audio/gamemusiccool.mp3'),
     loadImage('background', 'assets/images/background.png'),
     loadImage('foreground', 'assets/images/foreground.png'),
     loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),

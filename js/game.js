@@ -13,7 +13,7 @@ export function Game(c, canvas) {
         window.requestAnimationFrame(animate);
         
         // Clear the canvas
-        c.fillStyle = 'white';
+        c.fillStyle = 'black';
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         // Draw background and boundaries
