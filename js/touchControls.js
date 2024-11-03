@@ -35,12 +35,12 @@ export function TouchControls() {
         buttons[buttonKey].addEventListener('touchstart', (e) => {
             e.preventDefault(); // Prevent scrolling
             handleButtonPress(buttonKey);
-        });
+        }, { passive: false });
 
         buttons[buttonKey].addEventListener('touchend', (e) => {
             e.preventDefault(); // Prevent scrolling
             handleButtonRelease(buttonKey);
-        });
+        }, { passive: false });
 
         // Optionally, add mouse events for desktop testing
         buttons[buttonKey].addEventListener('mousedown', (e) => {
