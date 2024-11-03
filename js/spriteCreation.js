@@ -52,7 +52,7 @@ export const createSprites = (canvas) => {
         foregroundSprite: foregroundSprite
     }
 }
-
+/*
 export const createGridBlocks = () => {
     for(let i = 0; i < GAME_CONFIG.canvasWidth * GAME_CONFIG.scale; i = i + GAME_CONFIG.tileSize * GAME_CONFIG.scale) {
         for (let j = 0; j < GAME_CONFIG.canvasHeight * GAME_CONFIG.scale; j = j + GAME_CONFIG.tileSize * GAME_CONFIG.scale) {
@@ -67,7 +67,7 @@ export const createGridBlocks = () => {
     }
     return gridBlocks;
 }
-
+*/
 export const getSprites = () => {
     return sprites
 }
