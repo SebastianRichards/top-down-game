@@ -4,9 +4,10 @@ import { loadImage, loadAudio } from './assetManager.js';
 import { Game } from './game.js';
 import { MusicControl } from './musicControl.js';
 import { TouchControls } from './touchControls.js';
-import { storeCollisionsData } from './collisionDetection.js';
+import { setCollisionsData } from './collisionDetection.js';
 import { setupBoundaries } from './movement.js';
 import { getBoundaries } from './movement.js';
+import { setDoorJsonData, setupDoorActionsAndReturnDoorDatas } from './doorHandler.js';
 
 // Canvas Setup
 const canvas = document.getElementById("game-canvas");
@@ -21,6 +22,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 // Load Assets
 Promise.all([
     loadAudio('backgroundMusic', 'assets/audio/gamemusiccool.mp3'),
+    loadAudio('noentry', 'assets/audio/noentry.mp3'),
     loadImage('background', 'assets/images/background.png'),
     loadImage('foreground', 'assets/images/foreground.png'),
     loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
@@ -31,8 +33,10 @@ Promise.all([
     // Import the collisions data
     // Assuming you have a collisions.js file exporting the collisions array
     import('../json/collisions.js').then(({ collisionsData }) => {
-        // Start the Game
-        storeCollisionsData(collisionsData)
+        import('../json/dooraction.js').then(({ doorData }) => {
+            setDoorJsonData(doorData);
+            // Start the Game
+        setCollisionsData(collisionsData)
         setupBoundaries();
         const game = Game(c, canvas, collisionsData);
         game.start();
@@ -42,6 +46,8 @@ Promise.all([
 
         // Initialize Touch Controls
         TouchControls();
+        })
+        
     });
 }).catch((error) => {
     console.error('Error loading assets:', error);

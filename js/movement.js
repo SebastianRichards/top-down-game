@@ -5,6 +5,7 @@ import { GAME_CONFIG } from "./config.js";
 import { getCollisionsData } from "./collisionDetection.js";
 import { rectangularCollision } from "./collisionDetection.js";
 import { getSprites } from "./spriteCreation.js";
+import { doorData } from "../json/dooraction.js";
 
 const collisions = getCollisionsData();
 const boundaries = [];
@@ -37,14 +38,14 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (player, gridBlocks, c) => {
+export const moveSprites = (player, doorData) => {
     //boundaries.forEach(x => x.draw(c));
     let moving = true;
     player.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
     const spritesObj = getSprites();
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite]
+    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData]
 
     if (direction && keys[lastKey].pressed) {
         player.moving = true;
@@ -78,7 +79,6 @@ export const moveSprites = (player, gridBlocks, c) => {
                 if(Math.abs(distanceCount) > 32) {
                     distanceCount = 0
                 }
-                console.log(distanceCount)
             });
             // Update player sprite based on direction
             if (direction.axis === 'y' && direction.delta > 0) {

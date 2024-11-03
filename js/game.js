@@ -1,12 +1,12 @@
 // js/game.js
 import { moveSprites } from './movement.js';
 import { createSprites } from './spriteCreation.js';
-import { createGridBlocks } from './spriteCreation.js';
+import { drawDoorData, setupDoorActionsAndReturnDoorDatas } from './doorHandler.js';
 
 export function Game(c, canvas) {
-    const gridBlocks = createGridBlocks();
     // Create boundaries
     const sprites = createSprites(canvas);
+    const doorData = setupDoorActionsAndReturnDoorDatas();
 
     function animate() {
         c.imageSmoothingEnabled = false;
@@ -23,7 +23,12 @@ export function Game(c, canvas) {
         sprites.foregroundSprite.draw(c);
         // Move sprites
         //gridBlocks.forEach(block => {block.draw(c)})
-        moveSprites(sprites.playerSprite, gridBlocks, c);
+        //drawDoorData(c);
+        
+        moveSprites(sprites.playerSprite, doorData);
+        doorData.forEach(door => {
+            door.checkDoorAction(sprites.playerSprite, c)
+        })
     }
 
     function start() {
