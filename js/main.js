@@ -28,7 +28,11 @@ Promise.all([
     loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
     loadImage('playerUp', 'assets/images/playerSprites/main-player-back.png'),
     loadImage('playerLeft', 'assets/images/playerSprites/main-player-left.png'),
-    loadImage('playerRight', 'assets/images/playerSprites/main-player-right.png')
+    loadImage('playerRight', 'assets/images/playerSprites/main-player-right.png'),
+    loadImage('npc1Up', 'assets/images/playerSprites/npc1/Npcback.png'),
+    loadImage('npc1Down', 'assets/images/playerSprites/npc1/Npcfront.png'),
+    loadImage('npc1Right', 'assets/images/playerSprites/npc1/Npcside.png'),
+    loadImage('npc1Left', 'assets/images/playerSprites/npc1/Npcside2.png'),
 ]).then(() => {
     // Import the collisions data
     // Assuming you have a collisions.js file exporting the collisions array

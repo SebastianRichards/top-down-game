@@ -31,6 +31,22 @@ export const createSprites = (canvas) => {
         },
         scale: 2
     });
+    //include json in the obj - and move it when the character moves, manually do coordinates
+    const npcPlayer1 = new Sprite({
+        position: {
+            x: 777,
+            y: 777,
+        },
+        image: getImage('npc1Down'),
+        frames: { max: 4 },
+        sprites: {
+            up: getImage('npc1Up'),
+            down: getImage('npc1Down'),
+            left: getImage('npc1Left'),
+            right: getImage('npc1Right')
+        },
+        scale: 2
+    })
 
     const foregroundSprite = new Sprite({
         position: {
@@ -44,12 +60,14 @@ export const createSprites = (canvas) => {
     sprites = {
         backgroundSprite: backgroundSprite,
         playerSprite: player,
-        foregroundSprite: foregroundSprite
+        foregroundSprite: foregroundSprite,
+        npcPlayer1Sprite: npcPlayer1
     }
     return {
         backgroundSprite: backgroundSprite,
         playerSprite: player,
-        foregroundSprite: foregroundSprite
+        foregroundSprite: foregroundSprite,
+        npcPlayer1Sprite: npcPlayer1
     }
 }
 /*

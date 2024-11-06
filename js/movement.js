@@ -45,7 +45,7 @@ export const moveSprites = (player, doorData) => {
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
     const spritesObj = getSprites();
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData]
+    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData, spritesObj.npcPlayer1Sprite]
 
     if (direction && keys[lastKey].pressed) {
         player.moving = true;
