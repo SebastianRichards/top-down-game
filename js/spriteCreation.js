@@ -34,8 +34,8 @@ export const createSprites = (canvas) => {
     //include json in the obj - and move it when the character moves, manually do coordinates
     const npcPlayer1 = new Sprite({
         position: {
-            x: 777,
-            y: 777,
+            x: 783,
+            y: 700,
         },
         image: getImage('npc1Down'),
         frames: { max: 4 },

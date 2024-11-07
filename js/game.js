@@ -19,8 +19,9 @@ export function Game(c, canvas) {
         // Draw background and boundaries
         sprites.backgroundSprite.draw(c);
 
-        sprites.playerSprite.draw(c);
+        
         sprites.npcPlayer1Sprite.draw(c);
+        sprites.playerSprite.draw(c);
         sprites.foregroundSprite.draw(c);
         // Move sprites
         //gridBlocks.forEach(block => {block.draw(c)})

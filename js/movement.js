@@ -71,6 +71,20 @@ export const moveSprites = (player, doorData) => {
                 break;
             }
         }
+        if (
+            rectangularCollision({
+                rectangle1: player,
+                rectangle2: {
+                    width: spritesObj.npcPlayer1Sprite.width * GAME_CONFIG.scale,
+                    height: spritesObj.npcPlayer1Sprite.height * GAME_CONFIG.scale,
+                    position: {x: spritesObj.npcPlayer1Sprite.position.x + (direction.axis === 'x' ? direction.delta : 0), y: spritesObj.npcPlayer1Sprite.position.y + (direction.axis === 'y' ? direction.delta : 0)},
+                }
+            })
+        ) {
+            moving = false;
+            
+        }
+
         
         if (moving) {
             moveableSprites.forEach((sprite) => {
