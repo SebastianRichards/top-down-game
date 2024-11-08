@@ -4,7 +4,6 @@ import { getLastKey, keys } from "./inputHandler.js";
 import { GAME_CONFIG } from "./config.js";
 import { getCollisionsData } from "./collisionDetection.js";
 import { rectangularCollision } from "./collisionDetection.js";
-import { getSprites } from "./spriteCreation.js";
 import { doorData } from "../json/dooraction.js";
 
 const collisions = getCollisionsData();
@@ -38,17 +37,16 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (player, doorData) => {
+export const moveSprites = (spritesObj, doorData) => {
     //boundaries.forEach(x => x.draw(c));
     let moving = true;
-    player.moving = false;
+    spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const spritesObj = getSprites();
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData, spritesObj.npcPlayer1Sprite]
+    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData, spritesObj.npcSprite1]
 
     if (direction && keys[lastKey].pressed) {
-        player.moving = true;
+        spritesObj.playerSprite.moving = true;
 
         // Collision detection
         
@@ -60,7 +58,7 @@ export const moveSprites = (player, doorData) => {
             };
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: spritesObj.playerSprite,
                     rectangle2: {
                         ...boundary,
                         position: futurePosition
@@ -73,14 +71,15 @@ export const moveSprites = (player, doorData) => {
         }
         if (
             rectangularCollision({
-                rectangle1: player,
+                rectangle1: spritesObj.playerSprite,
                 rectangle2: {
-                    width: spritesObj.npcPlayer1Sprite.width * GAME_CONFIG.scale,
-                    height: spritesObj.npcPlayer1Sprite.height * GAME_CONFIG.scale,
-                    position: {x: spritesObj.npcPlayer1Sprite.position.x + (direction.axis === 'x' ? direction.delta : 0), y: spritesObj.npcPlayer1Sprite.position.y + (direction.axis === 'y' ? direction.delta : 0)},
+                    width: spritesObj.npcSprite1.width * GAME_CONFIG.scale,
+                    height: spritesObj.npcSprite1.height * GAME_CONFIG.scale,
+                    position: {x: spritesObj.npcSprite1.position.x + (direction.axis === 'x' ? direction.delta : 0), y: spritesObj.npcSprite1.position.y + (direction.axis === 'y' ? direction.delta : 0)},
                 }
             })
         ) {
+           
             moving = false;
             
         }
@@ -96,17 +95,17 @@ export const moveSprites = (player, doorData) => {
             });
             // Update player sprite based on direction
             if (direction.axis === 'y' && direction.delta > 0) {
-                player.flipped = false
-                player.image = player.sprites.up;
+                spritesObj.playerSprite.flipped = false
+                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.up;
             } else if (direction.axis === 'y' && direction.delta < 0) {
-                player.flipped = false
-                player.image = player.sprites.down;
+                spritesObj.playerSprite.flipped = false
+                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.down;
             } else if (direction.axis === 'x' && direction.delta < 0) {
-                player.flipped = false
-                player.image = player.sprites.right;
+                spritesObj.playerSprite.flipped = false
+                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.right;
             } else if (direction.axis === 'x' && direction.delta > 0) {
-                player.flipped = true
-                player.image = player.sprites.left;
+                spritesObj.playerSprite.flipped = true
+                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.left;
             }
         }
     }

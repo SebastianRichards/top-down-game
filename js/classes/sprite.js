@@ -1,4 +1,3 @@
-// js/sprite.js
 export class Sprite {
     constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false }) {
         this.position = position;
@@ -12,11 +11,9 @@ export class Sprite {
         this.flipped = flipped;
 
         if (this.image.complete && this.image.naturalWidth !== 0) {
-            // Image is already loaded
             this.width = this.image.width / this.frames.max;
             this.height = this.image.height;
         } else {
-            // Image not yet loaded
             this.image.onload = () => {
                 this.width = this.image.width / this.frames.max;
                 this.height = this.image.height;
@@ -24,8 +21,6 @@ export class Sprite {
         }
 
     }
-
-    //replace with a search
     returnBlock(gridBlocks) {
         let gridBlockVal;
         gridBlocks.forEach(gridBlock => {
