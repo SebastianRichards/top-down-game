@@ -1,3 +1,5 @@
+let lastKey = '';
+
 export const keys = {
     w: { pressed: false },
     a: { pressed: false },
@@ -5,8 +7,6 @@ export const keys = {
     d: { pressed: false },
     ' ': { pressed: false}
 };
-
-let lastKey = '';
 
 export function getLastKey() {
     return lastKey;

@@ -1,4 +1,4 @@
-import { GAME_CONFIG } from "./config.js";
+import { GAME_CONFIG } from "../config.js";
 
 export function rectangularCollision({ rectangle1, rectangle2, isDoor }) {
     let result = "";

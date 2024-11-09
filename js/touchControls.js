@@ -8,7 +8,6 @@ export function TouchControls() {
         right: document.getElementById('right')
     };
 
-    // Map button IDs to keyboard keys
     const keyMap = {
         up: 'w',
         down: 's',
@@ -16,32 +15,28 @@ export function TouchControls() {
         right: 'd'
     };
 
-    // Function to handle button press
     const handleButtonPress = (buttonKey) => {
         const key = keyMap[buttonKey];
         keys[key].pressed = true;
         setLastKey(key);
     };
 
-    // Function to handle button release
     const handleButtonRelease = (buttonKey) => {
         const key = keyMap[buttonKey];
         keys[key].pressed = false;
     };
 
-    // Add event listeners for touchstart and touchend
     Object.keys(buttons).forEach((buttonKey) => {
         buttons[buttonKey].addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent scrolling
+            e.preventDefault(); 
             handleButtonPress(buttonKey);
         }, { passive: false });
 
         buttons[buttonKey].addEventListener('touchend', (e) => {
-            e.preventDefault(); // Prevent scrolling
+            e.preventDefault(); 
             handleButtonRelease(buttonKey);
         }, { passive: false });
 
-        // Optionally, add mouse events for desktop testing
         buttons[buttonKey].addEventListener('mousedown', (e) => {
             e.preventDefault();
             handleButtonPress(buttonKey);
@@ -52,9 +47,6 @@ export function TouchControls() {
             handleButtonRelease(buttonKey);
         });
 
-        buttons[buttonKey].addEventListener('mouseleave', (e) => {
-            e.preventDefault();
-            handleButtonRelease(buttonKey);
-        });
+       
     });
 }

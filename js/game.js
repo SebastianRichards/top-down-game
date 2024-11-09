@@ -1,5 +1,6 @@
-import { moveSprites } from './movement.js';
-import { drawDoorData, setupDoors } from './handlers/doorHandler.js';
+import { moveSprites } from './mechanics/movement.js';
+import { checkActions } from './mechanics/actions.js';
+import { setupDoors } from './handlers/doorHandler.js';
 import { spriteFactory } from './factories/createSpriteFactory.js';
 import { setupBoundaries } from './handlers/boundaryHandler.js';
 import { GAME_CONFIG } from './config.js';
@@ -33,11 +34,10 @@ export const Game = () => {
         sprites.npcSprite1.draw(c);
         sprites.playerSprite.draw(c);
         sprites.foregroundSprite.draw(c);
-        // Move sprites
+        // Mechanics
         moveSprites(sprites, solids);
-        solids.doorData.forEach(door => {
-            door.checkDoorAction(sprites.playerSprite, c)
-        })
+        checkActions(sprites, solids, c)
+        
 
     }
 

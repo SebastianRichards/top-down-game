@@ -1,5 +1,5 @@
-import { getLastKey, keys } from "./inputHandler.js";
-import { GAME_CONFIG } from "./config.js";
+import { getLastKey, keys } from "../inputHandler.js";
+import { GAME_CONFIG } from "../config.js";
 import { rectangularCollision } from "./collisionDetection.js";
 
 
