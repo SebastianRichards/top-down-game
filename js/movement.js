@@ -1,4 +1,3 @@
-import { Boundary } from "./classes/boundary.js";
 import { getLastKey, keys } from "./inputHandler.js";
 import { GAME_CONFIG } from "./config.js";
 import { rectangularCollision } from "./collisionDetection.js";
@@ -13,21 +12,21 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (spritesObj, doorData, boundaryData) => {
+export const moveSprites = (spritesObj, solidsObj) => {
     //boundaries.forEach(x => x.draw(c));
     let moving = true;
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaryData, spritesObj.foregroundSprite, ...doorData, spritesObj.npcSprite1]
+    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1]
 
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 
         // Collision detection
         
-        for (let i = 0; i < boundaryData.length; i++) {
-            const boundary = boundaryData[i];
+        for (let i = 0; i < solidsObj.boundaryData.length; i++) {
+            const boundary = solidsObj.boundaryData[i];
             const futurePosition = {
                 x: boundary.position.x + (direction.axis === 'x' ? direction.delta : 0),
                 y: boundary.position.y + (direction.axis === 'y' ? direction.delta : 0)

@@ -1,4 +1,3 @@
-// js/config.js
 export const GAME_CONFIG = {
     canvasWidth: 1024,
     canvasHeight: 576,

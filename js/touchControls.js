@@ -1,4 +1,3 @@
-// js/touchControls.js
 import { keys, setLastKey } from './inputHandler.js';
 
 export function TouchControls() {

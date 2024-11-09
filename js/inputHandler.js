@@ -1,4 +1,3 @@
-// js/inputHandler.js
 export const keys = {
     w: { pressed: false },
     a: { pressed: false },

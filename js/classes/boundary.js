@@ -1,4 +1,3 @@
-// js/boundary.js
 import { GAME_CONFIG } from '../config.js';
 
 export class Boundary {

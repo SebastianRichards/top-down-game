@@ -1,10 +1,17 @@
-// js/game.js
 import { moveSprites } from './movement.js';
 import { drawDoorData, setupDoors } from './handlers/doorHandler.js';
 import { spriteFactory } from './factories/createSpriteFactory.js';
 import { setupBoundaries } from './handlers/boundaryHandler.js';
+import { GAME_CONFIG } from './config.js';
 
-export function Game(c, canvas) {
+export const Game = () => {
+    const canvas = document.getElementById("game-canvas");
+    const c = canvas.getContext('2d');
+    canvas.width = GAME_CONFIG.canvasWidth;
+    canvas.height = GAME_CONFIG.canvasHeight;
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'black';
+    c.imageSmoothingEnabled = false;
     const sprites = {
         foregroundSprite: spriteFactory('foregroundSprite', canvas),
         playerSprite: spriteFactory('playerSprite', canvas),
@@ -12,30 +19,23 @@ export function Game(c, canvas) {
         npcSprite1: spriteFactory('npcSprite1', canvas)
 
     }
-    const doorData = setupDoors();
-    const boundaryData = setupBoundaries();
+    const solids = {
+        doorData: setupDoors(),
+        boundaryData: setupBoundaries()
+    }
 
     function animate() {
-        c.imageSmoothingEnabled = false;
         window.requestAnimationFrame(animate);
-        
-        // Clear the canvas
-        c.fillStyle = 'black';
+        // Clear canvas
         c.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Draw background and boundaries
+        // Draw sprites
         sprites.backgroundSprite.draw(c);
-
-        
         sprites.npcSprite1.draw(c);
         sprites.playerSprite.draw(c);
         sprites.foregroundSprite.draw(c);
         // Move sprites
-        //gridBlocks.forEach(block => {block.draw(c)})
-        //drawDoorData(c);
-        
-        moveSprites(sprites, doorData, boundaryData);
-        doorData.forEach(door => {
+        moveSprites(sprites, solids);
+        solids.doorData.forEach(door => {
             door.checkDoorAction(sprites.playerSprite, c)
         })
 

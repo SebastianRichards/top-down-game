@@ -1,16 +1,5 @@
 import { GAME_CONFIG } from "./config.js";
 
-let collisionsData = "";
-
-export const setCollisionsData = (collisionsDataInput) => {
-    collisionsData = collisionsDataInput;
-}
-
-export const getCollisionsData = () => {
-    return collisionsData
-}
-
-// js/collisionDetection.js
 export function rectangularCollision({ rectangle1, rectangle2, isDoor }) {
     let result = "";
     if(isDoor) {

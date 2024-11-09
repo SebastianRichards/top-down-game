@@ -1,7 +1,6 @@
 import { GAME_CONFIG } from '../config.js';
 import { rectangularCollision } from '../collisionDetection.js';
 import { getAudio } from '../utilities/assetManager.js';
-import { Sprite } from './sprite.js';
 import { Boundary } from './boundary.js';
 
 export class Door extends Boundary{
