@@ -35,10 +35,9 @@ export const Game = () => {
         sprites.playerSprite.draw(c);
         sprites.foregroundSprite.draw(c);
         // Mechanics
-        moveSprites(sprites, solids);
+        moveSprites(sprites, solids, c);
         checkActions(sprites, solids, c)
         
-
     }
 
     function start() {

@@ -47,6 +47,9 @@ export function TouchControls() {
             handleButtonRelease(buttonKey);
         });
 
-       
+        buttons[buttonKey].addEventListener('mouseleave', (e) => {
+            e.preventDefault();
+            handleButtonRelease(buttonKey);
+        });
     });
 }

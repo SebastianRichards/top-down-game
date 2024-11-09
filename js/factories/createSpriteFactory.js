@@ -1,6 +1,7 @@
 import { GAME_CONFIG } from "../config.js";
 import { Sprite } from "../classes/sprite.js";
 import { getImage } from "../utilities/assetManager.js";
+import { NpcSprite } from "../classes/npcSprite.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -30,7 +31,7 @@ export const spriteFactory = (type, canvas) => {
                 scale: 2
             });
         case "npcSprite1":
-            return new Sprite({
+            return new NpcSprite({
                 position: {
                     x: 783,
                     y: 700,
@@ -43,7 +44,12 @@ export const spriteFactory = (type, canvas) => {
                     left: getImage('npc1Left'),
                     right: getImage('npc1Right')
                 },
-                scale: 2
+                scale: 2,
+                profileImg: getImage('npc1Profile'),
+                textSlides: {
+                    slides1: ["Hello..", "I've coded this in vanilla js", "it was a pain.."],
+                    slidesIndex: 0
+                }
             })
         case "foregroundSprite":
             return new Sprite({

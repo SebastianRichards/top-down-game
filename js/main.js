@@ -1,4 +1,4 @@
-import { loadImage, loadAudio } from './utilities/assetManager.js';
+import { loadImage, loadAudio, getImage } from './utilities/assetManager.js';
 import { Game } from './game.js';
 import { MusicControl } from './musicControl.js';
 import { TouchControls } from './touchControls.js';
@@ -18,6 +18,7 @@ const init = async () => {
         loadImage('npc1Down', 'assets/images/playerSprites/npc1/Npcfront.png'),
         loadImage('npc1Right', 'assets/images/playerSprites/npc1/Npcside.png'),
         loadImage('npc1Left', 'assets/images/playerSprites/npc1/Npcside2.png'),
+        loadImage('npc1Profile', 'assets/images/playerSprites/npc1/profile.png')
     ])
 
     const { boundaryData } = await import('../json/collisions.js');

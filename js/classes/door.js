@@ -12,7 +12,7 @@ export class Door extends Boundary{
     }
 
     checkDoorAction(player, c) {
-        if(!rectangularCollision({rectangle1: player, rectangle2: this, isDoor: true})) {
+        if(!rectangularCollision({rectangle1: player, rectangle2: this, isDoor: true}, c)) {
             return
         } 
         if(!(player.image.src).includes('main-player-back')) {

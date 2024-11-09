@@ -12,14 +12,13 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (spritesObj, solidsObj) => {
+export const moveSprites = (spritesObj, solidsObj, c) => {
     //boundaries.forEach(x => x.draw(c));
     let moving = true;
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
     const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1]
-
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 
@@ -37,8 +36,8 @@ export const moveSprites = (spritesObj, solidsObj) => {
                     rectangle2: {
                         ...boundary,
                         position: futurePosition
-                    }
-                })
+                    },
+                }, c)
             ) {
                 moving = false;
                 break;
@@ -47,12 +46,16 @@ export const moveSprites = (spritesObj, solidsObj) => {
         if (
             rectangularCollision({
                 rectangle1: spritesObj.playerSprite,
-                rectangle2: {
-                    width: spritesObj.npcSprite1.width * GAME_CONFIG.scale,
+                rectangle2: {...spritesObj.npcSprite1,
+                    width: spritesObj.npcSprite1.width * GAME_CONFIG.scale, 
                     height: spritesObj.npcSprite1.height * GAME_CONFIG.scale,
-                    position: {x: spritesObj.npcSprite1.position.x + (direction.axis === 'x' ? direction.delta : 0), y: spritesObj.npcSprite1.position.y + (direction.axis === 'y' ? direction.delta : 0)},
+                    position: {
+                        x: spritesObj.npcSprite1.position.x + (direction.axis === 'x' ? direction.delta : 0),
+                        y: spritesObj.npcSprite1.position.y + (direction.axis === 'y' ? direction.delta : 0),
+                    }
                 }
-            })
+            }, c)
+            
         ) {
            
             moving = false;

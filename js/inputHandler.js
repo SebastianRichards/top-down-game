@@ -1,12 +1,21 @@
-let lastKey = '';
-
+// js/inputHandler.js
 export const keys = {
     w: { pressed: false },
     a: { pressed: false },
     s: { pressed: false },
-    d: { pressed: false },
-    ' ': { pressed: false}
+    d: { pressed: false }
 };
+
+let lastKey = '';
+let lastActionKey = '';
+
+export function getLastActionKey() {
+    return lastActionKey;
+}
+
+export function setLastActionKey(key) {
+    lastActionKey = key;
+}
 
 export function getLastKey() {
     return lastKey;
@@ -21,9 +30,7 @@ window.addEventListener('keydown', (e) => {
         keys[e.key].pressed = true;
         lastKey = e.key;
     }
-    if (e.key === ' ') {
-        console.log('check both coords here then do something')
-    }
+    lastActionKey = e.key
 });
 
 window.addEventListener('keyup', (e) => {
