@@ -1,4 +1,3 @@
-// js/assetManager.js
 const images = {};
 const audio = {};
 

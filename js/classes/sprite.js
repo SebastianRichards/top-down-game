@@ -21,17 +21,6 @@ export class Sprite {
         }
 
     }
-    returnBlock(gridBlocks) {
-        let gridBlockVal;
-        gridBlocks.forEach(gridBlock => {
-            if(gridBlock.position.x == this.position.x) {
-                if(gridBlock.position.y == this.position.y) {
-                    gridBlockVal = gridBlock
-                }
-            }
-        });
-        return gridBlockVal
-    }
 
     draw(c) {
         c.drawImage(

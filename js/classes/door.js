@@ -1,18 +1,16 @@
 import { GAME_CONFIG } from '../config.js';
 import { rectangularCollision } from '../collisionDetection.js';
-import { getLastKey } from '../inputHandler.js';
-import { getAudio } from '../assetManager.js';
+import { getAudio } from '../utilities/assetManager.js';
+import { Sprite } from './sprite.js';
+import { Boundary } from './boundary.js';
 
-export class Door {
+export class Door extends Boundary{
     constructor({ position }) {
+
+        super({ position })
         this.position = position;
         this.width = GAME_CONFIG.tileSize * GAME_CONFIG.scale / 32;
         this.height = GAME_CONFIG.tileSize * GAME_CONFIG.scale;
-    }
-
-    draw(c) {
-        c.fillStyle = 'red';
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     checkDoorAction(player, c) {

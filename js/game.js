@@ -1,7 +1,8 @@
 // js/game.js
 import { moveSprites } from './movement.js';
-import { drawDoorData, setupDoorActionsAndReturnDoorDatas } from './doorHandler.js';
+import { drawDoorData, setupDoors } from './handlers/doorHandler.js';
 import { spriteFactory } from './factories/createSpriteFactory.js';
+import { setupBoundaries } from './handlers/boundaryHandler.js';
 
 export function Game(c, canvas) {
     const sprites = {
@@ -11,7 +12,8 @@ export function Game(c, canvas) {
         npcSprite1: spriteFactory('npcSprite1', canvas)
 
     }
-    const doorData = setupDoorActionsAndReturnDoorDatas();
+    const doorData = setupDoors();
+    const boundaryData = setupBoundaries();
 
     function animate() {
         c.imageSmoothingEnabled = false;
@@ -32,7 +34,7 @@ export function Game(c, canvas) {
         //gridBlocks.forEach(block => {block.draw(c)})
         //drawDoorData(c);
         
-        moveSprites(sprites, doorData);
+        moveSprites(sprites, doorData, boundaryData);
         doorData.forEach(door => {
             door.checkDoorAction(sprites.playerSprite, c)
         })

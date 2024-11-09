@@ -1,35 +1,11 @@
-import { Sprite } from "./classes/sprite.js";
 import { Boundary } from "./classes/boundary.js";
 import { getLastKey, keys } from "./inputHandler.js";
 import { GAME_CONFIG } from "./config.js";
-import { getCollisionsData } from "./collisionDetection.js";
 import { rectangularCollision } from "./collisionDetection.js";
-import { doorData } from "../json/dooraction.js";
 
-const collisions = getCollisionsData();
-const boundaries = [];
+
 let distanceCount = 0;
 
-export const setupBoundaries = () => {
-    console.log('called')
-    const collisions = getCollisionsData();
-    console.log(collisions)
-    const boundaryTileObjList = collisions.layers[0].tiles;
-    boundaryTileObjList.forEach(tile => {
-        boundaries.push(
-            new Boundary({
-                position: {
-                    x: tile.x * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetX + 96,
-                    y: tile.y * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetY + 96
-                }
-            })
-        );
-    });
-};
-
-export const getBoundaries = () => {
-    return boundaries;
-}
 const directionMap = {
     w: { axis: 'y', delta: GAME_CONFIG.movementSpeed },
     a: { axis: 'x', delta: GAME_CONFIG.movementSpeed },
@@ -37,21 +13,21 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 
-export const moveSprites = (spritesObj, doorData) => {
+export const moveSprites = (spritesObj, doorData, boundaryData) => {
     //boundaries.forEach(x => x.draw(c));
     let moving = true;
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...boundaries, spritesObj.foregroundSprite, ...doorData, spritesObj.npcSprite1]
+    const moveableSprites = [spritesObj.backgroundSprite, ...boundaryData, spritesObj.foregroundSprite, ...doorData, spritesObj.npcSprite1]
 
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 
         // Collision detection
         
-        for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
+        for (let i = 0; i < boundaryData.length; i++) {
+            const boundary = boundaryData[i];
             const futurePosition = {
                 x: boundary.position.x + (direction.axis === 'x' ? direction.delta : 0),
                 y: boundary.position.y + (direction.axis === 'y' ? direction.delta : 0)

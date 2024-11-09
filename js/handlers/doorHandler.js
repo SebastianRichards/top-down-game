@@ -1,23 +1,13 @@
-import { Door } from './classes/door.js';
-import { GAME_CONFIG } from './config.js';
+import { Door } from '../classes/door.js';
+import { GAME_CONFIG } from '../config.js';
+import { getDoorJsonData } from '../utilities/dataManager.js';
 
-let doorJsonData = "";
 
-export const getDoorJsonData = () => {
-    return doorJsonData;
-}
-
-export const setDoorJsonData = (data) => {
-    doorJsonData = data;
-}
-
-let doorTileObjList = "";
 const doorDatas = []
 
-export const setupDoorActionsAndReturnDoorDatas = () => {
+export const setupDoors = () => {
     const doorJsonData = getDoorJsonData();
-    doorTileObjList = doorJsonData.layers[0].tiles;
-    doorTileObjList.forEach(tile => {
+    doorJsonData.layers[0].tiles.forEach(tile => {
         doorDatas.push(
             new Door({
                 position: {

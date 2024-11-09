@@ -1,6 +1,6 @@
 import { GAME_CONFIG } from "../config.js";
 import { Sprite } from "../classes/sprite.js";
-import { getImage } from "../assetManager.js";
+import { getImage } from "../utilities/assetManager.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {

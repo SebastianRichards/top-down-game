@@ -1,8 +1,9 @@
 // js/musicControl.js
-import { getAudio } from './assetManager.js';
+import { getAudio } from './utilities/assetManager.js';
 
 export function MusicControl() {
     const backgroundMusic = getAudio('backgroundMusic');
+    console.log(backgroundMusic)
     backgroundMusic.loop = true;
     backgroundMusic.volume = 0.5;
 
