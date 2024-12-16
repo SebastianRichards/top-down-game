@@ -29,7 +29,6 @@ export class Door extends Boundary{
         c.fillStyle = 'black'; 
         c.font = '20px Arial'; 
         c.fillText(text, 400, 540); 
-        
     }
 
     soundNoEntry() {

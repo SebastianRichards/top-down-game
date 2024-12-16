@@ -20,6 +20,7 @@ export const Game = () => {
         npcSprite1: spriteFactory('npcSprite1', canvas)
 
     }
+    //list of objs that derived from json
     const solids = {
         doorData: setupDoors(),
         boundaryData: setupBoundaries()

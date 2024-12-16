@@ -34,21 +34,7 @@ export class NpcSprite extends Sprite {
     c.fillText(text, textBoxWidth / 2 - 70 , 550)
     }
 
-    checkNpcAction(player, c, type) {
-        if(!rectangularCollision({rectangle1: {
-            ...player,}
-            , rectangle2: {
-            ...this,
-            position: {
-                x: this.position.x - this.width + 10,
-                y: this.position.y
-            },
-            width: this.width * GAME_CONFIG.scale + 20,
-            height: this.height * GAME_CONFIG.scale + 20
-        }}, c)) {
-            return
-        } 
-
+    npcAction(c, type) {
         switch (type) {
             case "text1":
                 const lastActionKey = getLastActionKey();
