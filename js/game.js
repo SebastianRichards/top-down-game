@@ -3,7 +3,9 @@ import { checkActions } from './mechanics/actions.js';
 import { setupDoors } from './handlers/doorHandler.js';
 import { spriteFactory } from './factories/createSpriteFactory.js';
 import { setupBoundaries } from './handlers/boundaryHandler.js';
+import { setupBattleSquares } from './handlers/battleHandler.js';
 import { GAME_CONFIG } from './config.js';
+import { battleData } from '../json/battle.js';
 
 export const Game = () => {
     const canvas = document.getElementById("game-canvas");
@@ -23,7 +25,8 @@ export const Game = () => {
     //list of objs that derived from json
     const solids = {
         doorData: setupDoors(),
-        boundaryData: setupBoundaries()
+        boundaryData: setupBoundaries(),
+        battleData: setupBattleSquares()
     }
 
     function animate() {
@@ -38,7 +41,6 @@ export const Game = () => {
         // Mechanics
         moveSprites(sprites, solids, c);
         checkActions(sprites, solids, c)
-        
     }
 
     function start() {

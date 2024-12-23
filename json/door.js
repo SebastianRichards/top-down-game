@@ -1,0 +1,1 @@
+export const doorData = {"tileSize":16,"mapWidth":85,"mapHeight":65,"layers":[{"name":"Layer_4","tiles":[{"id":"0","x":77,"y":38},{"id":"0","x":84,"y":44},{"id":"0","x":69,"y":50},{"id":"0","x":0,"y":64},{"id":"0","x":1,"y":64},{"id":"0","x":0,"y":36},{"id":"0","x":1,"y":36},{"id":"0","x":47,"y":0},{"id":"0","x":48,"y":0}],"collider":false}]}

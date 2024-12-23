@@ -8,8 +8,8 @@ export const spriteFactory = (type, canvas) => {
         case "backgroundSprite":
             return new Sprite({
                 position: {
-                    x: GAME_CONFIG.offsetX,
-                    y: GAME_CONFIG.offsetY
+                    x: GAME_CONFIG.offsetX -1900,
+                    y: GAME_CONFIG.offsetY -1400
                 },
                 image: getImage('background'),
                 scale: 2
@@ -33,8 +33,8 @@ export const spriteFactory = (type, canvas) => {
         case "npcSprite1":
             return new NpcSprite({
                 position: {
-                    x: 783,
-                    y: 700,
+                    x: GAME_CONFIG.offsetX + 683,
+                    y: GAME_CONFIG.offsetY + 110,
                 },
                 image: getImage('npc1Down'),
                 frames: { max: 4 },
@@ -54,8 +54,8 @@ export const spriteFactory = (type, canvas) => {
         case "foregroundSprite":
             return new Sprite({
                 position: {
-                    x: GAME_CONFIG.offsetX + 192,
-                    y: GAME_CONFIG.offsetY + 354
+                    x: GAME_CONFIG.offsetX + 372,
+                    y: GAME_CONFIG.offsetY + 8
                 },
                 image: getImage('foreground'),
                 scale: 2

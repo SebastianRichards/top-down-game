@@ -2,14 +2,14 @@ import { loadImage, loadAudio, getImage } from './utilities/assetManager.js';
 import { Game } from './game.js';
 import { MusicControl } from './musicControl.js';
 import { TouchControls } from './touchControls.js';
-import { setBoundaryJsonData, setDoorJsonData } from './utilities/dataManager.js';
+import { setBoundaryJsonData, setDoorJsonData, setBattleJsonData } from './utilities/dataManager.js';
 
 const init = async () => {
     await Promise.all([
         loadAudio('backgroundMusic', 'assets/audio/gamemusiccool.mp3'),
         loadAudio('noentry', 'assets/audio/noentry.mp3'),
-        loadImage('background', 'assets/images/background.png'),
-        loadImage('foreground', 'assets/images/foreground.png'),
+        loadImage('background', 'assets/images/background1.png'),
+        loadImage('foreground', 'assets/images/foreground1.png'),
         loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
         loadImage('playerUp', 'assets/images/playerSprites/main-player-back.png'),
         loadImage('playerLeft', 'assets/images/playerSprites/main-player-left.png'),
@@ -21,10 +21,13 @@ const init = async () => {
         loadImage('npc1Profile', 'assets/images/playerSprites/npc1/profile.png')
     ])
 
-    const { boundaryData } = await import('../json/collisions.js');
-    const { doorData } = await import('../json/dooraction.js');
-    setBoundaryJsonData(boundaryData)
+    const { boundaryData } = await import('../json/boundaries1.js');
+    const { doorData } = await import('../json/door.js');
+    const { battleData } = await import('../json/battle.js');
+
+    setBoundaryJsonData(boundaryData);
     setDoorJsonData(doorData);
+    setBattleJsonData(battleData);
 
     const game = Game();
     game.start();
