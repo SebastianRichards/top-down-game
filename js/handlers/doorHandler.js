@@ -4,6 +4,7 @@ import { getDoorJsonData } from '../utilities/dataManager.js';
 
 
 const doorDatas = []
+let identifier = 0;
 
 export const setupDoors = () => {
     const doorJsonData = getDoorJsonData();
@@ -12,10 +13,12 @@ export const setupDoors = () => {
             new Door({
                 position: {
                     x: tile.x * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetX - 1758,
-                    y: tile.y * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetY - 1110
-                }
+                    y: tile.y * GAME_CONFIG.scale * GAME_CONFIG.tileSize + GAME_CONFIG.offsetY - 1116
+                },
+                identifier: identifier
             })
         )
+        identifier ++;
     })
     return doorDatas
 }
