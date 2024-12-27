@@ -2,6 +2,7 @@ import { GAME_CONFIG } from "../config.js";
 import { Sprite } from "../classes/sprite.js";
 import { getImage } from "../utilities/assetManager.js";
 import { NpcSprite } from "../classes/npcSprite.js";
+import { BattleScene } from "../classes/battleScene.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -60,6 +61,34 @@ export const spriteFactory = (type, canvas) => {
                 image: getImage('foreground'),
                 scale: 2
             })
+        case "battleBackgroundSprite":
+            return new BattleScene({
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                image: getImage('battle'),
+                scale: 2
+
+            })
+        case "mons1":
+            return new Sprite({
+                position: {
+                    x: 730,
+                    y: 50
+                },
+                image: getImage('mons1-front'),
+                scale: 2
+            })
+            case "mons2":
+                return new Sprite({
+                    position: {
+                        x: 150,
+                        y: 350
+                    },
+                    image: getImage('mons2-back'),
+                    scale: 2
+                })
         default:
             console.log('unknown type', type)
     }

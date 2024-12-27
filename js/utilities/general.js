@@ -1,5 +1,10 @@
+import { battleData } from "../../json/battle.js";
 import { GAME_CONFIG } from "../config.js";
 let xOffSet = -5;
+
+let inBattle = false;
+
+let battleSquareId = -1;
 
 export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
     let result = "";
@@ -46,4 +51,21 @@ export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
     }
     //console.log(rectangle1.position.x, rectangle1.position.y, 'rectangle 1 xy', rectangle2.position.x, rectangle2.position.y, 'rectangle 2 xy')
 
+}
+
+export const setInBattleStatus = (inBattleParam) => {
+    inBattle = inBattleParam
+}
+
+export const getInBattleStatus = () => {
+    return inBattle
+}
+
+export const setBattleTileId = (id) => {
+    battleSquareId = id;
+    console.log('setting to ', id)
+}
+
+export const getBattleTileId = () => {
+    return battleSquareId;
 }
