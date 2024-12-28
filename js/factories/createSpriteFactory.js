@@ -68,27 +68,58 @@ export const spriteFactory = (type, canvas) => {
                     y: 0
                 },
                 image: getImage('battle'),
-                scale: 2
-
-            })
-        case "mons1":
-            return new Sprite({
-                position: {
-                    x: 730,
-                    y: 50
+                scale: 2,
+                mons1: {
+                    position: {
+                        x: 730,
+                        y: 50
+                    },
+                    image: getImage('mons1-front'),
+                    scale: 2,
+                    name: 'Flamemons',
+                    health: 20,
+                    currentHealth: 20,
+                    level: 5,
+                    strength: 4,
+                    defence: 2,
+                    moves: {
+                        move1: {
+                            name: 'Tackle',
+                            strength: 2 
+                        },
+                        move2: {
+                            name: 'Fire Shock',
+                            strength: 4
+                        }
+                    }
                 },
-                image: getImage('mons1-front'),
-                scale: 2
-            })
-            case "mons2":
-                return new Sprite({
+                mons2: {
                     position: {
                         x: 150,
                         y: 350
                     },
                     image: getImage('mons2-back'),
-                    scale: 2
-                })
+                    scale: 2,
+                    name: 'Icemons',
+                    health: 20,
+                    currentHealth: 20,
+                    strength: 4,
+                    defence: 2,
+                    level: 5,
+                    moves: {
+                        move1: {
+                            name: 'Tackle',
+                            strength: 2 
+                        },
+                        move2: {
+                            name: 'Ice Shock',
+                            strength: 4
+                        }
+                    }
+                }
+                
+
+            })
         default:
             console.log('unknown type', type)
     }

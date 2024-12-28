@@ -34,7 +34,6 @@ export class BattleTile extends Boundary{
           }
           
           return true
-        //this.battleAction();
     }
 
 

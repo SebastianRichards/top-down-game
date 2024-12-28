@@ -24,19 +24,14 @@ export const Game = () => {
         npcSprite1: spriteFactory('npcSprite1', canvas)
     }
 
-    const battleSprites = {
-        battleBackgroundSprite: spriteFactory('battleBackgroundSprite', canvas)
-    }
+
+    const battleScene =  spriteFactory('battleBackgroundSprite', canvas)
+    
     //list of objs that derived from json
     const solids = {
         doorData: setupDoors(),
         boundaryData: setupBoundaries(),
         battleData: setupBattleSquares()
-    }
-
-    const mons = {
-        mons1: spriteFactory('mons1', canvas),
-        mons2: spriteFactory('mons2', canvas)
     }
 
     function animate() {
@@ -52,11 +47,11 @@ export const Game = () => {
             moveSprites(sprites, solids, c);
             checkActions(sprites, solids, c);
         } else {
-            battleSprites.battleBackgroundSprite.draw(c);
-            mons.mons1.draw(c);
-            mons.mons2.draw(c);
-            battleSprites.battleBackgroundSprite.textAction(c);
-            moveSelectedText(battleSprites.battleBackgroundSprite);
+            battleScene.draw(c);
+            battleScene.drawMons(c);
+            battleScene.drawHealthAndLevel(c);
+            battleScene.setupText(c);
+            moveSelectedText(battleScene);
         }
         
     }
