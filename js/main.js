@@ -8,7 +8,7 @@ const init = async () => {
     await Promise.all([
         loadAudio('backgroundMusic', 'assets/audio/gamemusiccool.mp3'),
         loadAudio('noentry', 'assets/audio/noentry.mp3'),
-        loadImage('background', 'assets/images/background1.png'),
+        loadImage('background', 'assets/images/map2.png'),
         loadImage('foreground', 'assets/images/foreground1.png'),
         loadImage('playerDown', 'assets/images/playerSprites/main-player-front.png'),
         loadImage('playerUp', 'assets/images/playerSprites/main-player-back.png'),
@@ -24,6 +24,7 @@ const init = async () => {
         loadImage('mons1-back', 'assets/images/monsterSprites/mons1-back.png'),
         loadImage('mons2-front', 'assets/images/monsterSprites/mons2.png'),
         loadImage('mons2-back', 'assets/images/monsterSprites/mons2-back.png'),
+        loadImage('grassBlock', 'assets/images/Dec22.png')
     ])
 
     const { boundaryData } = await import('../json/boundaries1.js');

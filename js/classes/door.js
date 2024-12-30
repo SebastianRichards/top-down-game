@@ -32,10 +32,16 @@ export class Door extends Boundary{
                 
                 break;
             case 4:
-                console.log('door2');
+                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                    return
+                };
+                this.moveCharacter(2418, -770, sprites, solids)
                 break;
             case 3:
-                console.log('door3');
+                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                    return
+                };
+                this.moveCharacter(2450, -770, sprites, solids)
                 break;
             case 5:
                 if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
@@ -44,24 +50,33 @@ export class Door extends Boundary{
                 this.moveCharacter(2205, 510, sprites, solids)
                 break;
             case 6: 
-            if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
-                return
-            };
-            this.moveCharacter(2170, 510, sprites, solids)
+                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                    return
+                };
+                this.moveCharacter(2170, 510, sprites, solids)
                 break;
             case 7: 
-            if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
-                return
-            };
-            this.moveCharacter(1185, 1470, sprites, solids)
+                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                    return
+                };
+                this.moveCharacter(1185, 1470, sprites, solids)
                 break;
             case 8: 
-            if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
-                return
-            };
-            this.moveCharacter(1150, 1470, sprites, solids)
+                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                    return
+                };
+                this.moveCharacter(1150, 1470, sprites, solids)
                 break;
+            case 0: {
+                if(!(sprites.playerSprite.image.src).includes('main-player-back')) {
+                    return
+                };
+                this.moveCharacter(-2450, 770, sprites, solids)
+            }
+            default: 
+                console.log(this.identifier, 'not recognised')
         }
+        
         //this.soundNoEntry();   
     }
 

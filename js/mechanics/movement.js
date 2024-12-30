@@ -17,7 +17,7 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData]
+    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass]
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 
@@ -64,6 +64,9 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
         
         if (moving) {
             moveableSprites.forEach((sprite) => {
+                if(sprite === 'npcSprite1') {
+                    console.log(sprite)
+                }
                 sprite.position[direction.axis] += direction.delta;
                 distanceCount += direction.delta;
                 if(Math.abs(distanceCount) > 32) {

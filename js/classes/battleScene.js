@@ -1,6 +1,6 @@
 import { Sprite } from "./sprite.js"
 import { GAME_CONFIG } from "../config.js";
-import { setInBattleStatus } from "../utilities/general.js";
+import { setGameState, setInBattleStatus } from "../utilities/general.js";
 
 export class BattleScene extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {} }) {
@@ -10,6 +10,8 @@ export class BattleScene extends Sprite {
         this.mons2 = mons2
         this.battleTextStatus = 'main';
         this.textBoxMessage = false;
+        this.inBattleTurn = false;
+        this.battleType = '';
     }
 
     drawMons(c) {
@@ -120,6 +122,7 @@ a
             case "Move1":
                 const moveStrength = this.mons2.moves.move1.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
+                this.inBattleTurn = true;
                 if(this.mons1.currentHealth - damage <= 0) {
                     this.textBoxMessage = 'You won!'
                     await this.wait(1);
@@ -131,6 +134,11 @@ a
                     this.mons2.currentHealthealth += 1
                     await this.wait(1);
                     setInBattleStatus(false);
+                    if(this.battleType === "npc") {
+                        setGameState('fightWon')
+                    } else {
+                        console.log('gamestate failed', this.battleType)
+                    }
                     this.resetScene();
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
@@ -139,11 +147,13 @@ a
                     this.textBoxMessage = false;
                     this.opponentMove();
                 }
+                this.inBattleTurn = false
                 break;
 
             case "Move2": {
                 const moveStrength = this.mons2.moves.move2.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
+                this.inBattleTurn = true;
                 if(this.mons1.currentHealth - damage <= 0) {
                     this.textBoxMessage = 'You won!'
                     await this.wait(1);
@@ -155,6 +165,11 @@ a
                     this.mons2.currentHealthealth += 1
                     await this.wait(1);
                     setInBattleStatus(false);
+                    if(this.battleType === "npc") {
+                        setGameState('fightWon')
+                    } else {
+                        console.log('gamestate failed', this.battleType)
+                    }
                     this.resetScene();
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
@@ -163,6 +178,7 @@ a
                     this.textBoxMessage = false;
                     this.opponentMove();
                 }
+                this.inBattleTurn = false;
                 break;
             }
         }   
@@ -170,6 +186,7 @@ a
 
     async opponentMove() {
         const ownDefence = this.mons2.defence
+        this.inBattleTurn = true;
         if(Math.random() < 0.5) {
             const moveStrength = this.mons1.moves.move1.strength + this.mons1.strength;
             const damage = moveStrength / ownDefence
@@ -177,6 +194,11 @@ a
                 this.textBoxMessage = 'You lost!';
                 await this.wait(1);
                 setInBattleStatus(false);
+                if(this.battleType === 'npc') {
+                    setGameState('fightWon');
+                } else {
+                    console.log('gamestate failed', this.battleType)
+                }
                 this.resetScene();
             } else {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage;
@@ -191,6 +213,9 @@ a
                 this.textBoxMessage = 'You lost!';
                 await this.wait(1);
                 setInBattleStatus(false);
+                if(this.battleType === "npc") {
+                    setGameState('fightWon')
+                }
                 this.resetScene();
             } else {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage
@@ -200,6 +225,7 @@ a
             }
 
         }
+        this.inBattleTurn = false;
     }
 
     wait(s) {
@@ -212,5 +238,58 @@ a
         this.textBoxMessage = false;
         this.battleTextStatus = 'main';
         this.currentOption = 'Fight';
+        document.removeEventListener('keydown', this.battleKeyDownHandler)
+        this.hasInit = false;
     }
+
+    setupEventListener() {
+        if(!this.hasInit) {
+            document.addEventListener('keydown', this.battleKeyDownHandler);
+        }
+        this.hasInit = true;
+    }
+
+
+    battleKeyDownHandler = (e) => {
+        console.log(e.key, 'e key')
+        if(e.key === "ArrowRight") {
+            if(this.battleTextStatus === 'main') {
+                this.changeCurrentOption('Run')
+            } else {
+                this.changeCurrentOption('Move2')
+            }
+            
+        }
+        if(e.key === "ArrowLeft") {
+            if(this.battleTextStatus === 'main') {
+                this.changeCurrentOption('Fight');
+            } else {
+                this.changeCurrentOption('Move1')
+            }
+        }
+        if(e.key === " ") {
+            const currentOption = this.currentOption;
+            if(this.inBattleTurn === true) {
+                return
+            }
+            switch (currentOption) {
+                case "Fight": 
+                    this.battleTextStatus = 'moves';
+                    this.changeCurrentOption('Move1')
+                    break;
+                case "Run":
+                    setInBattleStatus(false);
+                    this.battleTextStatus = 'main';
+                    this.changeCurrentOption('Fight')
+                    this.resetScene();
+                    break;
+                case "Move1":
+                    this.executeMove("Move1");
+                    break;
+                case "Move2":
+                    this.executeMove("Move2");
+                    break;  
+            }    
+        }
+    };
 }

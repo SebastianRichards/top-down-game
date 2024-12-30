@@ -1,13 +1,42 @@
 import { Sprite } from "./sprite.js"
 import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { GAME_CONFIG } from "../config.js";
-import { getLastActionKey, setLastActionKey } from "../inputHandler.js";
+import { setInBattleStatus } from "../utilities/general.js";
+
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
         super({position, image, frames, sprites, scale, flipped})
         this.textSlides = textSlides
         this.profileImg = profileImg
         this.isShowingText = false
+        this.status = 'prefight';
+        this.selected = 'yes';
+        this.lastActionKey = '';
+        this.actionKeyHasInit = false;
+        this.boundActionKeyHandler = this.keydownActionKeyHandler().bind(this);
+        this.boundSelectionHandler = this.keydownHandler().bind(this);
+    }
+
+    drawOption(c) {
+        const textBoxX = 750;
+        const textBoxY = 400;
+        const textBoxWidth = GAME_CONFIG.canvasWidth;
+        const textBoxHeight = 80;
+        c.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+        c.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+        c.strokeStyle = 'black';
+        c.lineWidth = 4; 
+        c.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+        c.strokeStyle = 'black';
+        c.lineWidth = 2;
+        c.fillStyle = 'black';
+        c.font = '20px Arial';
+        c.save();
+        this.selected === 'yes' ? c.fillStyle = 'blue' : c.fillStyle = 'black';
+        c.fillText('yes', textBoxWidth / 2 + 305 , 448)
+        this.selected === 'no' ? c.fillStyle = 'blue' : c.fillStyle = 'black';
+        c.fillText('no', textBoxWidth / 2 + 415 , 448)
+        c.restore();
     }
 
     textAction(c, text) {
@@ -33,30 +62,129 @@ export class NpcSprite extends Sprite {
         c.fillText(text, textBoxWidth / 2 - 70 , 550)
     }
 
-    npcAction(c, type) {
-        const lastActionKey = getLastActionKey();
+    keydownHandler() {
+        const keydownHandler = (e) => {
+            if (e.key === 'ArrowRight') {
+                this.selected = 'no';
+            } else if (e.key === 'ArrowLeft') {
+                this.selected = 'yes';
+            }
+        };
 
-        switch (type) {
-            case "text1":
+        return keydownHandler
+    }
+
+    keydownActionKeyHandler() {
+        const keydownActionHandler = (e) => {
+            if (e.key === ' ') {
+                this.lastActionKey = ' ';
+            } 
+        };
+        return keydownActionHandler;
+
+    }
+
+    removeEventListeners() {
+        document.removeEventListener('keydown', this.boundActionKeyHandler)
+        document.removeEventListener('keydown', this.boundSelectionHandler)
+        this.actionKeyHasInit = false
+    }
+
+    setupEventListener(command) {
+        if(command === 'add') {
+            if (this.actionKeyHasInit) return
+            document.addEventListener('keydown', this.boundActionKeyHandler);
+            this.actionKeyHasInit = true;
+            console.log('initialised')
+        } else if(command === 'remove') {
+            document.removeEventListener('keydown', this.boundActionKeyHandler);
+            this.actionKeyHasInit = false;
+            console.log('removed')
+        }
+    }
+
+    startBattle(battleScene) {
+        setInBattleStatus(true);
+        battleScene.battleType = 'npc';
+    }
+
+    textLogic(battleScene, slides, lastActionKey, c, status) {
+        switch(status) {
+            case "prefight":
                 if (!this.isShowingText) {
                     if (lastActionKey === ' ') {
                         this.isShowingText = true;
                         this.slidesIndex = -1;
-                        setLastActionKey('');  
+                        this.lastActionKey = '';  
                     }
                 } 
                 
                 if (this.isShowingText) {
-                    this.textAction(c, this.textSlides.slides1[this.slidesIndex]);
+                    this.textAction(c, slides[this.slidesIndex]);
+            
+                    if(this.slidesIndex === 3 && this.status === "prefight") {
+                        this.drawOption(c)
+                        document.addEventListener('keydown', this.boundSelectionHandler);
+                    }
                     if (lastActionKey === ' ') {
                         this.slidesIndex++;
-                        setLastActionKey('');
-                        if (this.slidesIndex >= this.textSlides.slides1.length) {
+                        console.log(this.slidesIndex, 'is slides index')
+                        this.lastActionKey = '';
+                        if (this.slidesIndex >= slides.length) {
+                            this.setupEventListener('remove')
                             this.isShowingText = false;
-                            this.slidesIndex = 0;
+                            this.slidesIndex = -1;
+                            battleScene.mons1.level = 20
+                            battleScene.mons1.health = 40;
+                            battleScene.mons1.currentHealth = 40;
+                            battleScene.mons1.strength = 20;
+                            battleScene.mons1.defence = 20;
+                            if(this.selected === 'yes') {
+                                this.startBattle(battleScene);
+                                this.selected === 'no'
+                            } 
+                            document.removeEventListener('keydown', this.boundSelectionHandler);
                         }
                     }
-                }
+                break;
+            } case "fightWon":
+                if (!this.isShowingText) {
+                    if (lastActionKey === ' ') {
+                        this.isShowingText = true;
+                        this.slidesIndex = -1;
+                        this.lastActionKey = '';  
+                    }
+                } 
+                
+                if (this.isShowingText) {
+                    this.textAction(c, slides[this.slidesIndex]);
+                    if (lastActionKey === ' ') {
+                        this.slidesIndex++;
+                        console.log(this.slidesIndex, 'is slides index')
+                        this.lastActionKey = '';
+                        if (this.slidesIndex >= slides.length) {
+                            this.setupEventListener('remove')
+                            this.isShowingText = false;
+                            this.slidesIndex = -1;
+                            document.removeEventListener('keydown', this.boundSelectionHandler);
+                        }
+                    }
+                break;
+            }
+        } 
+    }
+    npcAction(c, type, battleScene) {
+        const lastActionKey = this.lastActionKey;
+        this.setupEventListener('add')
+        switch (type) {
+            case "prefight":
+                this.textLogic(battleScene, this.textSlides.prefight, lastActionKey, c, "prefight");
+                break;
+            case "fightWon": 
+                this.textLogic(battleScene, this.textSlides.fightwon, lastActionKey, c, "fightWon");
+                break;
+            case "fightLost": 
+                this.textLogic(battleScene, this.textSlides.fight, lastActionKey, c, "fightLost");
                 break;
             default:
                 console.log('action type not found')

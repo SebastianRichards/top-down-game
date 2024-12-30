@@ -12,7 +12,7 @@ export class BattleTile extends Boundary{
         this.id = id;
     }
 
-    checkBattleAction(player, c) {
+    checkBattleAction(player, c, grass, battleScene) {
         const testPlayer = {
             position: {x: player.position.x + 32 / 2,
                 y: player.position.y + 16 / 2
@@ -25,20 +25,27 @@ export class BattleTile extends Boundary{
             return false;
           }
           const battleTileId = getBattleTileId();
-        
           if (this.id !== battleTileId) {
             setBattleTileId(this.id);
+            grass.position.x = this.position.x;
+            grass.position.y = this.position.y + 32;
+            grass.setIsOnGrass();
             if(Math.random() < 0.1) {
-                this.battleAction();
+                this.battleAction(battleScene);
             }
           }
           
           return true
     }
 
-
-    battleAction() {
+    battleAction(battleScene) {
+        battleScene.mons1.level = 5
+        battleScene.mons1.health = 20;
+        battleScene.mons1.currentHealth = 20;
+        battleScene.mons1.strength = 3;
+        battleScene.mons1.defence = 2;
         setInBattleStatus(true);
+        battleScene.battleType = 'random';
     }
 
    

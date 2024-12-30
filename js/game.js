@@ -7,7 +7,6 @@ import { setupBattleSquares } from './handlers/battleHandler.js';
 import { GAME_CONFIG } from './config.js';
 import { battleData } from '../json/battle.js';
 import { getInBattleStatus } from './utilities/general.js';
-import { moveSelectedText } from './mechanics/battleNav.js';
 
 export const Game = () => {
     const canvas = document.getElementById("game-canvas");
@@ -21,7 +20,8 @@ export const Game = () => {
         foregroundSprite: spriteFactory('foregroundSprite', canvas),
         playerSprite: spriteFactory('playerSprite', canvas),
         backgroundSprite: spriteFactory('backgroundSprite', canvas),
-        npcSprite1: spriteFactory('npcSprite1', canvas)
+        npcSprite1: spriteFactory('npcSprite1', canvas),
+        grass: spriteFactory('Grass', canvas)
     }
 
 
@@ -41,17 +41,18 @@ export const Game = () => {
         if(!inBattle) {
             sprites.backgroundSprite.draw(c);
             sprites.npcSprite1.draw(c);
+            sprites.grass.draw(c); 
             sprites.playerSprite.draw(c);
             sprites.foregroundSprite.draw(c);
             // Mechanics
             moveSprites(sprites, solids, c);
-            checkActions(sprites, solids, c);
+            checkActions({spritesObj: sprites, solidsObj: solids, c: c, battleScene: battleScene});
         } else {
             battleScene.draw(c);
             battleScene.drawMons(c);
             battleScene.drawHealthAndLevel(c);
             battleScene.setupText(c);
-            moveSelectedText(battleScene);
+            battleScene.setupEventListener();
         }
         
     }

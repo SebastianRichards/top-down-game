@@ -3,6 +3,7 @@ import { Sprite } from "../classes/sprite.js";
 import { getImage } from "../utilities/assetManager.js";
 import { NpcSprite } from "../classes/npcSprite.js";
 import { BattleScene } from "../classes/battleScene.js";
+import { Grass } from '../classes/grass.js';
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -48,7 +49,9 @@ export const spriteFactory = (type, canvas) => {
                 scale: 2,
                 profileImg: getImage('npc1Profile'),
                 textSlides: {
-                    slides1: ["Hello..", "I've coded this in vanilla js", "it was a pain.."],
+                    prefight: ["Hello..", "I've coded this in vanilla js", "it was a pain..", "Want to fight?"],
+                    fightwon: ["Wow you won", "Come into the house"],
+                    fightlost: ["Shame you lost", "Try training in the grass to win"],
                     slidesIndex: 0
                 }
             })
@@ -120,6 +123,15 @@ export const spriteFactory = (type, canvas) => {
                 
 
             })
+            case "Grass":
+                return new Grass({
+                    position: {
+                        x: GAME_CONFIG.offsetX,
+                        y: GAME_CONFIG.offsetY
+                    },
+                    image: getImage('grassBlock'),
+                    scale: 2
+                });
         default:
             console.log('unknown type', type)
     }

@@ -6,6 +6,8 @@ let inBattle = false;
 
 let battleSquareId = -1;
 
+let gameState = 'prefight'
+
 export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
     let result = "";
     let direction = "";
@@ -44,7 +46,6 @@ export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
         case 'back':
             if(rectangle1.position.x + (rectangle1.width * GAME_CONFIG.scale) >= rectangle2.position.x + xOffSet &&
             rectangle1.position.x <= rectangle2.position.x + rectangle2.width && rectangle1.position.y - 26 === rectangle2.position.y) {
-                console.log('can talk back')
                 return true;
             }
             break;
@@ -68,4 +69,13 @@ export const setBattleTileId = (id) => {
 
 export const getBattleTileId = () => {
     return battleSquareId;
+}
+
+export const getGameState = () => {
+    return gameState
+}
+
+export const setGameState = (state) => {
+    gameState = state;
+    console.log(state, 'gamestate set')
 }
