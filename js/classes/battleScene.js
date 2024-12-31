@@ -107,7 +107,6 @@ export class BattleScene extends Sprite {
             c.restore();
         }
     }
-a
     changeCurrentOption(option) {
         this.currentOption = option;
     }

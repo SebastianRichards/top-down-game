@@ -1,0 +1,1 @@
+export const pcData = {"tileSize":16,"mapWidth":53,"mapHeight":67,"layers":[{"name":"Layer_7","tiles":[{"id":"0","x":0,"y":66},{"id":"0","x":52,"y":0}],"collider":false}]}

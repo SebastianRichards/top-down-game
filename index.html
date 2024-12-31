@@ -4,24 +4,20 @@
     <meta charset="UTF-8">
     <title>Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
-    <!-- Volume Control -->
     <div class="volume-control" id="volume-control">
         <i class="fa fa-volume-off" id="volUp"></i>
         <i class="fa fa-volume-up" id="volDown" style="display: none;"></i>
     </div>
 
-    <!-- Game Canvas -->
     <div style="display: flex; justify-content: center;">
         <canvas id="game-canvas" style="image-rendering: pixelated;"></canvas>
     </div>
 
-    <!-- Control Wheel -->
     <div class="control-wheel">
         <button class="btn up" id="up">↑</button>
         <button class="btn left" id="left">←</button>
@@ -29,7 +25,6 @@
         <button class="btn right" id="right">→</button>
     </div>
 
-    <!-- Include your main JavaScript file -->
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

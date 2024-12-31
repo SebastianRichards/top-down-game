@@ -29,4 +29,8 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
         spritesObj.npcSprite1.removeEventListeners();
     }
 
+    solidsObj.pcData.forEach(pc => {
+        pc.checkPcAction(spritesObj, c)
+    })
+
 }

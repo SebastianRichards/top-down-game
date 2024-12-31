@@ -17,7 +17,7 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass]
+    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass, ...solidsObj.pcData]
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 
@@ -64,9 +64,6 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
         
         if (moving) {
             moveableSprites.forEach((sprite) => {
-                if(sprite === 'npcSprite1') {
-                    console.log(sprite)
-                }
                 sprite.position[direction.axis] += direction.delta;
                 distanceCount += direction.delta;
                 if(Math.abs(distanceCount) > 32) {
@@ -81,7 +78,9 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
                 spritesObj.playerSprite.flipped = false
                 spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.down;
             } else if (direction.axis === 'x' && direction.delta < 0) {
+                console.log('moving left or right');
                 spritesObj.playerSprite.flipped = false
+                console.log(spritesObj.playerSprite)
                 spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.right;
             } else if (direction.axis === 'x' && direction.delta > 0) {
                 spritesObj.playerSprite.flipped = true

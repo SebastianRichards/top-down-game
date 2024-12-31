@@ -18,57 +18,57 @@ export class Door extends Boundary{
         } 
         switch(this.identifier) {
             case 2:
-                if(!(sprites.playerSprite.image.src).includes('main-player-back')) {
+                if(!(sprites.playerSprite.image.src).includes('player-back')) {
                     return
                 };
                 this.moveCharacter(-2205, -510, sprites, solids)
                 
                 break;
             case 1:
-                if(!(sprites.playerSprite.image.src).includes('main-player-back')) {
+                if(!(sprites.playerSprite.image.src).includes('player-back')) {
                     return
                 };
                 this.moveCharacter(-1185, -1470, sprites, solids)
                 
                 break;
             case 4:
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2418, -770, sprites, solids)
                 break;
             case 3:
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2450, -770, sprites, solids)
                 break;
             case 5:
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2205, 510, sprites, solids)
                 break;
             case 6: 
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2170, 510, sprites, solids)
                 break;
             case 7: 
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(1185, 1470, sprites, solids)
                 break;
             case 8: 
-                if(!(sprites.playerSprite.image.src).includes('main-player-front')) {
+                if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(1150, 1470, sprites, solids)
                 break;
             case 0: {
-                if(!(sprites.playerSprite.image.src).includes('main-player-back')) {
+                if(!(sprites.playerSprite.image.src).includes('player-back')) {
                     return
                 };
                 this.moveCharacter(-2450, 770, sprites, solids)
@@ -103,6 +103,11 @@ export class Door extends Boundary{
                     data.position.x = data.position.x - offsetX;
                     data.position.y = data.position.y - offsetY
                 })
+                solids.pcData.forEach((data) => {
+                    data.position.x = data.position.x - offsetX;
+                    data.position.y = data.position.y - offsetY
+                })
+
     }
 
     drawTextBox(c, text) {

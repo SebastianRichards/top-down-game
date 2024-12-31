@@ -8,6 +8,8 @@ let battleSquareId = -1;
 
 let gameState = 'prefight'
 
+let npcState = 'default'
+
 export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
     let result = "";
     let direction = "";
@@ -79,3 +81,11 @@ export const setGameState = (state) => {
     gameState = state;
     console.log(state, 'gamestate set')
 }
+
+export const getNpcState = () => {
+    return npcState;
+}
+
+export const setNpcState = (state) => {
+    npcState = state;
+}  

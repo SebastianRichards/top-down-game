@@ -6,7 +6,8 @@ import { setupBoundaries } from './handlers/boundaryHandler.js';
 import { setupBattleSquares } from './handlers/battleHandler.js';
 import { GAME_CONFIG } from './config.js';
 import { battleData } from '../json/battle.js';
-import { getInBattleStatus } from './utilities/general.js';
+import { getGameState, getInBattleStatus, getNpcState } from './utilities/general.js';
+import { setupPcs } from './handlers/pcHandler.js';
 
 export const Game = () => {
     const canvas = document.getElementById("game-canvas");
@@ -31,7 +32,8 @@ export const Game = () => {
     const solids = {
         doorData: setupDoors(),
         boundaryData: setupBoundaries(),
-        battleData: setupBattleSquares()
+        battleData: setupBattleSquares(),
+        pcData: setupPcs()
     }
 
     function animate() {
@@ -40,7 +42,9 @@ export const Game = () => {
         const inBattle = getInBattleStatus();
         if(!inBattle) {
             sprites.backgroundSprite.draw(c);
-            sprites.npcSprite1.draw(c);
+            if(getNpcState() === "default") {
+                sprites.npcSprite1.draw(c);
+            }
             sprites.grass.draw(c); 
             sprites.playerSprite.draw(c);
             sprites.foregroundSprite.draw(c);
