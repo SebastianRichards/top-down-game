@@ -52,11 +52,7 @@ export const Game = () => {
             moveSprites(sprites, solids, c);
             checkActions({spritesObj: sprites, solidsObj: solids, c: c, battleScene: battleScene});
         } else {
-            battleScene.draw(c);
-            battleScene.drawMons(c);
-            battleScene.drawHealthAndLevel(c);
-            battleScene.setupText(c);
-            battleScene.setupEventListener();
+            battleScene.drawSceneAndSetupListener(c);
         }
         
     }

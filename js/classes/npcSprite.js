@@ -2,6 +2,7 @@ import { Sprite } from "./sprite.js"
 import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { GAME_CONFIG } from "../config.js";
 import { setInBattleStatus } from "../utilities/general.js";
+import { monsterFactory } from "../factories/monsterFactory.js";
 
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
@@ -104,8 +105,10 @@ export class NpcSprite extends Sprite {
     }
 
     startBattle(battleScene) {
-        setInBattleStatus(true);
         battleScene.battleType = 'npc';
+        const npcMonster = monsterFactory('monsplash', 10)
+        battleScene.mons1 = npcMonster
+        setInBattleStatus(true);
     }
 
     textLogic(battleScene, slides, lastActionKey, c, status) {
@@ -134,11 +137,6 @@ export class NpcSprite extends Sprite {
                             this.setupEventListener('remove')
                             this.isShowingText = false;
                             this.slidesIndex = -1;
-                            battleScene.mons1.level = 20
-                            battleScene.mons1.health = 40;
-                            battleScene.mons1.currentHealth = 40;
-                            battleScene.mons1.strength = 20;
-                            battleScene.mons1.defence = 20;
                             if(this.selected === 'yes') {
                                 this.startBattle(battleScene);
                                 this.selected === 'no'

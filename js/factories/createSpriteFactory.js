@@ -4,6 +4,7 @@ import { getImage } from "../utilities/assetManager.js";
 import { NpcSprite } from "../classes/npcSprite.js";
 import { BattleScene } from "../classes/battleScene.js";
 import { Grass } from '../classes/grass.js';
+import { monsterFactory } from "./monsterFactory.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -65,6 +66,7 @@ export const spriteFactory = (type, canvas) => {
                 scale: 2
             })
         case "battleBackgroundSprite":
+            const playerMons = monsterFactory('monsflame-player', 5)
             return new BattleScene({
                 position: {
                     x: 0,
@@ -72,54 +74,8 @@ export const spriteFactory = (type, canvas) => {
                 },
                 image: getImage('battle'),
                 scale: 2,
-                mons1: {
-                    position: {
-                        x: 730,
-                        y: 50
-                    },
-                    image: getImage('mons1-front'),
-                    scale: 2,
-                    name: 'Flamemons',
-                    health: 20,
-                    currentHealth: 20,
-                    level: 5,
-                    strength: 4,
-                    defence: 2,
-                    moves: {
-                        move1: {
-                            name: 'Tackle',
-                            strength: 2 
-                        },
-                        move2: {
-                            name: 'Fire Shock',
-                            strength: 4
-                        }
-                    }
-                },
-                mons2: {
-                    position: {
-                        x: 150,
-                        y: 350
-                    },
-                    image: getImage('mons2-back'),
-                    scale: 2,
-                    name: 'Icemons',
-                    health: 20,
-                    currentHealth: 20,
-                    strength: 4,
-                    defence: 2,
-                    level: 5,
-                    moves: {
-                        move1: {
-                            name: 'Tackle',
-                            strength: 2 
-                        },
-                        move2: {
-                            name: 'Ice Shock',
-                            strength: 4
-                        }
-                    }
-                }
+                mons1: '',
+                mons2: playerMons
                 
 
             })

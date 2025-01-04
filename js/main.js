@@ -24,7 +24,12 @@ const init = async () => {
         loadImage('mons1-back', 'assets/images/monsterSprites/mons1-back.png'),
         loadImage('mons2-front', 'assets/images/monsterSprites/mons2.png'),
         loadImage('mons2-back', 'assets/images/monsterSprites/mons2-back.png'),
-        loadImage('grassBlock', 'assets/images/Dec22.png')
+        loadImage('grassBlock', 'assets/images/Dec22.png'),
+        loadImage('monsflame-front', 'assets/images/monsterSprites/monsflame-front.png'),
+        loadImage('monsflame-back', 'assets/images/monsterSprites/monsflame-back.png'),
+        loadImage('monsplash-front', 'assets/images/monsterSprites/monsplash-front.png'),
+        loadImage('monsplash-back', 'assets/images/monsterSprites/monsplash-back.png'),
+        loadImage('grassPatch', 'assets/images/grassPatch.png')
     ])
 
     const { boundaryData } = await import('../json/boundaries1.js');

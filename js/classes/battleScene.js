@@ -1,6 +1,7 @@
 import { Sprite } from "./sprite.js"
 import { GAME_CONFIG } from "../config.js";
 import { setGameState, setInBattleStatus } from "../utilities/general.js";
+import { getImage } from "../utilities/assetManager.js";
 
 export class BattleScene extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {} }) {
@@ -12,23 +13,56 @@ export class BattleScene extends Sprite {
         this.textBoxMessage = false;
         this.inBattleTurn = false;
         this.battleType = '';
+        this.grassImgWidth = 128;
+        this.grassSize = 128;
+        this.grassScale = 3;
+        this.grassFramesElapsed = 0;
+        this.grassFrameTime = 10;
+    }
+
+    drawSceneAndSetupListener(c) {
+        this.draw(c)
+        this.drawGrass(c);
+        this.drawMons(c);
+        this.drawHealthAndLevel(c);
+        this.setupText(c);
+        this.setupEventListener();
     }
 
     drawMons(c) {
+        this.mons1.draw(c)
+        this.mons2.draw(c)
+    }
+
+    drawGrass(c) {
         c.drawImage(
-            this.mons1.image,
-            this.mons1.position.x,
-            this.mons1.position.y,
-            128, 
-            128
-        );
+            getImage('grassPatch'),
+            this.grassImgWidth,
+            0,
+            128,
+            128,
+            20,
+            300,
+            this.grassSize * this.grassScale,
+            this.grassSize * this.grassScale
+        )
         c.drawImage(
-            this.mons2.image,
-            this.mons2.position.x,
-            this.mons2.position.y,
-            128, 
-            128
-        );
+            getImage('grassPatch'),
+            this.grassImgWidth,
+            0,
+            128,
+            128,
+            620,
+            25,
+            this.grassSize * this.grassScale,
+            this.grassSize * this.grassScale
+        )
+        this.grassFramesElapsed ++;
+        if(this.grassFramesElapsed > this.grassFrameTime) {
+            this.grassFramesElapsed = 0;
+            this.grassImgWidth === 128 ? this.grassImgWidth = 0 : this.grassImgWidth = 128
+        }
+        
     }
 
     drawHealthAndLevel(c) {
@@ -55,7 +89,7 @@ export class BattleScene extends Sprite {
         const healthBarWidth2 = 340;
         const healthBarHeight2 = 12;
         const healthBarX2 = 50; 
-        const healthBarY2 = 320; 
+        const healthBarY2 = 230; 
         c.fillStyle = 'grey'; 
         c.fillRect(healthBarX2, healthBarY2, healthBarWidth2, healthBarHeight2);
         const currentHealth2 = this.mons2.currentHealth;
