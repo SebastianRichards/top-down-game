@@ -69,41 +69,48 @@ export class BattleScene extends Sprite {
         c.save();
         const healthBarWidth = 340;
         const healthBarHeight = 12;
-        const healthBarX = 600; 
+        const healthBarX = 620; 
         const healthBarY = 20; 
+        c.fillStyle = 'rgba(19, 19, 19, 0.7)';
+        c.fillRect(healthBarX - 32, healthBarY - 32, healthBarWidth + 96, 64)
         c.fillStyle = 'grey'; 
         c.fillRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
         const currentHealth = this.mons1.currentHealth;
         const maxHealth = this.mons1.health;
     
-        c.fillStyle = 'green'; 
+        c.fillStyle = 'YellowGreen'; 
         c.fillRect(
             healthBarX,
             healthBarY,
             (currentHealth / maxHealth) * healthBarWidth,
             healthBarHeight
         );
-        c.fillStyle = 'black'; 
-        c.font = '12px Arial'; 
-        c.fillText(`Level ${this.mons1.level}`, healthBarX + healthBarWidth + 10, healthBarY + healthBarHeight);
+        c.fillStyle = 'gold'; 
+        c.font = '16px Arial'; 
+        c.fillText(`Lvl ${this.mons1.level}`, healthBarX + healthBarWidth + 10, healthBarY + healthBarHeight);
+        c.fillText(this.mons1.name, healthBarX, healthBarY - 4)
+
         const healthBarWidth2 = 340;
         const healthBarHeight2 = 12;
-        const healthBarX2 = 50; 
-        const healthBarY2 = 230; 
+        const healthBarX2 = 20; 
+        const healthBarY2 = 200; 
+        c.fillStyle = 'rgba(19, 19, 19, 0.7)';
+        c.fillRect(healthBarX2 - 32, healthBarY2 - 32, healthBarWidth2 + 96, 64)
         c.fillStyle = 'grey'; 
         c.fillRect(healthBarX2, healthBarY2, healthBarWidth2, healthBarHeight2);
         const currentHealth2 = this.mons2.currentHealth;
         const maxHealth2 = this.mons2.health;
-        c.fillStyle = 'green'; 
+        c.fillStyle = 'YellowGreen'; 
         c.fillRect(
             healthBarX2,
             healthBarY2,
             (currentHealth2 / maxHealth2) * healthBarWidth2,
             healthBarHeight2
         );
-        c.fillStyle = 'black'; 
-        c.font = '12px Arial'; 
-        c.fillText(`Level ${this.mons2.level}`, healthBarX2 + healthBarWidth2 + 10, healthBarY2 + healthBarHeight2);
+        c.fillStyle = 'gold'; 
+        c.font = '16px Arial'; 
+        c.fillText(`Lvl ${this.mons2.level}`, healthBarX2 + healthBarWidth2 + 10, healthBarY2 + healthBarHeight2);
+        c.fillText(this.mons2.name, healthBarX2, healthBarY2 - 4)
         c.restore();
     }
     

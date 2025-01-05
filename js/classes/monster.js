@@ -33,10 +33,7 @@ export class Monster {
     }
 
     draw(c) {
-        // Calculate the current frame to display
         const frameX = this.frames.max * this.width;
-    
-        // Draw the current frame from the sprite sheet
         c.drawImage(
             this.image,        // Source image
             this.width,            // Source x position (frame start)
@@ -56,19 +53,6 @@ export class Monster {
                 this.width === 64 ? this.width = 0 : this.width = 64;
             } 
         }
-        /*
-        // Update the frame for animation
-        if (this.frames.max > 1) {
-            this.frames.elapsed++;
-            if (this.frames.elapsed % 10 === 0) { // Adjust speed by changing 10
-                if (this.frames.val < this.frames.max - 1) {
-                    this.frames.val++;
-                } else {
-                    this.frames.val = 0; // Loop back to the first frame
-                }
-            }
-        }
-            */
     }
     
 

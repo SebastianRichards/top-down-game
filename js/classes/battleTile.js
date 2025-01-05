@@ -3,6 +3,7 @@ import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { Boundary } from './boundary.js';
 import { getBattleTileId, setInBattleStatus, setBattleTileId } from '../utilities/general.js';
 import { getImage } from '../utilities/assetManager.js';
+import { monsterFactory } from '../factories/monsterFactory.js';
 
 export class BattleTile extends Boundary{
     constructor({ position, id }) {
@@ -39,11 +40,14 @@ export class BattleTile extends Boundary{
     }
 
     battleAction(battleScene) {
-        battleScene.mons1.level = 5
-        battleScene.mons1.health = 20;
-        battleScene.mons1.currentHealth = 20;
-        battleScene.mons1.strength = 3;
-        battleScene.mons1.defence = 2;
+        const levelDist = [3, 3, 3, 4, 5];
+        const monsDist = ['monsflame', 'monsplash']
+        const randomLvlIndex = Math.floor(Math.random() * levelDist.length);
+        const lvl = levelDist[randomLvlIndex];
+        const randomMonsIndex = Math.floor(Math.random() * monsDist.length);
+        const mons = monsDist[randomMonsIndex]
+        const randomMons = monsterFactory(mons, lvl)
+        battleScene.mons1 = randomMons;
         setInBattleStatus(true);
         battleScene.battleType = 'random';
     }

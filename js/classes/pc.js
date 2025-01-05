@@ -16,16 +16,18 @@ export class Pc {
         this.hasChangedCode = false
         this.hasChangedSprite = false;
         this.char = 'main';
+        this.message = '';
     }
     keydownHandler() {
         const keydownHandler = (e) => {
-            console.log(e.key, 'is key press')
-            if (e.key === 'ArrowRight') {
-                console.log('arrow right clicked')
-                this.selectedOption = 'changeCode';
-            } else if (e.key === 'ArrowLeft') {
-                this.selectedOption = 'viewCode';
-            }
+            if(this.message !== 'notAdminPc') {
+                if (e.key === 'ArrowRight') {
+                    console.log('arrow right clicked')
+                    this.selectedOption = 'changeCode';
+                } else if (e.key === 'ArrowLeft') {
+                    this.selectedOption = 'viewCode';
+                }
+            } 
             if (e.key === ' ') {
                 switch(this.selectedOption) {
                     case "viewCode": 
@@ -43,9 +45,16 @@ export class Pc {
                                 this.char = 'main'
                             }
                         } else {
+                            this.message = 'notAdminPc';
+                            this.selectedOption = "notAdminPc"
                             console.log('not admin pc')
                         }
                         break;
+                    case "notAdminPc":
+                        this.selectedOption = 'viewCode';
+                        this.message = ''
+
+                    
                 }
             } 
         };
@@ -68,15 +77,20 @@ export class Pc {
         c.lineWidth = 2;
         c.fillStyle = 'black';
         c.font = '20px Arial';
-        if (this.selectedOption === 'viewCode') {
-            c.fillStyle = 'blue'
-            c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
+        if(this.message === "notAdminPc") {
             c.fillStyle = 'black'
-            c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
-        } else if (this.selectedOption === 'changeCode') {
-            c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
-            c.fillStyle = 'blue'
-            c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
+            c.fillText('Not Admin Pc', textBoxWidth / 2 + 70 , 550)
+        } else {
+            if (this.selectedOption === 'viewCode') {
+                c.fillStyle = 'blue'
+                c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
+                c.fillStyle = 'black'
+                c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
+            } else if (this.selectedOption === 'changeCode') {
+                c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
+                c.fillStyle = 'blue'
+                c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
+            }
         }
         c.restore();
         
@@ -113,6 +127,8 @@ export class Pc {
         if(!rectangularCollision({rectangle1: sprites.playerSprite, rectangle2: this, isPc: true}, c)) {
             document.removeEventListener('keydown', this.boundSelectionHandler)
             this.nearPc = false;
+            this.message = ''
+            this.selectedOption = 'viewCode'
             return
         } 
         
