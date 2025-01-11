@@ -40,7 +40,7 @@ export class BattleTile extends Boundary{
     }
 
     battleAction(battleScene) {
-        const levelDist = [3, 3, 3, 4, 5];
+        const levelDist = [3, 4, 5];
         const monsDist = ['monsflame', 'monsplash']
         const randomLvlIndex = Math.floor(Math.random() * levelDist.length);
         const lvl = levelDist[randomLvlIndex];

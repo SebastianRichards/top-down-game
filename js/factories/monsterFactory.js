@@ -24,8 +24,8 @@ export const monsterFactory = (type, lvl) => {
         case "monsflame":
             return new Monster({
                 position: {
-                    x: 700,
-                    y: 50
+                    x: 712,
+                    y: 6
                 },
                 image: getImage('monsflame-front'),
                 scale: 3,
@@ -54,7 +54,7 @@ export const monsterFactory = (type, lvl) => {
             return new Monster({
                 position: {
                     x: 730,
-                    y: 50
+                    y: 10
                 },
                 image: getImage('monsplash-front'),
                 scale: 3,
@@ -107,7 +107,7 @@ export const monsterFactory = (type, lvl) => {
             case "monsplash-player":
                 return new Monster({
                     position: {
-                        x: 150,
+                        x: 58,
                         y: 300
                     },
                     image: getImage('monsplash-back'),

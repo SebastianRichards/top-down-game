@@ -4,6 +4,11 @@
     padding: 0;
 }
 
+@font-face {
+    font-family: 'PixelFont';
+    src: url('assets/font/customFont.TTF') format('truetype');
+}
+
 /* Body styling */
 body {
     background-color: black;

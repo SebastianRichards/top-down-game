@@ -1,4 +1,4 @@
-import { loadImage, loadAudio, getImage } from './utilities/assetManager.js';
+import { loadImage, loadAudio, getImage, loadFont } from './utilities/assetManager.js';
 import { Game } from './game.js';
 import { MusicControl } from './musicControl.js';
 import { TouchControls } from './touchControls.js';
@@ -29,7 +29,10 @@ const init = async () => {
         loadImage('monsflame-back', 'assets/images/monsterSprites/monsflame-back.png'),
         loadImage('monsplash-front', 'assets/images/monsterSprites/monsplash-front.png'),
         loadImage('monsplash-back', 'assets/images/monsterSprites/monsplash-back.png'),
-        loadImage('grassPatch', 'assets/images/grassPatch.png')
+        loadImage('grassPatch', 'assets/images/grassPatch.png'),
+        loadImage('battleBar', 'assets/images/healthbar.png'),
+        loadFont()
+
     ])
 
     const { boundaryData } = await import('../json/boundaries1.js');

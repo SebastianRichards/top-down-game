@@ -2,6 +2,7 @@ import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { GAME_CONFIG } from '../config.js';
 import { getImage } from '../utilities/assetManager.js';
 import { setNpcState } from '../utilities/general.js';
+import { monsterFactory } from '../factories/monsterFactory.js';
 
 export class Pc {
     constructor({position, identifier }) {
@@ -17,6 +18,7 @@ export class Pc {
         this.hasChangedSprite = false;
         this.char = 'main';
         this.message = '';
+        this.storedMonster = null;
     }
     keydownHandler() {
         const keydownHandler = (e) => {
@@ -96,7 +98,7 @@ export class Pc {
         
     }
       
-    checkPcAction(sprites, c) {
+    checkPcAction(sprites, c, battleScene) {
         if(!this.hasChangeSprite && this.char === 'npc') {
                 sprites.playerSprite.image = getImage('npc1Down');
                 sprites.playerSprite.sprites = {
@@ -108,6 +110,12 @@ export class Pc {
                 setNpcState('npcRemoved')
                 this.npcLocation = sprites.npcSprite1.position.y
                 sprites.npcSprite1.position.y -= 40;
+
+                battleScene.mons2 = monsterFactory('monsplash-player', 10)
+                
+                
+
+
         } else if(!this.hasChangeSprite && this.char === 'main') {
                 sprites.playerSprite.image = getImage('playerDown');
                 sprites.playerSprite.sprites = {
@@ -119,6 +127,7 @@ export class Pc {
                 setNpcState('default');
                 if (this.npcLocation) sprites.npcSprite1.position.y = this.npcLocation
                 console.log('main change')
+                battleScene.mons2 = monsterFactory('monsflame-player', 5) 
             }
             this.hasChangeSprite = true; 
         

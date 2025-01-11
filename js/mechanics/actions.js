@@ -30,7 +30,7 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
     }
 
     solidsObj.pcData.forEach(pc => {
-        pc.checkPcAction(spritesObj, c)
+        pc.checkPcAction(spritesObj, c, battleScene)
     })
 
 }
