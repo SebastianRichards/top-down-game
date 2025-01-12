@@ -13,7 +13,7 @@ export function loadImage(name, src) {
     });
 }
 
-export function loadFont(name = 'PixelFont', src = 'assets/font/customFont.ttf') {
+export function loadFont(name = 'PixelFont', src = '/assets/font/customFont.ttf') {
     return new Promise((resolve, reject) => {
         const font = new FontFace(name, `url(${src})`);
         font.load()

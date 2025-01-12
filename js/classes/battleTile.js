@@ -1,7 +1,7 @@
 import { GAME_CONFIG } from '../config.js';
 import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { Boundary } from './boundary.js';
-import { getBattleTileId, setInBattleStatus, setBattleTileId } from '../utilities/general.js';
+import { getBattleTileId, setInBattleStatus, setBattleTileId, getInBattleStatus } from '../utilities/general.js';
 import { getImage } from '../utilities/assetManager.js';
 import { monsterFactory } from '../factories/monsterFactory.js';
 
@@ -57,7 +57,7 @@ export class BattleTile extends Boundary{
             }
             const elapsed = timestamp - startTime;
             const currentFrame = Math.floor(elapsed / frameDuration); 
-            if (currentFrame >= totalFrames) {
+            if (currentFrame >= totalFrames || getInBattleStatus()) {
                 return;
             }
     
