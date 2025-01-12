@@ -37,6 +37,21 @@ const init = async () => {
 
     ])
 
+    function loadFont(name = 'PixelFont', src = 'assets/font/customFont.ttf') {
+        return new Promise((resolve, reject) => {
+            const font = new FontFace(name, `url(${src})`);
+            font.load()
+                .then((loadedFont) => {
+                    document.fonts.add(loadedFont);
+                    resolve(loadedFont);
+                })
+                .catch((err) => {
+                    console.error('Font loading failed:', err);
+                    reject(err);
+                });
+        });
+    }
+
     const { boundaryData } = await import('../json/boundaries1.js');
     const { doorData } = await import('../json/door.js');
     const { battleData } = await import('../json/battle.js');
