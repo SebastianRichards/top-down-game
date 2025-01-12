@@ -17,7 +17,7 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass, ...solidsObj.pcData]
+    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass, ...solidsObj.pcData, spritesObj.grassTiles]
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
 

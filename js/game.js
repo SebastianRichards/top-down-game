@@ -22,7 +22,8 @@ export const Game = () => {
         playerSprite: spriteFactory('playerSprite', canvas),
         backgroundSprite: spriteFactory('backgroundSprite', canvas),
         npcSprite1: spriteFactory('npcSprite1', canvas),
-        grass: spriteFactory('Grass', canvas)
+        grass: spriteFactory('Grass', canvas),
+        grassTiles: spriteFactory('GrassTiles', canvas)
     }
 
 
@@ -45,8 +46,10 @@ export const Game = () => {
             if(getNpcState() === "default") {
                 sprites.npcSprite1.draw(c);
             }
-            sprites.grass.draw(c); 
-            sprites.playerSprite.draw(c);
+            sprites.playerSprite.drawPlayer(c);
+            sprites.grassTiles.draw(c)
+            sprites.playerSprite.drawHead(c);
+            //sprites.grass.draw(c); 
             sprites.foregroundSprite.draw(c);
             // Mechanics
             moveSprites(sprites, solids, c);

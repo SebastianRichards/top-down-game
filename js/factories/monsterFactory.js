@@ -107,8 +107,8 @@ export const monsterFactory = (type, lvl) => {
             case "monsplash-player":
                 return new Monster({
                     position: {
-                        x: 58,
-                        y: 300
+                        x: 66,
+                        y: 270
                     },
                     image: getImage('monsplash-back'),
                     scale: 4,

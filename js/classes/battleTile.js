@@ -11,6 +11,10 @@ export class BattleTile extends Boundary{
         this.position = position;
         this.hasWalkedOn = false;
         this.id = id;
+        this.grassImage = getImage('grassAnimation');
+        this.grassImageWidth = 48;
+        this.grassImageHeight = 16;
+        this.grassFrames = { max: 3, elapsed: 0, val: 0}
     }
 
     checkBattleAction(player, c, grass, battleScene) {
@@ -25,9 +29,11 @@ export class BattleTile extends Boundary{
         if (!rectangularCollision({ rectangle1: testPlayer, rectangle2: this, isBattle: true }, c)) {
             return false;
           }
+
           const battleTileId = getBattleTileId();
           if (this.id !== battleTileId) {
             setBattleTileId(this.id);
+            this.playAnimation(c);
             grass.position.x = this.position.x;
             grass.position.y = this.position.y + 32;
             grass.setIsOnGrass();
@@ -39,6 +45,38 @@ export class BattleTile extends Boundary{
           return true
     }
 
+    playAnimation(c) {
+        let startTime = null;
+        const frameDuration = 200;
+        const totalFrames = this.grassFrames.max; 
+        const frameWidth = 16; 
+    
+        const animate = (timestamp) => {
+            if (!startTime) {
+                startTime = timestamp;
+            }
+            const elapsed = timestamp - startTime;
+            const currentFrame = Math.floor(elapsed / frameDuration); 
+            if (currentFrame >= totalFrames) {
+                return;
+            }
+    
+            const sourceX = currentFrame * frameWidth;
+            c.drawImage(
+                this.grassImage,       
+                sourceX, 0,       
+                frameWidth, this.grassImageHeight, 
+                this.position.x,       
+                this.position.y + 40,      
+                32, 24                 
+            );
+    
+            requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }
+    
+    
     battleAction(battleScene) {
         const levelDist = [3, 4, 5];
         const monsDist = ['monsflame', 'monsplash']

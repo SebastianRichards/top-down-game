@@ -5,6 +5,7 @@ import { NpcSprite } from "../classes/npcSprite.js";
 import { BattleScene } from "../classes/battleScene.js";
 import { Grass } from '../classes/grass.js';
 import { monsterFactory } from "./monsterFactory.js";
+import { Player } from "../classes/player.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -18,7 +19,7 @@ export const spriteFactory = (type, canvas) => {
                 scale: 2
             });
         case "playerSprite":
-            return new Sprite({
+            return new Player({
                 position: {
                     x: canvas.width / 2 - 192 / 2,
                     y: canvas.height / 2 - 68 / 2
@@ -82,12 +83,21 @@ export const spriteFactory = (type, canvas) => {
             case "Grass":
                 return new Grass({
                     position: {
-                        x: GAME_CONFIG.offsetX,
-                        y: GAME_CONFIG.offsetY
+                        x: 300,
+                        y: 200
                     },
-                    image: getImage('grassBlock'),
+                    image: getImage('grassAnimation'),
                     scale: 2
                 });
+            case "GrassTiles":
+                return new Sprite({
+                    position: {
+                        x: -56,
+                        y: 154
+                    },
+                    image: getImage('grassTiles'),
+                    scale: 2
+                })
         default:
             console.log('unknown type', type)
     }

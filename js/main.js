@@ -31,6 +31,8 @@ const init = async () => {
         loadImage('monsplash-back', 'assets/images/monsterSprites/monsplash-back.png'),
         loadImage('grassPatch', 'assets/images/grassPatch.png'),
         loadImage('battleBar', 'assets/images/healthbar.png'),
+        loadImage('grassTiles', 'assets/images/grassTiles.png'),
+        loadImage('grassAnimation', 'assets/images/grassAnimation.png'),
         loadFont()
 
     ])

@@ -90,6 +90,9 @@ export class Door extends Boundary{
                 sprites.npcSprite1.position.x = sprites.npcSprite1.position.x - offsetX;
                 sprites.npcSprite1.position.y = sprites.npcSprite1.position.y - offsetY;
 
+                sprites.grassTiles.position.x = sprites.grassTiles.position.x - offsetX;
+                sprites.grassTiles.position.y = sprites.grassTiles.position.y - offsetY;
+
                 solids.doorData.forEach((data) => {
                     data.position.x = data.position.x - offsetX;
                     data.position.y = data.position.y - offsetY

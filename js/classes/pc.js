@@ -111,7 +111,7 @@ export class Pc {
                 this.npcLocation = sprites.npcSprite1.position.y
                 sprites.npcSprite1.position.y -= 40;
 
-                battleScene.mons2 = monsterFactory('monsplash-player', 10)
+                battleScene.mons2 = monsterFactory('monsflame-player', 10)
                 
                 
 
