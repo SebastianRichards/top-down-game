@@ -13,6 +13,21 @@ export function loadImage(name, src) {
     });
 }
 
+export function loadFont(name = 'PixelFont', src = './assets/font/customFont.ttf') {
+    return new Promise((resolve, reject) => {
+        const font = new FontFace(name, `url(${src})`);
+        font.load()
+            .then((loadedFont) => {
+                document.fonts.add(loadedFont);
+                resolve(loadedFont);
+            })
+            .catch((err) => {
+                console.error('Font loading failed:', err);
+                reject(err);
+            });
+    });
+}
+
 
 export function getImage(name) {
     return images[name];

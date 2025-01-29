@@ -76,7 +76,8 @@ export const spriteFactory = (type, canvas) => {
                 image: getImage('battle'),
                 scale: 2,
                 mons1: '',
-                mons2: playerMons
+                mons2: playerMons,
+                c: canvas
                 
 
             })

@@ -4,7 +4,7 @@ import { setGameState, setInBattleStatus } from "../utilities/general.js";
 import { getImage } from "../utilities/assetManager.js";
 
 export class BattleScene extends Sprite {
-    constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {} }) {
+    constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {}, c }) {
         super({position, image, frames, sprites, scale, flipped})
         this.currentOption = 'Fight';
         this.mons1 = mons1,
@@ -21,6 +21,10 @@ export class BattleScene extends Sprite {
         this.battleBarHeight = 28;
         this.battleBarWidth = 134;
         this.battleBarScale = 3;
+        this.disableInputs = false;
+        this.moveDuration = 1000;
+        this.currentMoveFrame = 0;
+        this.c = c.getContext('2d')
     }
 
     drawSceneAndSetupListener(c) {
@@ -179,20 +183,26 @@ export class BattleScene extends Sprite {
         const opponentDefence = this.mons1.defence
         switch (move) {
             case "Move1":
+                this.moveAnimation({type: this.mons2.moves.move1.name, moveExecutor: 'user'});
                 const moveStrength = this.mons2.moves.move1.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
                 this.inBattleTurn = true;
                 if(this.mons1.currentHealth - damage <= 0) {
+                    this.mons1.currentHealth = 0
                     this.textBoxMessage = 'You won!'
+                    this.disableInputs = true;
                     await this.wait(1);
+                    this.disableInputs = false;
                     this.textBoxMessage = `${this.mons2.name} levelled up`
                     this.mons2.level += 1
                     this.mons2.strength += 1
                     this.mons2.defence += 1
-                    this.mons2.health += 1
                     this.mons2.currentHealthealth += 1
+                    this.disableInputs = true;
                     await this.wait(1);
+                    this.disableInputs = false;
                     setInBattleStatus(false);
+                    this.mons2.health += 1
                     if(this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
@@ -202,7 +212,9 @@ export class BattleScene extends Sprite {
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
                     this.textBoxMessage = `${this.mons2.name} used ${this.mons2.moves.move1.name}`
+                    this.disableInputs = true;
                     await this.wait(1)
+                    this.disableInputs = false;
                     this.textBoxMessage = false;
                     this.opponentMove();
                 }
@@ -210,20 +222,26 @@ export class BattleScene extends Sprite {
                 break;
 
             case "Move2": {
+                this.moveAnimation({type: this.mons2.moves.move2.name, moveExecutor: 'user'});
                 const moveStrength = this.mons2.moves.move2.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
                 this.inBattleTurn = true;
                 if(this.mons1.currentHealth - damage <= 0) {
+                    this.mons1.currentHealth = 0;
                     this.textBoxMessage = 'You won!'
+                    this.disableInputs = true;
                     await this.wait(1);
+                    this.disableInputs = false;
                     this.textBoxMessage = `${this.mons2.name} levelled up`
                     this.mons2.level += 1
                     this.mons2.strength += 1
                     this.mons2.defence += 1
-                    this.mons2.health += 1
                     this.mons2.currentHealthealth += 1
+                    this.disableInputs = true;
                     await this.wait(1);
+                    this.disableInputs = false;
                     setInBattleStatus(false);
+                    this.mons2.health += 1
                     if(this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
@@ -233,7 +251,9 @@ export class BattleScene extends Sprite {
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
                     this.textBoxMessage = `${this.mons2.name} used ${this.mons2.moves.move2.name}`
+                    this.disableInputs = true;
                     await this.wait(1)
+                    this.disableInputs = false;
                     this.textBoxMessage = false;
                     this.opponentMove();
                 }
@@ -250,8 +270,11 @@ export class BattleScene extends Sprite {
             const moveStrength = this.mons1.moves.move1.strength + this.mons1.strength;
             const damage = moveStrength / ownDefence
             if(this.mons2.currentHealth - damage <= 0) {
+                this.mons2.currentHealth = 0
                 this.textBoxMessage = 'You lost!';
+                this.disableInputs = true;
                 await this.wait(1);
+                this.disableInputs = false;
                 setInBattleStatus(false);
                 if(this.battleType === 'npc') {
                     setGameState('fightWon');
@@ -269,8 +292,11 @@ export class BattleScene extends Sprite {
             const moveStrength = this.mons1.moves.move2.strength + this.mons1.strength;
             const damage = moveStrength / ownDefence
             if(this.mons2.currentHealth - damage <= 0) {
+                this.mons2.currentHealth = 0;
                 this.textBoxMessage = 'You lost!';
+                this.disableInputs = true;
                 await this.wait(1);
+                this.disableInputs = false;
                 setInBattleStatus(false);
                 if(this.battleType === "npc") {
                     setGameState('fightWon')
@@ -279,8 +305,10 @@ export class BattleScene extends Sprite {
             } else {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage
                 this.textBoxMessage = `${this.mons1.name} used ${this.mons1.moves.move2.name}`
-                    await this.wait(1)
-                    this.textBoxMessage = false;
+                this.disableInputs = true;
+                await this.wait(1)
+                this.disableInputs = false;
+                this.textBoxMessage = false;
             }
 
         }
@@ -299,6 +327,7 @@ export class BattleScene extends Sprite {
         this.currentOption = 'Fight';
         document.removeEventListener('keydown', this.battleKeyDownHandler)
         this.hasInit = false;
+        this.disableInputs = false;
     }
 
     setupEventListener() {
@@ -308,9 +337,70 @@ export class BattleScene extends Sprite {
         this.hasInit = true;
     }
 
+    
+    moveAnimation({ 
+        startTime, 
+        type, 
+        moveExecutor, 
+        lastFrameTime = 0, 
+        frameIndex = 0,
+        x = 200,  // Starting position (left side)
+        y = 330  // Starting position (bottom)
+    }) {
+        console.log(type, moveExecutor, 'is type and move executor');
+    
+        switch (type) {
+            case "Fire Shock":
+                if (moveExecutor === 'user') {
+                    if (!startTime) startTime = performance.now();
+                    const elapsed = performance.now() - startTime;
+                    
+                    if (elapsed < this.moveDuration) {
+                        const currentTime = performance.now();
+                        
+                        // Switch sprite frame every 200ms
+                        if (currentTime - lastFrameTime >= 200) {
+                            console.log('frame');
+                            lastFrameTime = currentTime;
+                            frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
+                        }
+                        const sx = frameIndex * 16; 
+                        this.c.drawImage(getImage('fireball'), 
+                            sx, 0, 16, 16,  
+                            x, y, 16 * 3, 16 * 3 
+                        );
+                        x += 10;  
+                        y -= 6;  
+    
+                        requestAnimationFrame(() => this.moveAnimation({ 
+                            startTime, 
+                            type, 
+                            moveExecutor,
+                            lastFrameTime,
+                            frameIndex,
+                            x,  
+                            y   
+                        }));
+                    } else {
+                        console.log('Animation ended');
+                    }
+                } else if (moveExecutor === 'opponent') {
+                    console.log('opponent executed move');
+                }
+                break;
+        }
+    }
+    
+    
+    
+    
+    
 
     battleKeyDownHandler = (e) => {
         console.log(e.key, 'e key')
+        if(this.disableInputs) {
+            return
+        }
         if(e.key === "ArrowRight") {
             if(this.battleTextStatus === 'main') {
                 this.changeCurrentOption('Run')
