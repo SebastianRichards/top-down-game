@@ -11,18 +11,24 @@ const directionMap = {
     s: { axis: 'y', delta: -GAME_CONFIG.movementSpeed },
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
-
 export const moveSprites = (spritesObj, solidsObj, c) => {
     let moving = true;
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
     const direction = directionMap[lastKey];
-    const moveableSprites = [spritesObj.backgroundSprite, ...solidsObj.boundaryData, spritesObj.foregroundSprite, ...solidsObj.doorData, spritesObj.npcSprite1, ...solidsObj.battleData, spritesObj.grass, ...solidsObj.pcData, spritesObj.grassTiles]
+    const moveableSprites = [
+        spritesObj.backgroundSprite, ...solidsObj.boundaryData, 
+        spritesObj.foregroundSprite, ...solidsObj.doorData, 
+        spritesObj.npcSprite1, ...solidsObj.battleData, 
+        spritesObj.grass, ...solidsObj.pcData, 
+        spritesObj.grassTiles,
+        spritesObj.flowerSprites,
+        spritesObj.computerSprite,
+        spritesObj.npcSprite2
+    ];
+
     if (direction && keys[lastKey].pressed) {
         spritesObj.playerSprite.moving = true;
-
-        // Collision detection
-        
         for (let i = 0; i < solidsObj.boundaryData.length; i++) {
             const boundary = solidsObj.boundaryData[i];
             const futurePosition = {
@@ -32,20 +38,19 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
             if (
                 rectangularCollision({
                     rectangle1: spritesObj.playerSprite,
-                    rectangle2: {
-                        ...boundary,
-                        position: futurePosition
-                    },
+                    rectangle2: { ...boundary, position: futurePosition }
                 }, c)
             ) {
-                moving = false;
+                moving = false; 
                 break;
             }
         }
+
         if (
             rectangularCollision({
                 rectangle1: spritesObj.playerSprite,
-                rectangle2: {...spritesObj.npcSprite1,
+                rectangle2: {
+                    ...spritesObj.npcSprite1,
                     width: spritesObj.npcSprite1.width * GAME_CONFIG.scale, 
                     height: spritesObj.npcSprite1.height * GAME_CONFIG.scale,
                     position: {
@@ -54,38 +59,32 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
                     }
                 }
             }, c)
-            
         ) {
-           
             moving = false;
-            
         }
 
-        
+        if (direction.axis === 'y' && direction.delta > 0) {
+            spritesObj.playerSprite.flipped = false;
+            spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.up;
+        } else if (direction.axis === 'y' && direction.delta < 0) {
+            spritesObj.playerSprite.flipped = false;
+            spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.down;
+        } else if (direction.axis === 'x' && direction.delta < 0) {
+            spritesObj.playerSprite.flipped = false;
+            spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.right;
+        } else if (direction.axis === 'x' && direction.delta > 0) {
+            spritesObj.playerSprite.flipped = true;
+            spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.left;
+        }
+
         if (moving) {
             moveableSprites.forEach((sprite) => {
                 sprite.position[direction.axis] += direction.delta;
                 distanceCount += direction.delta;
-                if(Math.abs(distanceCount) > 32) {
-                    distanceCount = 0
+                if (Math.abs(distanceCount) > 32) {
+                    distanceCount = 0;
                 }
             });
-            // Update player sprite based on direction
-            if (direction.axis === 'y' && direction.delta > 0) {
-                spritesObj.playerSprite.flipped = false
-                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.up;
-            } else if (direction.axis === 'y' && direction.delta < 0) {
-                spritesObj.playerSprite.flipped = false
-                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.down;
-            } else if (direction.axis === 'x' && direction.delta < 0) {
-                console.log('moving left or right');
-                spritesObj.playerSprite.flipped = false
-                console.log(spritesObj.playerSprite)
-                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.right;
-            } else if (direction.axis === 'x' && direction.delta > 0) {
-                spritesObj.playerSprite.flipped = true
-                spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.left;
-            }
         }
     }
-}
+};

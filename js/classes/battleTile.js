@@ -4,6 +4,8 @@ import { Boundary } from './boundary.js';
 import { getBattleTileId, setInBattleStatus, setBattleTileId, getInBattleStatus } from '../utilities/general.js';
 import { getImage } from '../utilities/assetManager.js';
 import { monsterFactory } from '../factories/monsterFactory.js';
+import { setDisableInput } from '../inputHandler.js';
+import { blurTransition } from '../utilities/general.js';
 
 export class BattleTile extends Boundary{
     constructor({ position, id }) {
@@ -38,7 +40,7 @@ export class BattleTile extends Boundary{
             grass.position.y = this.position.y + 32;
             grass.setIsOnGrass();
             if(Math.random() < 0.1) {
-                this.battleAction(battleScene);
+                this.battleAction(battleScene, c);
             }
           }
           
@@ -77,7 +79,7 @@ export class BattleTile extends Boundary{
     }
     
     
-    battleAction(battleScene) {
+    battleAction(battleScene, c) {
         const levelDist = [3, 4, 5];
         const monsDist = ['monsflame', 'monsplash']
         const randomLvlIndex = Math.floor(Math.random() * levelDist.length);
@@ -86,9 +88,13 @@ export class BattleTile extends Boundary{
         const mons = monsDist[randomMonsIndex]
         const randomMons = monsterFactory(mons, lvl)
         battleScene.mons1 = randomMons;
-        setInBattleStatus(true);
+        setDisableInput(true);
+
+        blurTransition(c, () => {
+            setInBattleStatus(true);
+            setDisableInput(false);
+        });
         battleScene.battleType = 'random';
     }
-
    
 }

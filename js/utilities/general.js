@@ -89,3 +89,20 @@ export const getNpcState = () => {
 export const setNpcState = (state) => {
     npcState = state;
 }  
+
+export const blurTransition = (c, callback) => {
+    let blurAmount = 0;
+    const maxBlur = 10; 
+    const interval = 50; 
+
+    const blurEffect = setInterval(() => {
+        blurAmount += 1;
+        c.filter = `blur(${blurAmount}px)`;
+
+        if (blurAmount >= maxBlur) {
+            clearInterval(blurEffect);
+            c.filter = 'none'; 
+            callback();
+        }
+    }, interval);
+};

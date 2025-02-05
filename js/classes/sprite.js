@@ -21,7 +21,7 @@ export class Sprite {
         }
 
     }
-
+    
     draw(c) {
         c.drawImage(
             this.image,
@@ -47,4 +47,5 @@ export class Sprite {
             }
         }
     }
+        
 }

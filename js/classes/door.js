@@ -82,34 +82,43 @@ export class Door extends Boundary{
 
     moveCharacter(offsetX, offsetY, sprites, solids) {
         sprites.backgroundSprite.position.x = sprites.backgroundSprite.position.x - offsetX;
-                sprites.backgroundSprite.position.y = sprites.backgroundSprite.position.y - offsetY;
+        sprites.backgroundSprite.position.y = sprites.backgroundSprite.position.y - offsetY;
 
-                sprites.foregroundSprite.position.x = sprites.foregroundSprite.position.x - offsetX;
-                sprites.foregroundSprite.position.y = sprites.foregroundSprite.position.y - offsetY;
+        sprites.foregroundSprite.position.x = sprites.foregroundSprite.position.x - offsetX;
+        sprites.foregroundSprite.position.y = sprites.foregroundSprite.position.y - offsetY;
 
-                sprites.npcSprite1.position.x = sprites.npcSprite1.position.x - offsetX;
-                sprites.npcSprite1.position.y = sprites.npcSprite1.position.y - offsetY;
+        sprites.npcSprite1.position.x = sprites.npcSprite1.position.x - offsetX;
+        sprites.npcSprite1.position.y = sprites.npcSprite1.position.y - offsetY;
 
-                sprites.grassTiles.position.x = sprites.grassTiles.position.x - offsetX;
-                sprites.grassTiles.position.y = sprites.grassTiles.position.y - offsetY;
+        sprites.grassTiles.position.x = sprites.grassTiles.position.x - offsetX;
+        sprites.grassTiles.position.y = sprites.grassTiles.position.y - offsetY;
 
-                solids.doorData.forEach((data) => {
-                    data.position.x = data.position.x - offsetX;
-                    data.position.y = data.position.y - offsetY
-                    console.log(data.position.x, data.position.y)
-                })
-                solids.boundaryData.forEach((data) => {
-                    data.position.x = data.position.x - offsetX;
-                    data.position.y = data.position.y - offsetY
-                })
-                solids.battleData.forEach((data) => {
-                    data.position.x = data.position.x - offsetX;
-                    data.position.y = data.position.y - offsetY
-                })
-                solids.pcData.forEach((data) => {
-                    data.position.x = data.position.x - offsetX;
-                    data.position.y = data.position.y - offsetY
-                })
+        sprites.computerSprite.position.x = sprites.computerSprite.position.x - offsetX;
+        sprites.computerSprite.position.y = sprites.computerSprite.position.y - offsetY;
+
+        sprites.flowerSprites.position.x = sprites.flowerSprites.position.x - offsetX;
+        sprites.flowerSprites.position.y = sprites.flowerSprites.position.y - offsetY;
+
+        sprites.npcSprite2.position.x = sprites.npcSprite2.position.x - offsetX;
+        sprites.npcSprite2.position.y = sprites.npcSprite2.position.y - offsetY;
+
+        solids.doorData.forEach((data) => {
+            data.position.x = data.position.x - offsetX;
+            data.position.y = data.position.y - offsetY
+            console.log(data.position.x, data.position.y)
+        })
+        solids.boundaryData.forEach((data) => {
+            data.position.x = data.position.x - offsetX;
+            data.position.y = data.position.y - offsetY
+        })
+        solids.battleData.forEach((data) => {
+            data.position.x = data.position.x - offsetX;
+            data.position.y = data.position.y - offsetY
+        })
+        solids.pcData.forEach((data) => {
+            data.position.x = data.position.x - offsetX;
+            data.position.y = data.position.y - offsetY
+        })
 
     }
 

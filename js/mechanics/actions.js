@@ -4,6 +4,7 @@ let moved = false
 
 export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
     let canTalkNpc = "";
+    let canTalkNpc2 = "";
     solidsObj.doorData.forEach(door => {
         door.checkDoorAction(spritesObj, solidsObj, c)
     })
@@ -23,11 +24,19 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
         moved = true
     } 
     canTalkNpc = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite1);
+    canTalkNpc2 = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite2);
     if (canTalkNpc) {
         spritesObj.npcSprite1.npcAction(c, gameProgress, battleScene);
     } else {
         spritesObj.npcSprite1.removeEventListeners();
     }
+
+    if (canTalkNpc2) {
+        spritesObj.npcSprite2.npcAction(c, gameProgress, battleScene);
+    } else {
+        spritesObj.npcSprite2.removeEventListeners();
+    }
+
 
     solidsObj.pcData.forEach(pc => {
         pc.checkPcAction(spritesObj, c, battleScene)

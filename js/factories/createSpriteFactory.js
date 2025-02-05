@@ -1,5 +1,6 @@
 import { GAME_CONFIG } from "../config.js";
 import { Sprite } from "../classes/sprite.js";
+import { FlowerSprite } from "../classes/flowerSprite.js";
 import { getImage } from "../utilities/assetManager.js";
 import { NpcSprite } from "../classes/npcSprite.js";
 import { BattleScene } from "../classes/battleScene.js";
@@ -57,6 +58,17 @@ export const spriteFactory = (type, canvas) => {
                     slidesIndex: 0
                 }
             })
+        case "npcSprite2": {
+            return new NpcSprite({
+                position: {
+                    x: -122,
+                    y: -1303,
+                },
+                image: getImage('npc2'),
+                scale: 2,
+                profileImg: getImage('npc2Profile')
+            })
+        }
         case "foregroundSprite":
             return new Sprite({
                 position: {
@@ -97,6 +109,31 @@ export const spriteFactory = (type, canvas) => {
                         y: 154
                     },
                     image: getImage('grassTiles'),
+                    scale: 2
+                });
+            case "Computer":
+                return new Sprite({
+                    position: {
+                        x: -1722,
+                        y: 794,
+                    },
+                    image: getImage('computer'),
+                    scale: 2
+                })
+            case "Flowers": 
+                return new FlowerSprite({
+                    position: {
+                        x: GAME_CONFIG.offsetX - 138,
+                        y: GAME_CONFIG.offsetY + 8,
+                    },
+                    image: getImage('flowers2'),
+                    frames: { max: 4 },
+                    sprites: {
+                        image1: getImage('flowers1'),
+                        image2: getImage('flowers2'),
+                        image3: getImage('flowers3'),
+                        image4: getImage('flowers4'),
+                    },
                     scale: 2
                 })
         default:

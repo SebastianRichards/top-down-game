@@ -4,8 +4,8 @@ import { setGameState, setInBattleStatus } from "../utilities/general.js";
 import { getImage } from "../utilities/assetManager.js";
 
 export class BattleScene extends Sprite {
-    constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {}, c }) {
-        super({position, image, frames, sprites, scale, flipped})
+    constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {}, c }) {
+        super({ position, image, frames, sprites, scale, flipped })
         this.currentOption = 'Fight';
         this.mons1 = mons1,
         this.mons2 = mons2
@@ -28,6 +28,7 @@ export class BattleScene extends Sprite {
     }
 
     drawSceneAndSetupListener(c) {
+        this.battleStartAnimation({mons1: this.mons1, mons2: this.mons2})
         this.draw(c)
         this.drawGrass(c);
         this.drawMons(c);
@@ -64,23 +65,23 @@ export class BattleScene extends Sprite {
             this.grassSize * this.grassScale,
             this.grassSize * this.grassScale
         )
-        this.grassFramesElapsed ++;
-        if(this.grassFramesElapsed > this.grassFrameTime) {
+        this.grassFramesElapsed++;
+        if (this.grassFramesElapsed > this.grassFrameTime) {
             this.grassFramesElapsed = 0;
             this.grassImgWidth === 128 ? this.grassImgWidth = 0 : this.grassImgWidth = 128
         }
-        
+
     }
 
     drawHealthAndLevel(c) {
         c.save();
         const healthBarWidth = 195;
         const healthBarHeight = 12;
-        const healthBarX = 788; 
-        const healthBarY = 282; 
+        const healthBarX = 788;
+        const healthBarY = 282;
         const currentHealth = this.mons1.currentHealth;
         const maxHealth = this.mons1.health;
-        c.fillStyle = 'grey'; 
+        c.fillStyle = 'grey';
         c.fillRect(
             healthBarX,
             healthBarY,
@@ -95,27 +96,27 @@ export class BattleScene extends Sprite {
             healthBarHeight
         );
         c.drawImage(getImage('battleBar'), 620, 234, this.battleBarWidth * this.battleBarScale, this.battleBarHeight * this.battleBarScale);
-        c.fillStyle = 'rgb(14, 37, 6)'; 
-        c.font = '20px PixelFont'; 
+        c.fillStyle = 'rgb(14, 37, 6)';
+        c.font = '20px PixelFont';
         c.fillText(this.mons1.name, 660, 270)
         c.fillStyle = 'black';
         const mons1LvlText = `${this.mons1.level < 10 ? '0' + this.mons1.level : this.mons1.level}`
         const mons1LevelMetrics = c.measureText(mons1LvlText);
         c.fillRect(914, 252, 41 + mons1LevelMetrics.width, 22)
-        c.fillStyle = 'gold'; 
-        c.font = '16px PixelFont'; 
+        c.fillStyle = 'gold';
+        c.font = '16px PixelFont';
         c.fillText('Lvl', 918, 270);
         c.fillText(mons1LvlText, 960, 270)
 
         const healthBarWidth2 = 195;
         const healthBarHeight2 = 12;
-        const healthBarX2 = 168; 
-        const healthBarY2 = 222; 
-        c.fillStyle = 'grey'; 
+        const healthBarX2 = 168;
+        const healthBarY2 = 222;
+        c.fillStyle = 'grey';
         c.fillRect(healthBarX2, healthBarY2, healthBarWidth2, healthBarHeight2);
         const currentHealth2 = this.mons2.currentHealth;
         const maxHealth2 = this.mons2.health;
-        currentHealth2 < maxHealth2 * 0.2 ? c.fillStyle = 'red' : c.fillStyle = 'YellowGreen'; 
+        currentHealth2 < maxHealth2 * 0.2 ? c.fillStyle = 'red' : c.fillStyle = 'YellowGreen';
         c.fillRect(
             healthBarX2,
             healthBarY2,
@@ -123,20 +124,20 @@ export class BattleScene extends Sprite {
             healthBarHeight2
         );
         c.drawImage(getImage('battleBar'), 0, 172, this.battleBarWidth * this.battleBarScale, this.battleBarHeight * this.battleBarScale);
-        c.fillStyle = 'rgb(14, 37, 6)'; 
-        c.font = '20px PixelFont'; 
-        c.fillStyle = 'black'; 
+        c.fillStyle = 'rgb(14, 37, 6)';
+        c.font = '20px PixelFont';
+        c.fillStyle = 'black';
         c.fillText(this.mons2.name, 38, 208)
         const mons2LvlText = `${this.mons2.level < 10 ? '0' + this.mons2.level : this.mons2.level}`
         const mons2LevelMetrics = c.measureText(mons2LvlText);
         c.fillRect(290, 188, 41 + mons2LevelMetrics.width, 22)
-        c.fillStyle = 'gold'; 
-        c.font = '16px PixelFont'; 
+        c.fillStyle = 'gold';
+        c.font = '16px PixelFont';
         c.fillText('Lvl', 294, 188 + 18);
         c.fillText(mons2LvlText, 294 + 42, 188 + 18)
         c.restore();
     }
-    
+
 
     async setupText(c) {
         c.save();
@@ -144,20 +145,20 @@ export class BattleScene extends Sprite {
         const textBoxY = 500;
         const textBoxWidth = GAME_CONFIG.canvasWidth;
         const textBoxHeight = 80;
-        c.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+        c.fillStyle = 'rgba(255, 255, 255, 0.9)';
         c.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
         c.strokeStyle = 'black';
-        c.lineWidth = 4; 
+        c.lineWidth = 4;
         c.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
         c.strokeStyle = 'black';
         c.lineWidth = 2;
         c.font = '20px Arial';
-        if(this.textBoxMessage !== false) {
+        if (this.textBoxMessage !== false) {
             c.fillStyle = 'black';
-            c.fillText(this.textBoxMessage, textBoxWidth / 2 , 550);
+            c.fillText(this.textBoxMessage, textBoxWidth / 2, 550);
             return
         }
-        if(this.battleTextStatus === "moves") {
+        if (this.battleTextStatus === "moves") {
             c.fillStyle = (this.currentOption === 'Move1') ? 'blue' : 'black';
             c.fillText(this.mons2.moves.move1.name, textBoxWidth / 2 - 150, 550);
             c.fillStyle = (this.currentOption === 'Move2') ? 'blue' : 'black';
@@ -183,11 +184,11 @@ export class BattleScene extends Sprite {
         const opponentDefence = this.mons1.defence
         switch (move) {
             case "Move1":
-                this.moveAnimation({type: this.mons2.moves.move1.name, moveExecutor: 'user'});
+                this.moveAnimation({ type: this.mons2.moves.move1.name, moveExecutor: 'user' });
                 const moveStrength = this.mons2.moves.move1.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
                 this.inBattleTurn = true;
-                if(this.mons1.currentHealth - damage <= 0) {
+                if (this.mons1.currentHealth - damage <= 0) {
                     this.mons1.currentHealth = 0
                     this.textBoxMessage = 'You won!'
                     this.disableInputs = true;
@@ -203,7 +204,7 @@ export class BattleScene extends Sprite {
                     this.disableInputs = false;
                     setInBattleStatus(false);
                     this.mons2.health += 1
-                    if(this.battleType === "npc") {
+                    if (this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
                         console.log('gamestate failed', this.battleType)
@@ -222,11 +223,11 @@ export class BattleScene extends Sprite {
                 break;
 
             case "Move2": {
-                this.moveAnimation({type: this.mons2.moves.move2.name, moveExecutor: 'user'});
+                this.moveAnimation({ type: this.mons2.moves.move2.name, moveExecutor: 'user' });
                 const moveStrength = this.mons2.moves.move2.strength + this.mons2.strength;
                 const damage = moveStrength / opponentDefence
                 this.inBattleTurn = true;
-                if(this.mons1.currentHealth - damage <= 0) {
+                if (this.mons1.currentHealth - damage <= 0) {
                     this.mons1.currentHealth = 0;
                     this.textBoxMessage = 'You won!'
                     this.disableInputs = true;
@@ -242,7 +243,7 @@ export class BattleScene extends Sprite {
                     this.disableInputs = false;
                     setInBattleStatus(false);
                     this.mons2.health += 1
-                    if(this.battleType === "npc") {
+                    if (this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
                         console.log('gamestate failed', this.battleType)
@@ -260,23 +261,23 @@ export class BattleScene extends Sprite {
                 this.inBattleTurn = false;
                 break;
             }
-        }   
+        }
     }
 
     async opponentMove() {
         const ownDefence = this.mons2.defence
         this.inBattleTurn = true;
-        if(Math.random() < 0.5) {
+        if (Math.random() < 0.5) {
             const moveStrength = this.mons1.moves.move1.strength + this.mons1.strength;
             const damage = moveStrength / ownDefence
-            if(this.mons2.currentHealth - damage <= 0) {
+            if (this.mons2.currentHealth - damage <= 0) {
                 this.mons2.currentHealth = 0
                 this.textBoxMessage = 'You lost!';
                 this.disableInputs = true;
                 await this.wait(1);
                 this.disableInputs = false;
                 setInBattleStatus(false);
-                if(this.battleType === 'npc') {
+                if (this.battleType === 'npc') {
                     setGameState('fightWon');
                 } else {
                     console.log('gamestate failed', this.battleType)
@@ -285,20 +286,21 @@ export class BattleScene extends Sprite {
             } else {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage;
                 this.textBoxMessage = `${this.mons1.name} used ${this.mons1.moves.move1.name}`
-                    await this.wait(1)
-                    this.textBoxMessage = false;
+                this.moveAnimation({ type: this.mons1.moves.move1.name, moveExecutor: 'opponent' });
+                await this.wait(1)
+                this.textBoxMessage = false;
             }
         } else {
             const moveStrength = this.mons1.moves.move2.strength + this.mons1.strength;
             const damage = moveStrength / ownDefence
-            if(this.mons2.currentHealth - damage <= 0) {
+            if (this.mons2.currentHealth - damage <= 0) {
                 this.mons2.currentHealth = 0;
                 this.textBoxMessage = 'You lost!';
                 this.disableInputs = true;
                 await this.wait(1);
                 this.disableInputs = false;
                 setInBattleStatus(false);
-                if(this.battleType === "npc") {
+                if (this.battleType === "npc") {
                     setGameState('fightWon')
                 }
                 this.resetScene();
@@ -306,6 +308,7 @@ export class BattleScene extends Sprite {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage
                 this.textBoxMessage = `${this.mons1.name} used ${this.mons1.moves.move2.name}`
                 this.disableInputs = true;
+                this.moveAnimation({ type: this.mons1.moves.move2.name, moveExecutor: 'opponent' });
                 await this.wait(1)
                 this.disableInputs = false;
                 this.textBoxMessage = false;
@@ -328,101 +331,251 @@ export class BattleScene extends Sprite {
         document.removeEventListener('keydown', this.battleKeyDownHandler)
         this.hasInit = false;
         this.disableInputs = false;
+        this.mons2.initialX = null;
+        this.mons1.initialX = null;
     }
 
     setupEventListener() {
-        if(!this.hasInit) {
+        if (!this.hasInit) {
             document.addEventListener('keydown', this.battleKeyDownHandler);
         }
         this.hasInit = true;
     }
 
-    
-    moveAnimation({ 
-        startTime, 
-        type, 
-        moveExecutor, 
-        lastFrameTime = 0, 
-        frameIndex = 0,
+    battleStartAnimation({mons1,  mons2}) {
+        this.disableInputs = true;
+        if(!this.mons2.initialX) {
+            this.mons2.initialX = this.mons2.position.x
+            this.mons1.initialX = this.mons1.position.x
+            this.mons2.position.x = this.mons2.position.x - 300;
+            this.mons1.position.x = this.mons1.position.x + 300;
+        } 
+        if(this.mons2.position.x < this.mons2.initialX) {
+            mons2.position.x += 5;
+            mons1.position.x -= 5;
+        } else {
+            this.disableInputs = false;
+        }
+        
+    }
+
+
+    moveAnimation({
+        startTime,
+        type,
+        moveExecutor,
+        lastFrameTime = 0,
+        frameIndex = 0, 
         x = 200,  // Starting position (left side)
-        y = 330  // Starting position (bottom)
+        y = 330,  // Starting position (bottom)
+        xOpponent = 690,
+        yOpponent = 70,
+        xOpponentWater = 724,
+        yOpponentWater = 74
     }) {
         console.log(type, moveExecutor, 'is type and move executor');
-    
+
         switch (type) {
             case "Fire Shock":
-                if (moveExecutor === 'user') {
-                    if (!startTime) startTime = performance.now();
-                    const elapsed = performance.now() - startTime;
-                    
-                    if (elapsed < this.moveDuration) {
-                        const currentTime = performance.now();
-                        
-                        // Switch sprite frame every 200ms
-                        if (currentTime - lastFrameTime >= 200) {
-                            console.log('frame');
-                            lastFrameTime = currentTime;
-                            frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
-                        }
-                        const sx = frameIndex * 16; 
-                        this.c.drawImage(getImage('fireball'), 
-                            sx, 0, 16, 16,  
-                            x, y, 16 * 3, 16 * 3 
-                        );
-                        x += 10;  
-                        y -= 6;  
-    
-                        requestAnimationFrame(() => this.moveAnimation({ 
-                            startTime, 
-                            type, 
-                            moveExecutor,
-                            lastFrameTime,
-                            frameIndex,
-                            x,  
-                            y   
-                        }));
-                    } else {
-                        console.log('Animation ended');
+
+                if (!startTime) startTime = performance.now();
+                const elapsed = performance.now() - startTime;
+
+                if (elapsed < this.moveDuration) {
+                    const currentTime = performance.now();
+
+                    if (currentTime - lastFrameTime >= 200) {
+                        console.log('frame');
+                        lastFrameTime = currentTime;
+                        frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
                     }
-                } else if (moveExecutor === 'opponent') {
-                    console.log('opponent executed move');
+                    const sx = frameIndex * 16;
+                    if (moveExecutor === 'user') {
+                        if(x > 700) {
+                            return
+                        }
+                        this.c.drawImage(getImage('fireball'),
+                            sx, 0, 16, 16,
+                            x, y, 16 * 3, 16 * 3
+                        );
+                        x += 10;
+                        y -= 4.5;
+                    } else if (moveExecutor === 'opponent') {
+                        if(xOpponent < 270) {
+                            return
+                        }
+                        this.c.save();
+                        const fireballWidth = 16 * 3;
+                        const fireballHeight = 16 * 3;
+                        const centerX = xOpponent + fireballWidth / 2;
+                        const centerY = yOpponent + fireballHeight / 2;
+                        this.c.translate(centerX, centerY);
+                        this.c.rotate(Math.PI); 
+                        this.c.drawImage(getImage('fireball'),
+                            sx, 0, 16, 16,
+                            -fireballWidth / 2, -fireballHeight / 2,  
+                            fireballWidth, fireballHeight
+                        );
+                        this.c.restore();
+                        xOpponent -= 10;
+                        yOpponent += 6;
+
+                    } 
+                    requestAnimationFrame(() => this.moveAnimation({
+                        startTime,
+                        type,
+                        moveExecutor,
+                        lastFrameTime,
+                        frameIndex,
+                        x,
+                        y,
+                        xOpponent,
+                        yOpponent
+                    }));
+                } else {
+                    console.log('Animation ended');
                 }
                 break;
+            case "Water Shock": {
+                if (!startTime) startTime = performance.now();
+                const elapsed = performance.now() - startTime;
+
+                if (elapsed < this.moveDuration) {
+                    const currentTime = performance.now();
+
+                    if (currentTime - lastFrameTime >= 200) {
+                        console.log('frame');
+                        lastFrameTime = currentTime;
+                        frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
+                    }
+                    const sx = frameIndex * 16;
+                    if (moveExecutor === 'user') {
+                        if(x > 700) {
+                            return
+                        }
+                        this.c.drawImage(getImage('waterball'),
+                            sx, 0, 16, 16,
+                            x, y, 16 * 3, 16 * 3
+                        );
+                        x += 10;
+                        y -= 6;
+                    } else if (moveExecutor === 'opponent') {
+                        if(xOpponentWater < 270) {
+                            return
+                        }
+                        this.c.save();
+                        const waterballWidth = 16 * 3;
+                        const waterballHeight = 16 * 3;
+                        const centerX = xOpponentWater + waterballWidth / 2;
+                        const centerY = yOpponentWater + waterballHeight / 2;
+                        this.c.translate(centerX, centerY);
+                        this.c.rotate(Math.PI); 
+                        this.c.drawImage(getImage('waterball'),
+                            sx, 0, 16, 16,
+                            -waterballWidth / 2, -waterballHeight / 2,  
+                            waterballWidth, waterballHeight
+                        );
+                        this.c.restore();
+                        xOpponentWater -= 10;
+                        yOpponentWater += 6;
+
+                    } 
+                    requestAnimationFrame(() => this.moveAnimation({
+                        startTime,
+                        type,
+                        moveExecutor,
+                        lastFrameTime,
+                        frameIndex,
+                        x,
+                        y,
+                        xOpponentWater,
+                        yOpponentWater
+                    }));
+                } else {
+                    console.log('Animation ended');
+                }
+            }
+            break;
+            case "Tackle": {
+                if (!startTime) startTime = performance.now();
+            
+                // Store original position if not already stored
+                if (!this.monsOriginalPositions) {
+                    this.monsOriginalPositions = {
+                        mons1: { x: this.mons1.position.x, y: this.mons1.position.y },
+                        mons2: { x: this.mons2.position.x, y: this.mons2.position.y }
+                    };
+                }
+            
+                const elapsed = performance.now() - startTime;
+                const tackleSpeed = 10;
+                const tackleDistance = 40; 
+                const pauseDuration = 100;
+            
+                let monster = moveExecutor === 'user' ? this.mons2 : this.mons1; 
+                let originalX = this.monsOriginalPositions[moveExecutor === 'user' ? 'mons2' : 'mons1'].x;
+                let targetX = originalX + (moveExecutor === 'user' ? tackleDistance : -tackleDistance);
+                
+                if (elapsed < this.moveDuration / 8) {
+                    monster.position.x += (moveExecutor === 'user' ? tackleSpeed : -tackleSpeed);
+                   
+                } else if (elapsed < (this.moveDuration / 4 + pauseDuration)) {
+                } else if (elapsed < this.moveDuration / 4) {
+                    if ((moveExecutor === 'user' && monster.position.x > originalX) ||
+                        (moveExecutor === 'opponent' && monster.position.x < originalX)) {
+                        monster.position.x -= (moveExecutor === 'user' ? tackleSpeed : -tackleSpeed);
+                    }
+                } else {
+                    monster.position.x = originalX;
+                    this.monsOriginalPositions = null; 
+                    console.log('Tackle animation complete');
+                    return;
+                }
+                requestAnimationFrame(() => this.moveAnimation({
+                    startTime,
+                    type,
+                    moveExecutor,
+                    lastFrameTime,
+                    frameIndex
+                }));
+                break;
+            }
+            
         }
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 
     battleKeyDownHandler = (e) => {
         console.log(e.key, 'e key')
-        if(this.disableInputs) {
+        if (this.disableInputs) {
             return
         }
-        if(e.key === "ArrowRight") {
-            if(this.battleTextStatus === 'main') {
+        if (e.key === "ArrowRight") {
+            if (this.battleTextStatus === 'main') {
                 this.changeCurrentOption('Run')
             } else {
                 this.changeCurrentOption('Move2')
             }
-            
+
         }
-        if(e.key === "ArrowLeft") {
-            if(this.battleTextStatus === 'main') {
+        if (e.key === "ArrowLeft") {
+            if (this.battleTextStatus === 'main') {
                 this.changeCurrentOption('Fight');
             } else {
                 this.changeCurrentOption('Move1')
             }
         }
-        if(e.key === " ") {
+        if (e.key === " ") {
             const currentOption = this.currentOption;
-            if(this.inBattleTurn === true) {
+            if (this.inBattleTurn === true) {
                 return
             }
             switch (currentOption) {
-                case "Fight": 
+                case "Fight":
                     this.battleTextStatus = 'moves';
                     this.changeCurrentOption('Move1')
                     break;
@@ -437,8 +590,8 @@ export class BattleScene extends Sprite {
                     break;
                 case "Move2":
                     this.executeMove("Move2");
-                    break;  
-            }    
+                    break;
+            }
         }
     };
 }

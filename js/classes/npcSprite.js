@@ -3,6 +3,8 @@ import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { GAME_CONFIG } from "../config.js";
 import { setInBattleStatus } from "../utilities/general.js";
 import { monsterFactory } from "../factories/monsterFactory.js";
+import { setDisableInput } from "../inputHandler.js";
+import { blurTransition } from "../utilities/general.js";
 
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
@@ -104,11 +106,15 @@ export class NpcSprite extends Sprite {
         }
     }
 
-    startBattle(battleScene) {
+    startBattle(battleScene, c) {
         battleScene.battleType = 'npc';
         const npcMonster = monsterFactory('monsplash', 10)
         battleScene.mons1 = npcMonster
-        setInBattleStatus(true);
+        setDisableInput(true);
+        blurTransition(c, () => {
+            setInBattleStatus(true);
+            setDisableInput(false);
+        });
     }
 
     textLogic(battleScene, slides, lastActionKey, c, status) {
@@ -138,7 +144,7 @@ export class NpcSprite extends Sprite {
                             this.isShowingText = false;
                             this.slidesIndex = -1;
                             if(this.selected === 'yes') {
-                                this.startBattle(battleScene);
+                                this.startBattle(battleScene, c);
                                 this.selected === 'no'
                             } 
                             document.removeEventListener('keydown', this.boundSelectionHandler);

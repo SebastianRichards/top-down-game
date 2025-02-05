@@ -6,6 +6,17 @@ export const keys = {
     d: { pressed: false }
 };
 
+export let disableInput = false;
+
+export function setDisableInput(state) {
+    disableInput = state;
+    if (state) {
+        Object.keys(keys).forEach((key) => keys[key].pressed = false);
+        setLastKey('');
+        setLastActionKey('');
+    }
+}
+
 let lastKey = '';
 let lastActionKey = '';
 
@@ -26,6 +37,9 @@ export function setLastKey(key) {
 }
 
 window.addEventListener('keydown', (e) => {
+    if(disableInput) {
+        return
+    }
     if (keys[e.key] !== undefined) {
         keys[e.key].pressed = true;
         lastKey = e.key;
@@ -34,6 +48,9 @@ window.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('keyup', (e) => {
+    if(disableInput) {
+        return
+    }
     if (keys[e.key] !== undefined) {
         keys[e.key].pressed = false;
     }

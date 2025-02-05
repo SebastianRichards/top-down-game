@@ -22,11 +22,14 @@ export const Game = () => {
         playerSprite: spriteFactory('playerSprite', canvas),
         backgroundSprite: spriteFactory('backgroundSprite', canvas),
         npcSprite1: spriteFactory('npcSprite1', canvas),
+        npcSprite2: spriteFactory('npcSprite2', canvas),
         grass: spriteFactory('Grass', canvas),
-        grassTiles: spriteFactory('GrassTiles', canvas)
+        grassTiles: spriteFactory('GrassTiles', canvas),
+        computerSprite: spriteFactory('Computer', canvas),
+        flowerSprites: spriteFactory('Flowers', canvas)
     }
 
-
+    
     const battleScene =  spriteFactory('battleBackgroundSprite', canvas)
     
     //list of objs that derived from json
@@ -43,14 +46,17 @@ export const Game = () => {
         const inBattle = getInBattleStatus();
         if(!inBattle) {
             sprites.backgroundSprite.draw(c);
+            sprites.flowerSprites.renderFlowers(c);
             if(getNpcState() === "default") {
                 sprites.npcSprite1.draw(c);
             }
+            sprites.npcSprite2.draw(c);
             sprites.playerSprite.drawPlayer(c);
             sprites.grassTiles.draw(c)
             sprites.playerSprite.drawHead(c);
             //sprites.grass.draw(c); 
             sprites.foregroundSprite.draw(c);
+            sprites.computerSprite.draw(c);
             // Mechanics
             moveSprites(sprites, solids, c);
             checkActions({spritesObj: sprites, solidsObj: solids, c: c, battleScene: battleScene});
