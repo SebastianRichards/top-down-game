@@ -12,12 +12,9 @@ export class NpcSpriteNonCombat extends Sprite {
         this.textSlides = textSlides
         this.profileImg = profileImg
         this.isShowingText = false
-        this.status = 'prefight';
-        this.selected = 'yes';
         this.lastActionKey = '';
         this.actionKeyHasInit = false;
         this.boundActionKeyHandler = this.keydownActionKeyHandler().bind(this);
-        this.boundSelectionHandler = this.keydownHandler().bind(this);
     }
 
     textAction(c, text) {
@@ -40,7 +37,7 @@ export class NpcSpriteNonCombat extends Sprite {
         c.drawImage(this.profileImg, profileImgX, profileImgY, profileImgWidth, profileImgHeight);
         c.fillStyle = 'black';
         c.font = '20px Arial';
-        c.fillText(text, textBoxWidth / 2 - 70 , 550)
+        c.fillText(text, textBoxWidth / 2 -140, 550)
     }
 
 
@@ -48,6 +45,7 @@ export class NpcSpriteNonCombat extends Sprite {
         const keydownActionHandler = (e) => {
             if (e.key === ' ') {
                 this.lastActionKey = ' ';
+                console.log('space pressed for npc 2')
             } 
         };
         return keydownActionHandler;
@@ -72,39 +70,38 @@ export class NpcSpriteNonCombat extends Sprite {
         }
     }
 
-    textLogic(slides, lastActionKey, c, status) {
-        switch(status) {
-            case "fightWon":
-                if (!this.isShowingText) {
-                    if (lastActionKey === ' ') {
-                        this.isShowingText = true;
-                        this.slidesIndex = -1;
-                        this.lastActionKey = '';  
-                    }
-                }
-            default:
-                console.log('test');
-                break;
-        }
-    }
-    npcAction(c, type, battleScene) {
-        const lastActionKey = this.lastActionKey;
-        this.setupEventListener('add')
-        switch (type) {
-            case "prefight":
-                this.textLogic(battleScene, this.textSlides.prefight, lastActionKey, c, "prefight");
-                break;
-            case "fightWon": 
-                this.textLogic(battleScene, this.textSlides.fightwon, lastActionKey, c, "fightWon");
-                break;
-            case "fightLost": 
-                this.textLogic(battleScene, this.textSlides.fight, lastActionKey, c, "fightLost");
-                break;
-            default:
-                console.log('action type not found')
+    textLogic(slides, lastActionKey, c) {
+        if (!this.isShowingText && lastActionKey === ' ') {
+            this.isShowingText = true;
+            this.slidesIndex = -1; 
+            this.lastActionKey = '';  
         }
     
-  
+        if (this.isShowingText) {
+            if (this.slidesIndex < slides.length) {
+                this.textAction(c, slides[this.slidesIndex]); 
+            }
+    
+            if (lastActionKey === ' ' && this.slidesIndex < slides.length) {
+                this.slidesIndex++;
+                this.lastActionKey = '';
+                if (this.slidesIndex >= slides.length) {
+                    this.setupEventListener('remove');
+                        this.isShowingText = false;
+                        this.slidesIndex = -1;
+                }
+            }
+        }
+    }
+    
+    npcAction(c, playersImg) {
+        const lastActionKey = this.lastActionKey;
+        this.setupEventListener('add')
+        if(playersImg.includes('main-player')) {
+            this.textLogic(this.textSlides.player, lastActionKey, c);
+        } else {
+            this.textLogic(this.textSlides.npc, lastActionKey, c);
+        }  
     }
 
 }

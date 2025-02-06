@@ -63,6 +63,23 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
             moving = false;
         }
 
+        if (
+            rectangularCollision({
+                rectangle1: spritesObj.playerSprite,
+                rectangle2: {
+                    ...spritesObj.npcSprite2,
+                    width: spritesObj.npcSprite2.width * GAME_CONFIG.scale, 
+                    height: spritesObj.npcSprite2.height * GAME_CONFIG.scale,
+                    position: {
+                        x: spritesObj.npcSprite2.position.x + (direction.axis === 'x' ? direction.delta : 0),
+                        y: spritesObj.npcSprite2.position.y + (direction.axis === 'y' ? direction.delta : 0),
+                    }
+                }
+            }, c)
+        ) {
+            moving = false;
+        }
+
         if (direction.axis === 'y' && direction.delta > 0) {
             spritesObj.playerSprite.flipped = false;
             spritesObj.playerSprite.image = spritesObj.playerSprite.sprites.up;

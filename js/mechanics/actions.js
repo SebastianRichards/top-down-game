@@ -32,7 +32,7 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
     }
 
     if (canTalkNpc2) {
-        spritesObj.npcSprite2.npcAction(c, gameProgress, battleScene);
+        spritesObj.npcSprite2.npcAction(c, spritesObj.playerSprite.image.currentSrc);
     } else {
         spritesObj.npcSprite2.removeEventListeners();
     }

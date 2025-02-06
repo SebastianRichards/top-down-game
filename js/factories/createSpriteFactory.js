@@ -7,6 +7,7 @@ import { BattleScene } from "../classes/battleScene.js";
 import { Grass } from '../classes/grass.js';
 import { monsterFactory } from "./monsterFactory.js";
 import { Player } from "../classes/player.js";
+import { NpcSpriteNonCombat } from "../classes/npcSpriteNonCombat.js";
 
 export const spriteFactory = (type, canvas) => {
     switch(type) {
@@ -59,14 +60,19 @@ export const spriteFactory = (type, canvas) => {
                 }
             })
         case "npcSprite2": {
-            return new NpcSprite({
+            return new NpcSpriteNonCombat({
                 position: {
                     x: -122,
-                    y: -1303,
+                    y: -1294,
                 },
                 image: getImage('npc2'),
                 scale: 2,
-                profileImg: getImage('npc2Profile')
+                profileImg: getImage('npc2Profile'),
+                textSlides: {
+                    player: ["Wow I never get visitors", "Feel free to use my PC", "Only the developer outside has access to admin privs though"],
+                    npc: ["Hey psst", "There's a new kid on the island who wants to break into your house", "Make sure to not let him in"],
+                    slidesIndex: 0
+                }
             })
         }
         case "foregroundSprite":
