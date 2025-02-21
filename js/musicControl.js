@@ -1,22 +1,36 @@
 import { getAudio } from './utilities/assetManager.js';
 
-export function MusicControl() {
-    const backgroundMusic = getAudio('backgroundMusic');
-    backgroundMusic.loop = true;
-    backgroundMusic.volume = 0.5;
+let currentMusic = null; 
+
+export function MusicControl({ command, type }) {
+    if (command !== "play") {
+        return;
+    }
+
+    if (currentMusic) {
+        currentMusic.pause();
+        currentMusic.currentTime = 0;
+    }
+
+    let music;
+    switch (type) {
+        case "backgroundMusic":
+            music = getAudio('backgroundMusic');
+            break;
+        case "battleMusic":
+            music = getAudio('battleMusic');
+            break;
+        default:
+            return;
+    }
+
+    music.loop = true;
+    music.volume = 0.5;
+    music.play();
+
+    currentMusic = music;
 
     const volUp = document.getElementById("volUp");
     const volDown = document.getElementById("volDown");
 
-    volUp.addEventListener("click", () => {
-        volUp.style.display = 'none';
-        volDown.style.display = 'block';
-        backgroundMusic.play();
-    });
-
-    volDown.addEventListener("click", () => {
-        volDown.style.display = 'none';
-        volUp.style.display = 'block';
-        backgroundMusic.pause();
-    });
 }

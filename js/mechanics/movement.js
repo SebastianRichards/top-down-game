@@ -1,9 +1,11 @@
 import { getLastKey, keys } from "../inputHandler.js";
 import { GAME_CONFIG } from "../config.js";
 import { rectangularCollision } from "./collisionDetection.js";
+import { MusicControl } from "../musicControl.js";
 
 
 let distanceCount = 0;
+let musicStarted = false;
 
 const directionMap = {
     w: { axis: 'y', delta: GAME_CONFIG.movementSpeed },
@@ -28,6 +30,15 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
     ];
 
     if (direction && keys[lastKey].pressed) {
+        if(!musicStarted) {
+            console.log('playing music')
+            MusicControl({
+                command: 'play',
+                type: 'backgroundMusic'
+            })
+            musicStarted = true;
+            console.log(musicStarted, 'is music started')
+        }
         spritesObj.playerSprite.moving = true;
         for (let i = 0; i < solidsObj.boundaryData.length; i++) {
             const boundary = solidsObj.boundaryData[i];

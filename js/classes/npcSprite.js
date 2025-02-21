@@ -5,7 +5,7 @@ import { setInBattleStatus } from "../utilities/general.js";
 import { monsterFactory } from "../factories/monsterFactory.js";
 import { setDisableInput } from "../inputHandler.js";
 import { blurTransition } from "../utilities/general.js";
-
+import { MusicControl } from "../musicControl.js";
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
         super({position, image, frames, sprites, scale, flipped})
@@ -110,11 +110,13 @@ export class NpcSprite extends Sprite {
         battleScene.battleType = 'npc';
         const npcMonster = monsterFactory('monsplash', 10)
         battleScene.mons1 = npcMonster
+        MusicControl({command: "play", type: "battleMusic"});
         setDisableInput(true);
         blurTransition(c, () => {
             setInBattleStatus(true);
             setDisableInput(false);
         });
+
     }
 
     textLogic(battleScene, slides, lastActionKey, c, status) {
