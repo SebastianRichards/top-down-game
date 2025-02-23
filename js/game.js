@@ -8,6 +8,7 @@ import { GAME_CONFIG } from './config.js';
 import { battleData } from '../json/battle.js';
 import { getGameState, getInBattleStatus, getNpcState } from './utilities/general.js';
 import { setupPcs } from './handlers/pcHandler.js';
+import { loopAudio } from './musicControl.js';
 
 export const Game = () => {
     const canvas = document.getElementById("game-canvas");
@@ -44,6 +45,7 @@ export const Game = () => {
         window.requestAnimationFrame(animate);
         c.fillRect(0, 0, canvas.width, canvas.height);
         const inBattle = getInBattleStatus();
+        loopAudio();
         if(!inBattle) {
             sprites.backgroundSprite.draw(c);
             sprites.flowerSprites.renderFlowers(c);

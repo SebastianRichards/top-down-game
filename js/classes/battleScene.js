@@ -2,6 +2,7 @@ import { Sprite } from "./sprite.js"
 import { GAME_CONFIG } from "../config.js";
 import { setGameState, setInBattleStatus } from "../utilities/general.js";
 import { getImage } from "../utilities/assetManager.js";
+import { MusicControl } from "../musicControl.js";
 
 export class BattleScene extends Sprite {
     constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {}, c }) {
@@ -24,7 +25,8 @@ export class BattleScene extends Sprite {
         this.disableInputs = false;
         this.moveDuration = 1000;
         this.currentMoveFrame = 0;
-        this.c = c.getContext('2d')
+        this.c = c.getContext('2d');
+        this.profileImg = getImage('npc1Profile');
     }
 
     drawSceneAndSetupListener(c) {
@@ -170,6 +172,30 @@ export class BattleScene extends Sprite {
             c.fillStyle = (this.currentOption === 'Run') ? 'blue' : 'black';
             c.fillText('Run', textBoxWidth / 2 - 20, 550);
             c.restore();
+        } else if (this.battleTextStatus === "runAttempt") {
+            const textBoxX = 0;
+            const textBoxY = 500;
+            const textBoxWidth = GAME_CONFIG.canvasWidth;
+            const textBoxHeight = 80;
+            c.save();
+            c.fillStyle = 'rgba(255, 255, 255, 0.9)'; 
+            c.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+            c.strokeStyle = 'black';
+            c.lineWidth = 4; 
+            c.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+            const profileImgX = 20; 
+            const profileImgY = textBoxY + 8; 
+            const profileImgWidth = 64; 
+            const profileImgHeight = 64; 
+            c.strokeStyle = 'black';
+            c.lineWidth = 2;
+            c.strokeRect(profileImgX - 2, profileImgY - 2, profileImgWidth + 4, profileImgHeight + 4);
+            c.drawImage(this.profileImg, profileImgX, profileImgY, profileImgWidth, profileImgHeight);
+            c.fillStyle = 'black';
+            c.font = '20px Arial';
+            c.fillText("you can't run from me", textBoxWidth / 2 - 70 , 550)
+            c.restore();
+            this.currentOption
         }
     }
     changeCurrentOption(option) {
@@ -333,6 +359,10 @@ export class BattleScene extends Sprite {
         this.disableInputs = false;
         this.mons2.initialX = null;
         this.mons1.initialX = null;
+        if(this.battleType === 'npc') {
+            MusicControl({ command: 'play', type: 'backgroundMusic'});
+        }
+        
     }
 
     setupEventListener() {
@@ -555,6 +585,9 @@ export class BattleScene extends Sprite {
             return
         }
         if (e.key === "ArrowRight") {
+            if(this.battleTextStatus === "runAttempt") {
+                return
+            }
             if (this.battleTextStatus === 'main') {
                 this.changeCurrentOption('Run')
             } else {
@@ -563,6 +596,9 @@ export class BattleScene extends Sprite {
 
         }
         if (e.key === "ArrowLeft") {
+            if(this.battleTextStatus === "runAttempt") {
+                return
+            }
             if (this.battleTextStatus === 'main') {
                 this.changeCurrentOption('Fight');
             } else {
@@ -575,15 +611,25 @@ export class BattleScene extends Sprite {
                 return
             }
             switch (currentOption) {
+                case "EndRun": {
+                    this.battleTextStatus = 'main';
+                    this.changeCurrentOption('Fight')
+                    break;
+                }
                 case "Fight":
                     this.battleTextStatus = 'moves';
                     this.changeCurrentOption('Move1')
                     break;
                 case "Run":
-                    setInBattleStatus(false);
-                    this.battleTextStatus = 'main';
-                    this.changeCurrentOption('Fight')
-                    this.resetScene();
+                    if(this.battleType === 'npc') {
+                        this.battleTextStatus = "runAttempt";
+                        this.currentOption = 'EndRun';
+                    } else {
+                        setInBattleStatus(false);
+                        this.battleTextStatus = 'main';
+                        this.changeCurrentOption('Fight')
+                        this.resetScene();
+                    }
                     break;
                 case "Move1":
                     this.executeMove("Move1");

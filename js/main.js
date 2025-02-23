@@ -6,8 +6,14 @@ import { setBoundaryJsonData, setDoorJsonData, setBattleJsonData, setPcJsonData 
 
 const init = async () => {
     await Promise.all([
-        loadAudio('backgroundMusic', 'assets/audio/backgroundloop.wav'),
-        loadAudio('battleMusic', 'assets/audio/battle.mp3'),
+        loadAudio('tackleSound', 'assets/audio/tackleSound'),
+        loadAudio('collisionSound', 'assets/audio/collisionsound.mp3'),
+        loadAudio('computer', 'assets/audio/computersound.mp3'),
+        loadAudio('door', 'assets/audio/dooropen.mp3'),
+        loadAudio('walkSound1', 'assets/audio/walksound1.mp3'),
+        loadAudio('walkSound2', 'assets/audio/walksound2.mp3'),
+        loadAudio('backgroundMusic', 'assets/audio/backgroundmusicspace.mp3'),
+        loadAudio('battleMusic', 'assets/audio/gamemusicloopspace.mp3'),
         loadAudio('noentry', 'assets/audio/noentry.mp3'),
         loadImage('background', 'assets/images/map3.png'),
         loadImage('computer', 'assets/images/computer.png'),
@@ -59,7 +65,6 @@ const init = async () => {
 
     const game = Game();
     game.start();
-    MusicControl({command: "play", type: "backgroundMusic"});
     TouchControls();
         
 }

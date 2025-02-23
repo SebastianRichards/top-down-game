@@ -1,6 +1,6 @@
 import { rectangularCollision } from '../mechanics/collisionDetection.js';
 import { GAME_CONFIG } from '../config.js';
-import { getImage } from '../utilities/assetManager.js';
+import { getImage, getAudio } from '../utilities/assetManager.js';
 import { setNpcState } from '../utilities/general.js';
 import { monsterFactory } from '../factories/monsterFactory.js';
 
@@ -147,11 +147,22 @@ export class Pc {
         
         if(this.nearPc) {
             this.textAction(c)
+            if(!this.hasPlayedSound) {
+                this.playSound();
+                this.hasPlayedSound = true;
+            }
         }
         if(!this.nearPc) {
             document.addEventListener('keydown', this.boundSelectionHandler)
             this.nearPc = true;
+            this.hasPlayedSound = false;
         }
+    }
+
+    playSound() {
+        const computerSound = getAudio('computer');
+        computerSound.volume = 0.02;
+        computerSound.play();
     }
 
 }

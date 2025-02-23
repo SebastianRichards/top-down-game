@@ -1,11 +1,16 @@
-import { getImage } from "../utilities/assetManager.js";
+import { getImage, getAudio } from "../utilities/assetManager.js";
 import { Sprite } from "./sprite.js";
+
+const footStep1 = getAudio('walkSound1');
+const footStep2 = getAudio('walkSound2');
+let lastFootStep = 1; 
 
 export class Player extends Sprite {
     constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false }) {
         super({ position, image, frames, sprites, scale, flipped })
 
         this.depth = 0.65;
+        this.target = 30;
     }
 
 
@@ -22,8 +27,10 @@ export class Player extends Sprite {
             this.height * this.scale
         );
 
-        if (!this.moving) return;
+        console.log(this.frames.val)
 
+        if (!this.moving) return;
+        
         if (this.frames.max > 1) {
             this.frames.elapsed++;
             if (this.frames.elapsed % 10 === 0) {
@@ -50,16 +57,34 @@ export class Player extends Sprite {
         );
 
         if (!this.moving) return;
-
+        this.playFootStepSound();
         if (this.frames.max > 1) {
             this.frames.elapsed++;
             if (this.frames.elapsed % 20 === 0) {
                 if (this.frames.val < this.frames.max - 1) {
                     this.frames.val++;
+                    
                 } else {
                     this.frames.val = 0;
                 }
+                
             }
         }
+        
     }
+    
+    playFootStepSound() {
+        const footStep1 = getAudio('walkSound1');
+        const footStep2 = getAudio('walkSound2');
+        footStep1.volume = 0.06;
+        footStep2.volume = 0.06;
+        if (this.frames.elapsed > this.target) {
+            console.log(this.frames.elapsed, this.target)
+            footStep1.currentTime = 0;
+            footStep1.play()
+            this.target += 48;
+        } 
+        //currentWalkAudio.play();
+    }
+    
 }

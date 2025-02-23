@@ -1,7 +1,7 @@
 import { getLastKey, keys } from "../inputHandler.js";
 import { GAME_CONFIG } from "../config.js";
 import { rectangularCollision } from "./collisionDetection.js";
-import { MusicControl } from "../musicControl.js";
+import { MusicControl, playCollisionSound } from "../musicControl.js";
 
 
 let distanceCount = 0;
@@ -53,6 +53,7 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
                 }, c)
             ) {
                 moving = false; 
+                playCollisionSound();
                 break;
             }
         }

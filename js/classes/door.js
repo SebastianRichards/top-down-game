@@ -22,56 +22,64 @@ export class Door extends Boundary{
                     return
                 };
                 this.moveCharacter(-2205, -510, sprites, solids)
-                
+                this.playSound();
                 break;
             case 1:
                 if(!(sprites.playerSprite.image.src).includes('player-back')) {
                     return
                 };
                 this.moveCharacter(-1185, -1470, sprites, solids)
-                
+                this.playSound();
                 break;
             case 4:
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2418, -770, sprites, solids)
+                this.playSound();
                 break;
             case 3:
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2450, -770, sprites, solids)
+                this.playSound();
                 break;
             case 5:
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2205, 510, sprites, solids)
+                this.playSound();
                 break;
             case 6: 
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(2170, 510, sprites, solids)
+                this.playSound();
                 break;
             case 7: 
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(1185, 1470, sprites, solids)
+                this.playSound();
                 break;
             case 8: 
                 if(!(sprites.playerSprite.image.src).includes('player-front')) {
                     return
                 };
                 this.moveCharacter(1150, 1470, sprites, solids)
+                this.playSound();
                 break;
             case 0: {
                 if(!(sprites.playerSprite.image.src).includes('player-back')) {
                     return
                 };
                 this.moveCharacter(-2450, 770, sprites, solids)
+                this.playSound();
+                break;
             }
             default: 
                 console.log(this.identifier, 'not recognised')
@@ -134,6 +142,12 @@ export class Door extends Boundary{
         const noentrySound = getAudio('noentry');
         noentrySound.volume = 0.5;
         noentrySound.play();
+    }
+
+    playSound() {
+        const doorSound = getAudio('door');
+        doorSound.volume = 0.06;
+        doorSound.play();
     }
    
 }
