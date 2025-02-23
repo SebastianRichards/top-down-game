@@ -1,7 +1,7 @@
 import { Sprite } from "./sprite.js"
 import { GAME_CONFIG } from "../config.js";
 import { setGameState, setInBattleStatus } from "../utilities/general.js";
-import { getImage } from "../utilities/assetManager.js";
+import { getAudio, getImage } from "../utilities/assetManager.js";
 import { MusicControl } from "../musicControl.js";
 
 export class BattleScene extends Sprite {
@@ -407,7 +407,9 @@ export class BattleScene extends Sprite {
 
         switch (type) {
             case "Fire Shock":
-
+                const fireSound = getAudio('firesound');
+                fireSound.volume = 0.1;
+                fireSound.play();
                 if (!startTime) startTime = performance.now();
                 const elapsed = performance.now() - startTime;
 
@@ -467,6 +469,9 @@ export class BattleScene extends Sprite {
                 }
                 break;
             case "Water Shock": {
+                const waterSound = getAudio('watersound');
+                waterSound.volume = 0.1;
+                waterSound.play();
                 if (!startTime) startTime = performance.now();
                 const elapsed = performance.now() - startTime;
 
@@ -527,6 +532,9 @@ export class BattleScene extends Sprite {
             }
             break;
             case "Tackle": {
+                const tackleAudio = getAudio('tackleSound');
+                tackleAudio.volume = 0.1;
+                tackleAudio.play();
                 if (!startTime) startTime = performance.now();
             
                 // Store original position if not already stored

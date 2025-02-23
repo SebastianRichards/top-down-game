@@ -6,7 +6,9 @@ import { setBoundaryJsonData, setDoorJsonData, setBattleJsonData, setPcJsonData 
 
 const init = async () => {
     await Promise.all([
-        loadAudio('tackleSound', 'assets/audio/tackleSound'),
+        loadAudio('watersound', 'assets/audio/watersound.mp3'),
+        loadAudio('firesound', 'assets/audio/firesound.mp3'),
+        loadAudio('tackleSound', 'assets/audio/tackleSound.mp3'),
         loadAudio('collisionSound', 'assets/audio/collisionsound.mp3'),
         loadAudio('computer', 'assets/audio/computersound.mp3'),
         loadAudio('door', 'assets/audio/dooropen.mp3'),

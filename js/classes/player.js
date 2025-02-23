@@ -27,8 +27,6 @@ export class Player extends Sprite {
             this.height * this.scale
         );
 
-        console.log(this.frames.val)
-
         if (!this.moving) return;
         
         if (this.frames.max > 1) {
