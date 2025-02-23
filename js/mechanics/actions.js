@@ -17,14 +17,6 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
      }
     }
     const gameProgress = getGameState();
-    /*
-    if(gameProgress === "fightWon") {
-        if(!moved) {
-            spritesObj.npcSprite1.position.x = 452
-        }
-        moved = true
-    } 
-        */
     canTalkNpc = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite1);
     canTalkNpc2 = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite2);
     if (canTalkNpc.result) {

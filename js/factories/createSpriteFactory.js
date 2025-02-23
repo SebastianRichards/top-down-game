@@ -53,9 +53,10 @@ export const spriteFactory = (type, canvas) => {
                 scale: 2,
                 profileImg: getImage('npc1Profile'),
                 textSlides: {
-                    prefight: ["Hello..", "I've coded this in vanilla js", "it was a pain..", "Want to fight?"],
+                    prefight: ["Hello..", "I've coded this in vanilla js", "It was a pain..", "Want to fight?"],
                     fightwon: ["Wow you won", "Come into the house"],
-                    fightlost: ["Shame you lost", "Try training in the grass to win"],
+                    fightlost: ["Shame you lost", "Try training in the grass to win", "You will level up each time you win", "Want to try again?"],
+                    codeChanged: ["...Where was I?"],
                     slidesIndex: 0
                 }
             })

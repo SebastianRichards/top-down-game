@@ -4,6 +4,7 @@ import { getImage, getAudio } from '../utilities/assetManager.js';
 import { setNpcState } from '../utilities/general.js';
 import { monsterFactory } from '../factories/monsterFactory.js';
 import { playSelectSound } from '../musicControl.js';
+import { setGameState } from '../utilities/general.js';
 
 export class Pc {
     constructor({position, identifier }) {
@@ -47,6 +48,7 @@ export class Pc {
                                 this.hasChangeSprite = false;
                                 this.hasChangedCode = true
                                 this.char = 'main'
+                                setGameState('codeChanged')
                             }
                         } else {
                             this.message = 'notAdminPc';
@@ -82,18 +84,21 @@ export class Pc {
         c.fillStyle = 'black';
         c.font = '20px Arial';
         if(this.message === "notAdminPc") {
-            c.fillStyle = 'black'
-            c.fillText('Not Admin Pc', textBoxWidth / 2 + 70 , 550)
+            const message = 'Not Admin Pc';
+            const messageWidth = c.measureText(message).width;
+            const messageX = textBoxX + (textBoxWidth - messageWidth) / 2;
+            c.fillStyle = 'black';
+            c.fillText(message, messageX, 550);
         } else {
             if (this.selectedOption === 'viewCode') {
                 c.fillStyle = 'blue'
-                c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
+                c.fillText('View Code', textBoxWidth / 2 - 160 , 546)
                 c.fillStyle = 'black'
-                c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
+                c.fillText('Change Code', textBoxWidth / 2 + 50 , 546)
             } else if (this.selectedOption === 'changeCode') {
-                c.fillText('View Code', textBoxWidth / 2 - 70 , 550)
+                c.fillText('View Code', textBoxWidth / 2 - 160 , 546)
                 c.fillStyle = 'blue'
-                c.fillText('Change Code', textBoxWidth / 2 + 70 , 550)
+                c.fillText('Change Code', textBoxWidth / 2 + 50 , 546)
             }
         }
         c.restore();

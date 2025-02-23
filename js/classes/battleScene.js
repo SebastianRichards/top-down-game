@@ -157,20 +157,22 @@ export class BattleScene extends Sprite {
         c.font = '20px Arial';
         if (this.textBoxMessage !== false) {
             c.fillStyle = 'black';
-            c.fillText(this.textBoxMessage, textBoxWidth / 2, 550);
+            const messageWidth = c.measureText(this.textBoxMessage).width;
+            const messageX = textBoxX + (textBoxWidth - messageWidth) / 2;
+            c.fillText(this.textBoxMessage, messageX, 546);
             return
         }
         if (this.battleTextStatus === "moves") {
             c.fillStyle = (this.currentOption === 'Move1') ? 'blue' : 'black';
-            c.fillText(this.mons2.moves.move1.name, textBoxWidth / 2 - 150, 550);
+            c.fillText(this.mons2.moves.move1.name, textBoxWidth / 2 - 150, 546);
             c.fillStyle = (this.currentOption === 'Move2') ? 'blue' : 'black';
-            c.fillText(this.mons2.moves.move2.name, textBoxWidth / 2 + 50, 550);
+            c.fillText(this.mons2.moves.move2.name, textBoxWidth / 2 + 50, 546);
             c.restore();
         } else if (this.battleTextStatus === "main") {
             c.fillStyle = (this.currentOption === 'Fight') ? 'blue' : 'black';
-            c.fillText('Fight', textBoxWidth / 2 - 70, 550);
+            c.fillText('Fight', textBoxWidth / 2 - 100, 546);
             c.fillStyle = (this.currentOption === 'Run') ? 'blue' : 'black';
-            c.fillText('Run', textBoxWidth / 2 - 20, 550);
+            c.fillText('Run', textBoxWidth / 2 + 10, 546);
             c.restore();
         } else if (this.battleTextStatus === "runAttempt") {
             const textBoxX = 0;
@@ -193,7 +195,10 @@ export class BattleScene extends Sprite {
             c.drawImage(this.profileImg, profileImgX, profileImgY, profileImgWidth, profileImgHeight);
             c.fillStyle = 'black';
             c.font = '20px Arial';
-            c.fillText("you can't run from me", textBoxWidth / 2 - 70 , 550)
+            const message = "You can't run from me";
+            const messageWidth = c.measureText(message).width;
+            const messageX = textBoxX + (textBoxWidth - messageWidth) / 2;
+            c.fillText(message, messageX, 546);
             c.restore();
             this.currentOption
         }
@@ -304,7 +309,7 @@ export class BattleScene extends Sprite {
                 this.disableInputs = false;
                 setInBattleStatus(false);
                 if (this.battleType === 'npc') {
-                    setGameState('fightWon');
+                    setGameState('fightLost');
                 } else {
                     console.log('gamestate failed', this.battleType)
                 }
@@ -327,7 +332,7 @@ export class BattleScene extends Sprite {
                 this.disableInputs = false;
                 setInBattleStatus(false);
                 if (this.battleType === "npc") {
-                    setGameState('fightWon')
+                    setGameState('fightLost')
                 }
                 this.resetScene();
             } else {

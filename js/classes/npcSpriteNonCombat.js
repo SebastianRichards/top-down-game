@@ -38,7 +38,9 @@ export class NpcSpriteNonCombat extends Sprite {
         c.drawImage(this.profileImg, profileImgX, profileImgY, profileImgWidth, profileImgHeight);
         c.fillStyle = 'black';
         c.font = '20px Arial';
-        c.fillText(text, textBoxWidth / 2 -140, 550)
+        const textWidth = c.measureText(text).width;
+        const xPos = textBoxX + (textBoxWidth - textWidth) / 2;
+        c.fillText(text, xPos, 546)
     }
 
 

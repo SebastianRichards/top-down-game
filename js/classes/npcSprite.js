@@ -67,7 +67,9 @@ export class NpcSprite extends Sprite {
         c.drawImage(this.profileImg, profileImgX, profileImgY, profileImgWidth, profileImgHeight);
         c.fillStyle = 'black';
         c.font = '20px Arial';
-        c.fillText(text, textBoxWidth / 2 - 70 , 550)
+        const textWidth = c.measureText(text).width;
+        const xPos = textBoxX + (textBoxWidth - textWidth) / 2;
+        c.fillText(text, xPos, 546)
     }
 
     keydownHandler() {
@@ -161,6 +163,62 @@ export class NpcSprite extends Sprite {
 
     textLogic(battleScene, slides, lastActionKey, c, status) {
         switch(status) {
+            case "fightLost": 
+            if (!this.isShowingText) {
+                if (lastActionKey === ' ') {
+                    this.isShowingText = true;
+                    this.slidesIndex = -1;
+                    this.lastActionKey = ''; 
+                }
+            } 
+            
+            if (this.isShowingText) {
+                this.textAction(c, slides[this.slidesIndex]);
+                console.log(this.slidesIndex, this.status, 'slide index and status')
+                if(this.slidesIndex === 3 && this.status === "prefight") {
+                    this.drawOption(c);
+                    document.addEventListener('keydown', this.boundSelectionHandler);
+                }
+                if (lastActionKey === ' ') {
+                    this.slidesIndex++;
+                    console.log(this.slidesIndex, 'is slides index')
+                    this.lastActionKey = '';
+                    if (this.slidesIndex >= slides.length) {
+                        this.setupEventListener('remove')
+                        this.isShowingText = false;
+                        this.slidesIndex = -1;
+                        if(this.selected === 'yes') {
+                            this.startBattle(battleScene, c);
+                            this.selected === 'no'
+                        } 
+                        document.removeEventListener('keydown', this.boundSelectionHandler);
+                    }
+                }
+            }
+            break;
+            case "codeChanged":
+                if (!this.isShowingText) {
+                    if (lastActionKey === ' ') {
+                        this.isShowingText = true;
+                        this.slidesIndex = -1;
+                        this.lastActionKey = ''; 
+                    }
+                } 
+                if (this.isShowingText) {
+                    this.textAction(c, slides[this.slidesIndex]);
+                    if (lastActionKey === ' ') {
+                        this.slidesIndex++;
+                        console.log(this.slidesIndex, 'is slides index')
+                        this.lastActionKey = '';
+                        if (this.slidesIndex >= slides.length) {
+                            this.setupEventListener('remove')
+                            this.isShowingText = false;
+                            this.slidesIndex = -1;
+                            document.removeEventListener('keydown', this.boundSelectionHandler);
+                        }
+                    }
+                }
+                break;
             case "prefight":
                 if (!this.isShowingText) {
                     if (lastActionKey === ' ') {
@@ -225,8 +283,6 @@ export class NpcSprite extends Sprite {
         } 
     }
     moveCharacter() {
-        console.log(this.orientation, 'is this oritenetation')
-        let walkingDirection = '';
         switch(this.orientation) {
             case 'right':
                 if(this.position.x < 500) {
@@ -308,7 +364,10 @@ export class NpcSprite extends Sprite {
                 this.textLogic(battleScene, this.textSlides.fightwon, lastActionKey, c, "fightWon");
                 break;
             case "fightLost": 
-                this.textLogic(battleScene, this.textSlides.fight, lastActionKey, c, "fightLost");
+                this.textLogic(battleScene, this.textSlides.fightlost, lastActionKey, c, "fightLost");
+                break;
+            case "codeChanged":
+                this.textLogic(battleScene, this.textSlides.codeChanged, lastActionKey, c, "codeChanged");
                 break;
             default:
                 console.log('action type not found')
