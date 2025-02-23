@@ -2,7 +2,7 @@ import { Sprite } from "./sprite.js"
 import { GAME_CONFIG } from "../config.js";
 import { setGameState, setInBattleStatus } from "../utilities/general.js";
 import { getAudio, getImage } from "../utilities/assetManager.js";
-import { MusicControl } from "../musicControl.js";
+import { MusicControl, playSelectSoundBattle } from "../musicControl.js";
 
 export class BattleScene extends Sprite {
     constructor({ position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null, mons1 = {}, mons2 = {}, c }) {
@@ -622,6 +622,7 @@ export class BattleScene extends Sprite {
                 case "EndRun": {
                     this.battleTextStatus = 'main';
                     this.changeCurrentOption('Fight')
+                    playSelectSoundBattle();
                     break;
                 }
                 case "Fight":
@@ -632,6 +633,7 @@ export class BattleScene extends Sprite {
                     if(this.battleType === 'npc') {
                         this.battleTextStatus = "runAttempt";
                         this.currentOption = 'EndRun';
+                        playSelectSoundBattle()
                     } else {
                         setInBattleStatus(false);
                         this.battleTextStatus = 'main';

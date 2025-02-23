@@ -89,7 +89,6 @@ export class BattleTile extends Boundary{
         const randomMons = monsterFactory(mons, lvl)
         battleScene.mons1 = randomMons;
         setDisableInput(true);
-
         blurTransition(c, () => {
             setInBattleStatus(true);
             setDisableInput(false);

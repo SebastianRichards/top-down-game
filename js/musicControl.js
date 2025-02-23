@@ -1,5 +1,5 @@
 import { getAudio } from './utilities/assetManager.js';
-
+import { getInBattleStatus } from './utilities/general.js';
 let currentMusic = null; 
 
 export function MusicControl({ command, type }) {
@@ -52,4 +52,23 @@ export function playCollisionSound() {
     const collisionSound = getAudio('collisionSound');
     collisionSound.volume = 0.15;
     collisionSound.play();
+}
+
+export function playSelectSound() {
+    const inBattle = getInBattleStatus();
+    if(inBattle === true) {
+        return
+    }
+    const selectSound = getAudio('selectSound');
+    selectSound.volume = 0.1;
+    selectSound.currentTime = 0;
+    selectSound.play();
+    console.log('sound played')
+}
+
+export function playSelectSoundBattle() {
+    const selectSound = getAudio('selectSound');
+    selectSound.volume = 0.1;
+    selectSound.currentTime = 0;
+    selectSound.play();
 }

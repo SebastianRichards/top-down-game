@@ -5,7 +5,7 @@ import { setInBattleStatus } from "../utilities/general.js";
 import { monsterFactory } from "../factories/monsterFactory.js";
 import { setDisableInput } from "../inputHandler.js";
 import { blurTransition } from "../utilities/general.js";
-import { MusicControl } from "../musicControl.js";
+import { MusicControl, playSelectSound } from "../musicControl.js";
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
         super({position, image, frames, sprites, scale, flipped})
@@ -80,6 +80,13 @@ export class NpcSprite extends Sprite {
     keydownActionKeyHandler() {
         const keydownActionHandler = (e) => {
             if (e.key === ' ') {
+                if(this.selected === 'yes' && this.slidesIndex === 3 && this.status === "prefight") {
+                    console.log('battle started')
+                    this.removeEventListeners();
+                } else {
+                    playSelectSound();
+                }
+                
                 this.lastActionKey = ' ';
             } 
         };
@@ -107,6 +114,7 @@ export class NpcSprite extends Sprite {
     }
 
     startBattle(battleScene, c) {
+        this.removeEventListeners();
         battleScene.battleType = 'npc';
         const npcMonster = monsterFactory('monsplash', 10)
         battleScene.mons1 = npcMonster
@@ -126,7 +134,7 @@ export class NpcSprite extends Sprite {
                     if (lastActionKey === ' ') {
                         this.isShowingText = true;
                         this.slidesIndex = -1;
-                        this.lastActionKey = '';  
+                        this.lastActionKey = ''; 
                     }
                 } 
                 
@@ -134,7 +142,7 @@ export class NpcSprite extends Sprite {
                     this.textAction(c, slides[this.slidesIndex]);
             
                     if(this.slidesIndex === 3 && this.status === "prefight") {
-                        this.drawOption(c)
+                        this.drawOption(c);
                         document.addEventListener('keydown', this.boundSelectionHandler);
                     }
                     if (lastActionKey === ' ') {

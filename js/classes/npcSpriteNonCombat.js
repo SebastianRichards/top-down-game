@@ -5,6 +5,7 @@ import { setInBattleStatus } from "../utilities/general.js";
 import { monsterFactory } from "../factories/monsterFactory.js";
 import { setDisableInput } from "../inputHandler.js";
 import { blurTransition } from "../utilities/general.js";
+import { playSelectSound } from "../musicControl.js";
 
 export class NpcSpriteNonCombat extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
@@ -45,7 +46,7 @@ export class NpcSpriteNonCombat extends Sprite {
         const keydownActionHandler = (e) => {
             if (e.key === ' ') {
                 this.lastActionKey = ' ';
-                console.log('space pressed for npc 2')
+                playSelectSound();
             } 
         };
         return keydownActionHandler;

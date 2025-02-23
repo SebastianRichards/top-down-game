@@ -3,6 +3,7 @@ import { GAME_CONFIG } from '../config.js';
 import { getImage, getAudio } from '../utilities/assetManager.js';
 import { setNpcState } from '../utilities/general.js';
 import { monsterFactory } from '../factories/monsterFactory.js';
+import { playSelectSound } from '../musicControl.js';
 
 export class Pc {
     constructor({position, identifier }) {
@@ -31,6 +32,7 @@ export class Pc {
                 }
             } 
             if (e.key === ' ') {
+                playSelectSound();
                 switch(this.selectedOption) {
                     case "viewCode": 
                         window.open('https://github.com/SebastianRichards/top-down-game', '_blank', 'width=800,height=600');
