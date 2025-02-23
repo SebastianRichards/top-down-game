@@ -1,5 +1,6 @@
 import { battleData } from "../../json/battle.js";
 import { GAME_CONFIG } from "../config.js";
+import { getImage } from "./assetManager.js";
 let xOffSet = -5;
 
 let inBattle = false;
@@ -9,7 +10,6 @@ let battleSquareId = -1;
 let gameState = 'prefight'
 
 let npcState = 'default'
-
 export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
     let result = "";
     let direction = "";
@@ -28,30 +28,30 @@ export const checkIfCloseAndFacing = (rectangle1, rectangle2) => {
             if(rectangle1.position.x + (rectangle1.width * GAME_CONFIG.scale) >= rectangle2.position.x + xOffSet &&
             rectangle1.position.x <= rectangle2.position.x + rectangle2.width && rectangle1.position.y === rectangle2.position.y) {
                 console.log('can talk front')
-                return true;
+                return {result: true, orientation: 'front'};
             }
             break;
         case 'right':
             if(rectangle1.position.x + (rectangle1.width * GAME_CONFIG.scale) >= rectangle2.position.x + xOffSet &&
-            rectangle1.position.x <= rectangle2.position.x + rectangle2.width && rectangle1.position.y === rectangle2.position.y) {
-                console.log('can talk right')
-                return true;
+            rectangle1.position.x <= rectangle2.position.x + rectangle2.width && Math.abs(rectangle1.position.y - rectangle2.position.y) <= 4) {
+                return {result: true, orientation: 'right'};
             }
             break;
         case 'left':
             if(rectangle1.position.x + (rectangle1.width * GAME_CONFIG.scale) >= rectangle2.position.x + xOffSet &&
-            (rectangle1.position.x + xOffSet) <= rectangle2.position.x + (rectangle2.width * GAME_CONFIG.scale) && rectangle1.position.y === rectangle2.position.y) {
+            (rectangle1.position.x + xOffSet) <= rectangle2.position.x + (rectangle2.width * GAME_CONFIG.scale) && Math.abs(rectangle1.position.y - rectangle2.position.y) <= 4) {
                 console.log('can talk left')
-                return true;
+                return {result: true, orientation: 'left'};
             }
             break;
         case 'back':
             if(rectangle1.position.x + (rectangle1.width * GAME_CONFIG.scale) >= rectangle2.position.x + xOffSet &&
             rectangle1.position.x <= rectangle2.position.x + rectangle2.width && rectangle1.position.y - 26 === rectangle2.position.y) {
-                return true;
+                return {result: true, orientation: 'back'};
             }
             break;
     }
+    return {result: false}
     //console.log(rectangle1.position.x, rectangle1.position.y, 'rectangle 1 xy', rectangle2.position.x, rectangle2.position.y, 'rectangle 2 xy')
 
 }

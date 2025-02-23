@@ -17,21 +17,23 @@ export const checkActions = ({spritesObj, solidsObj, c, battleScene}) => {
      }
     }
     const gameProgress = getGameState();
+    /*
     if(gameProgress === "fightWon") {
         if(!moved) {
             spritesObj.npcSprite1.position.x = 452
         }
         moved = true
     } 
+        */
     canTalkNpc = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite1);
     canTalkNpc2 = checkIfCloseAndFacing(spritesObj.playerSprite, spritesObj.npcSprite2);
-    if (canTalkNpc) {
-        spritesObj.npcSprite1.npcAction(c, gameProgress, battleScene);
+    if (canTalkNpc.result) {
+        spritesObj.npcSprite1.npcAction(c, gameProgress, battleScene, canTalkNpc.orientation);
     } else {
         spritesObj.npcSprite1.removeEventListeners();
     }
 
-    if (canTalkNpc2) {
+    if (canTalkNpc2.result) {
         spritesObj.npcSprite2.npcAction(c, spritesObj.playerSprite.image.currentSrc);
     } else {
         spritesObj.npcSprite2.removeEventListeners();

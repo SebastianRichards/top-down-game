@@ -14,6 +14,9 @@ const directionMap = {
     d: { axis: 'x', delta: -GAME_CONFIG.movementSpeed }
 };
 export const moveSprites = (spritesObj, solidsObj, c) => {
+    if(spritesObj.npcSprite1.movementDisabled) {
+        return
+    }
     let moving = true;
     spritesObj.playerSprite.moving = false;
     const lastKey = getLastKey();
@@ -107,6 +110,10 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
         }
 
         if (moving) {
+            spritesObj.npcSprite1.slidesIndex = -1;
+            spritesObj.npcSprite1.isShowingText = false;
+            spritesObj.npcSprite2.isShowingText = false;
+            spritesObj.npcSprite2.slidesIndex = -1
             moveableSprites.forEach((sprite) => {
                 sprite.position[direction.axis] += direction.delta;
                 distanceCount += direction.delta;

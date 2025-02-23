@@ -6,6 +6,7 @@ import { monsterFactory } from "../factories/monsterFactory.js";
 import { setDisableInput } from "../inputHandler.js";
 import { blurTransition } from "../utilities/general.js";
 import { MusicControl, playSelectSound } from "../musicControl.js";
+import { getImage } from "../utilities/assetManager.js";
 export class NpcSprite extends Sprite {
     constructor({position, image, frames = { max: 1 }, sprites = {}, scale = 1, flipped = false, textSlides = null, profileImg = null }) {
         super({position, image, frames, sprites, scale, flipped})
@@ -18,6 +19,10 @@ export class NpcSprite extends Sprite {
         this.actionKeyHasInit = false;
         this.boundActionKeyHandler = this.keydownActionKeyHandler().bind(this);
         this.boundSelectionHandler = this.keydownHandler().bind(this);
+        this.orientation = '';
+        this.hasMoved = false;
+        this.moveFrames = 0;
+        this.movementDisabled = false;
     }
 
     drawOption(c) {
@@ -77,12 +82,39 @@ export class NpcSprite extends Sprite {
         return keydownHandler
     }
 
+    changeOrientation(orientation) {
+        switch(orientation) {
+            case "front": 
+                this.image = getImage('npc1Up');
+                break;
+            case "left":
+                this.image = getImage('npc1Right');
+                break;
+            case "right":
+                this.image = getImage('npc1Left');
+                break;
+            case "back":
+                this.image = getImage('npc1Down')
+                break;
+            
+            
+        }
+                
+    }
+
     keydownActionKeyHandler() {
         const keydownActionHandler = (e) => {
             if (e.key === ' ') {
+                console.log(this.orientation, 'orientation')
+                console.log(this.image, 'is current image');
+                console.log(getImage('npc1Right'), 'npc image right')
+                this.changeOrientation(this.orientation);
                 if(this.selected === 'yes' && this.slidesIndex === 3 && this.status === "prefight") {
                     console.log('battle started')
                     this.removeEventListeners();
+                } else if(this.selected === 'no' && this.slidesIndex === 3 && this.status === "prefight"){
+                    playSelectSound();
+                    this.image = getImage('npc1Down')
                 } else {
                     playSelectSound();
                 }
@@ -177,6 +209,11 @@ export class NpcSprite extends Sprite {
                         console.log(this.slidesIndex, 'is slides index')
                         this.lastActionKey = '';
                         if (this.slidesIndex >= slides.length) {
+                            if(!this.hasMoved) {
+                                this.moveCharacter()
+                                console.log('walking animation here')
+                            }
+                            this.hasMoved = true;
                             this.setupEventListener('remove')
                             this.isShowingText = false;
                             this.slidesIndex = -1;
@@ -187,8 +224,81 @@ export class NpcSprite extends Sprite {
             }
         } 
     }
-    npcAction(c, type, battleScene) {
+    moveCharacter() {
+        console.log(this.orientation, 'is this oritenetation')
+        let walkingDirection = '';
+        switch(this.orientation) {
+            case 'right':
+                if(this.position.x < 500) {
+                    this.movementDisabled = true;
+                    this.image = getImage('npc1Right')
+                    this.position.x += 2;
+                    this.moveFrames ++;
+                    this.frames.elapsed++;
+                    if (this.frames.elapsed % 10 === 0) {
+                        if (this.frames.val < this.frames.max - 1) {
+                            this.frames.val++;
+                        } else {
+                            this.frames.val = 0;
+                        }
+                    }
+        
+                    requestAnimationFrame(() => this.moveCharacter());
+                } else {
+                    this.image = getImage('npc1Down')
+                    this.frames.val = 0;
+                    this.movementDisabled = false;
+                }
+                break;
+            case 'left':
+                if(this.position.x > 340) {
+                    this.movementDisabled = true;
+                    this.image = getImage('npc1Left')
+                    this.position.x -= 2;
+                    this.moveFrames ++;
+                    this.frames.elapsed++;
+                    if (this.frames.elapsed % 10 === 0) {
+                        if (this.frames.val < this.frames.max - 1) {
+                            this.frames.val++;
+                        } else {
+                            this.frames.val = 0;
+                        }
+                    }
+        
+                    requestAnimationFrame(() => this.moveCharacter());
+                } else {
+                    this.image = getImage('npc1Down')
+                    this.frames.val = 0;
+                    this.movementDisabled = false;
+                }
+                break;
+            case 'back':
+                if(this.position.x < 478) {
+                    this.movementDisabled = true;
+                    this.image = getImage('npc1Right')
+                    this.position.x += 2;
+                    this.moveFrames ++;
+                    this.frames.elapsed++;
+                    if (this.frames.elapsed % 10 === 0) {
+                        if (this.frames.val < this.frames.max - 1) {
+                            this.frames.val++;
+                        } else {
+                            this.frames.val = 0;
+                        }
+                    }
+        
+                    requestAnimationFrame(() => this.moveCharacter());
+                } else {
+                    this.image = getImage('npc1Down')
+                    this.frames.val = 0;
+                    this.movementDisabled = false;
+                }
+                break;
+        }     
+    }
+    npcAction(c, type, battleScene, orientation) {
         const lastActionKey = this.lastActionKey;
+        this.orientation = orientation;
         this.setupEventListener('add')
         switch (type) {
             case "prefight":

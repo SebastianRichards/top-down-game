@@ -112,13 +112,10 @@ export class Pc {
                 setNpcState('npcRemoved')
                 this.npcLocation = sprites.npcSprite1.position.y
                 sprites.npcSprite1.position.y -= 40;
+                this.originalMonsLevel = battleScene.mons2.level;
+                battleScene.mons2 = monsterFactory('monsplash-player', 10)
 
-                battleScene.mons2 = monsterFactory('monsflame-player', 10)
-                
-                
-
-
-        } else if(!this.hasChangeSprite && this.char === 'main') {
+            } else if(!this.hasChangeSprite && this.char === 'main') {
                 sprites.playerSprite.image = getImage('playerDown');
                 sprites.playerSprite.sprites = {
                 up: getImage('playerUp'),
@@ -129,7 +126,8 @@ export class Pc {
                 setNpcState('default');
                 if (this.npcLocation) sprites.npcSprite1.position.y = this.npcLocation
                 console.log('main change')
-                battleScene.mons2 = monsterFactory('monsflame-player', 5) 
+                const level = this.originalMonsLevel ? this.originalMonsLevel : 5;
+                battleScene.mons2 = monsterFactory('monsflame-player', level) 
             }
             this.hasChangeSprite = true; 
         
