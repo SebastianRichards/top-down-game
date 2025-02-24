@@ -511,6 +511,7 @@ export class BattleScene extends Sprite {
                             x, y, 16 * 3, 16 * 3
                         );
                         x += 10;
+                        y -= 4.5;
                     } else if (moveExecutor === 'opponent') {
                         if(xOpponentWater < 270) {
                             return
