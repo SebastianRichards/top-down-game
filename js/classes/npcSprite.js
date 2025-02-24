@@ -41,9 +41,9 @@ export class NpcSprite extends Sprite {
         c.font = '20px Arial';
         c.save();
         this.selected === 'yes' ? c.fillStyle = 'blue' : c.fillStyle = 'black';
-        c.fillText('yes', textBoxWidth / 2 + 305 , 448)
+        c.fillText('Yes', textBoxWidth / 2 + 305 , 448)
         this.selected === 'no' ? c.fillStyle = 'blue' : c.fillStyle = 'black';
-        c.fillText('no', textBoxWidth / 2 + 415 , 448)
+        c.fillText('No', textBoxWidth / 2 + 415 , 448)
         c.restore();
     }
 
@@ -106,13 +106,14 @@ export class NpcSprite extends Sprite {
 
     keydownActionKeyHandler() {
         const keydownActionHandler = (e) => {
+            if (e.repeat) return;
             if (e.key === ' ') {
-                console.log(this.orientation, 'orientation')
-                console.log(this.image, 'is current image');
-                console.log(getImage('npc1Right'), 'npc image right')
+                //console.log(this.orientation, 'orientation')
+                //console.log(this.image, 'is current image');
+                //console.log(getImage('npc1Right'), 'npc image right')
                 this.changeOrientation(this.orientation);
                 if(this.selected === 'yes' && this.slidesIndex === 3 && this.status === "prefight") {
-                    console.log('battle started')
+                    //console.log('battle started')
                     this.removeEventListeners();
                 } else if(this.selected === 'no' && this.slidesIndex === 3 && this.status === "prefight"){
                     playSelectSound();
@@ -139,11 +140,11 @@ export class NpcSprite extends Sprite {
             if (this.actionKeyHasInit) return
             document.addEventListener('keydown', this.boundActionKeyHandler);
             this.actionKeyHasInit = true;
-            console.log('initialised')
+            //console.log('initialised')
         } else if(command === 'remove') {
             document.removeEventListener('keydown', this.boundActionKeyHandler);
             this.actionKeyHasInit = false;
-            console.log('removed')
+            //console.log('removed')
         }
     }
 
@@ -174,14 +175,14 @@ export class NpcSprite extends Sprite {
             
             if (this.isShowingText) {
                 this.textAction(c, slides[this.slidesIndex]);
-                console.log(this.slidesIndex, this.status, 'slide index and status')
+                //console.log(this.slidesIndex, this.status, 'slide index and status')
                 if(this.slidesIndex === 3 && this.status === "prefight") {
                     this.drawOption(c);
                     document.addEventListener('keydown', this.boundSelectionHandler);
                 }
                 if (lastActionKey === ' ') {
                     this.slidesIndex++;
-                    console.log(this.slidesIndex, 'is slides index')
+                    //console.log(this.slidesIndex, 'is slides index')
                     this.lastActionKey = '';
                     if (this.slidesIndex >= slides.length) {
                         this.setupEventListener('remove')
@@ -208,7 +209,7 @@ export class NpcSprite extends Sprite {
                     this.textAction(c, slides[this.slidesIndex]);
                     if (lastActionKey === ' ') {
                         this.slidesIndex++;
-                        console.log(this.slidesIndex, 'is slides index')
+                        //console.log(this.slidesIndex, 'is slides index')
                         this.lastActionKey = '';
                         if (this.slidesIndex >= slides.length) {
                             this.setupEventListener('remove')
@@ -237,7 +238,7 @@ export class NpcSprite extends Sprite {
                     }
                     if (lastActionKey === ' ') {
                         this.slidesIndex++;
-                        console.log(this.slidesIndex, 'is slides index')
+                        //console.log(this.slidesIndex, 'is slides index')
                         this.lastActionKey = '';
                         if (this.slidesIndex >= slides.length) {
                             this.setupEventListener('remove')
@@ -264,12 +265,12 @@ export class NpcSprite extends Sprite {
                     this.textAction(c, slides[this.slidesIndex]);
                     if (lastActionKey === ' ') {
                         this.slidesIndex++;
-                        console.log(this.slidesIndex, 'is slides index')
+                        //console.log(this.slidesIndex, 'is slides index')
                         this.lastActionKey = '';
                         if (this.slidesIndex >= slides.length) {
                             if(!this.hasMoved) {
                                 this.moveCharacter()
-                                console.log('walking animation here')
+                                //console.log('walking animation here')
                             }
                             this.hasMoved = true;
                             this.setupEventListener('remove')

@@ -26,13 +26,14 @@ export class Pc {
         const keydownHandler = (e) => {
             if(this.message !== 'notAdminPc') {
                 if (e.key === 'ArrowRight') {
-                    console.log('arrow right clicked')
+                    //console.log('arrow right clicked')
                     this.selectedOption = 'changeCode';
                 } else if (e.key === 'ArrowLeft') {
                     this.selectedOption = 'viewCode';
                 }
             } 
             if (e.key === ' ') {
+                if (e.repeat) return;
                 playSelectSound();
                 switch(this.selectedOption) {
                     case "viewCode": 
@@ -53,7 +54,7 @@ export class Pc {
                         } else {
                             this.message = 'notAdminPc';
                             this.selectedOption = "notAdminPc"
-                            console.log('not admin pc')
+                            //console.log('not admin pc')
                         }
                         break;
                     case "notAdminPc":
@@ -130,7 +131,7 @@ export class Pc {
                 }
                 setNpcState('default');
                 if (this.npcLocation) sprites.npcSprite1.position.y = this.npcLocation
-                console.log('main change')
+                //console.log('main change')
                 const level = this.originalMonsLevel ? this.originalMonsLevel : 5;
                 battleScene.mons2 = monsterFactory('monsflame-player', level) 
             }

@@ -54,8 +54,8 @@ export const spriteFactory = (type, canvas) => {
                 profileImg: getImage('npc1Profile'),
                 textSlides: {
                     prefight: ["Hello..", "I've coded this in vanilla js", "It was a pain..", "Want to fight?"],
-                    fightwon: ["Wow you won", "Come into the house"],
-                    fightlost: ["Shame you lost", "Try training in the grass to win", "You will level up each time you win", "Want to try again?"],
+                    fightwon: ["Wow I lost..", "Come into the house"],
+                    fightlost: ["Shame you lost", "Try training in the grass on the left", "You will level up each time you win", "Want to try again?"],
                     codeChanged: ["...Where was I?"],
                     slidesIndex: 0
                 }
@@ -71,7 +71,7 @@ export const spriteFactory = (type, canvas) => {
                 profileImg: getImage('npc2Profile'),
                 textSlides: {
                     player: ["Wow I never get visitors", "Feel free to use my PC", "Only the developer outside has access to admin privs though"],
-                    npc: ["Hey psst", "There's a new kid on the island who wants to break into your house", "Make sure to not let him in"],
+                    npc: ["Hey psst", "There's a new kid on the island who was trying to change the code", "Keep an eye on him"],
                     slidesIndex: 0
                 }
             })

@@ -27,6 +27,7 @@ export class BattleScene extends Sprite {
         this.currentMoveFrame = 0;
         this.c = c.getContext('2d');
         this.profileImg = getImage('npc1Profile');
+        this.awaitTime = 1;
     }
 
     drawSceneAndSetupListener(c) {
@@ -223,7 +224,7 @@ export class BattleScene extends Sprite {
                     this.mons1.currentHealth = 0
                     this.textBoxMessage = 'You won!'
                     this.disableInputs = true;
-                    await this.wait(1);
+                    await this.wait(this.awaitTime);
                     this.disableInputs = false;
                     this.textBoxMessage = `${this.mons2.name} levelled up`
                     this.mons2.level += 1
@@ -231,21 +232,24 @@ export class BattleScene extends Sprite {
                     this.mons2.defence += 1
                     this.mons2.currentHealthealth += 1
                     this.disableInputs = true;
-                    await this.wait(1);
+                    const levelUpSound = getAudio('levelUp');
+                    levelUpSound.volume = 0.2
+                    levelUpSound.play();
+                    await this.wait(this.awaitTime);
                     this.disableInputs = false;
                     setInBattleStatus(false);
                     this.mons2.health += 1
                     if (this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
-                        console.log('gamestate failed', this.battleType)
+                        //console.log('gamestate failed', this.battleType)
                     }
                     this.resetScene();
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
                     this.textBoxMessage = `${this.mons2.name} used ${this.mons2.moves.move1.name}`
                     this.disableInputs = true;
-                    await this.wait(1)
+                    await this.wait(this.awaitTime)
                     this.disableInputs = false;
                     this.textBoxMessage = false;
                     this.opponentMove();
@@ -262,7 +266,7 @@ export class BattleScene extends Sprite {
                     this.mons1.currentHealth = 0;
                     this.textBoxMessage = 'You won!'
                     this.disableInputs = true;
-                    await this.wait(1);
+                    await this.wait(this.awaitTime);
                     this.disableInputs = false;
                     this.textBoxMessage = `${this.mons2.name} levelled up`
                     this.mons2.level += 1
@@ -270,21 +274,24 @@ export class BattleScene extends Sprite {
                     this.mons2.defence += 1
                     this.mons2.currentHealthealth += 1
                     this.disableInputs = true;
-                    await this.wait(1);
+                    const levelUpSound = getAudio('levelUp');
+                    levelUpSound.volume = 0.2
+                    levelUpSound.play();
+                    await this.wait(this.awaitTime);
                     this.disableInputs = false;
                     setInBattleStatus(false);
                     this.mons2.health += 1
                     if (this.battleType === "npc") {
                         setGameState('fightWon')
                     } else {
-                        console.log('gamestate failed', this.battleType)
+                        //console.log('gamestate failed', this.battleType)
                     }
                     this.resetScene();
                 } else {
                     this.mons1.currentHealth = this.mons1.currentHealth - damage
                     this.textBoxMessage = `${this.mons2.name} used ${this.mons2.moves.move2.name}`
                     this.disableInputs = true;
-                    await this.wait(1)
+                    await this.wait(this.awaitTime)
                     this.disableInputs = false;
                     this.textBoxMessage = false;
                     this.opponentMove();
@@ -293,6 +300,12 @@ export class BattleScene extends Sprite {
                 break;
             }
         }
+    }
+
+    async disableInputsForUserDuringOpponentMove() {
+        this.disableAllInputs = true;
+        await this.wait(this.awaitTime * 2)
+        this.disableAllInputs = false;
     }
 
     async opponentMove() {
@@ -305,20 +318,20 @@ export class BattleScene extends Sprite {
                 this.mons2.currentHealth = 0
                 this.textBoxMessage = 'You lost!';
                 this.disableInputs = true;
-                await this.wait(1);
+                await this.wait(this.awaitTime);
                 this.disableInputs = false;
                 setInBattleStatus(false);
                 if (this.battleType === 'npc') {
                     setGameState('fightLost');
                 } else {
-                    console.log('gamestate failed', this.battleType)
+                    //console.log('gamestate failed', this.battleType)
                 }
                 this.resetScene();
             } else {
                 this.mons2.currentHealth = this.mons2.currentHealth - damage;
                 this.textBoxMessage = `${this.mons1.name} used ${this.mons1.moves.move1.name}`
                 this.moveAnimation({ type: this.mons1.moves.move1.name, moveExecutor: 'opponent' });
-                await this.wait(1)
+                await this.wait(this.awaitTime)
                 this.textBoxMessage = false;
             }
         } else {
@@ -328,7 +341,7 @@ export class BattleScene extends Sprite {
                 this.mons2.currentHealth = 0;
                 this.textBoxMessage = 'You lost!';
                 this.disableInputs = true;
-                await this.wait(1);
+                await this.wait(this.awaitTime);
                 this.disableInputs = false;
                 setInBattleStatus(false);
                 if (this.battleType === "npc") {
@@ -340,7 +353,7 @@ export class BattleScene extends Sprite {
                 this.textBoxMessage = `${this.mons1.name} used ${this.mons1.moves.move2.name}`
                 this.disableInputs = true;
                 this.moveAnimation({ type: this.mons1.moves.move2.name, moveExecutor: 'opponent' });
-                await this.wait(1)
+                await this.wait(this.awaitTime)
                 this.disableInputs = false;
                 this.textBoxMessage = false;
             }
@@ -408,7 +421,7 @@ export class BattleScene extends Sprite {
         xOpponentWater = 724,
         yOpponentWater = 74
     }) {
-        console.log(type, moveExecutor, 'is type and move executor');
+        //console.log(type, moveExecutor, 'is type and move executor');
 
         switch (type) {
             case "Fire Shock":
@@ -422,7 +435,7 @@ export class BattleScene extends Sprite {
                     const currentTime = performance.now();
 
                     if (currentTime - lastFrameTime >= 200) {
-                        console.log('frame');
+                        //console.log('frame');
                         lastFrameTime = currentTime;
                         frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
                     }
@@ -470,7 +483,7 @@ export class BattleScene extends Sprite {
                         yOpponent
                     }));
                 } else {
-                    console.log('Animation ended');
+                    //console.log('Animation ended');
                 }
                 break;
             case "Water Shock": {
@@ -484,7 +497,7 @@ export class BattleScene extends Sprite {
                     const currentTime = performance.now();
 
                     if (currentTime - lastFrameTime >= 200) {
-                        console.log('frame');
+                        //console.log('frame');
                         lastFrameTime = currentTime;
                         frameIndex = frameIndex === 0 ? 1 : 0; // Toggle between 0 and 1
                     }
@@ -498,7 +511,6 @@ export class BattleScene extends Sprite {
                             x, y, 16 * 3, 16 * 3
                         );
                         x += 10;
-                        y -= 6;
                     } else if (moveExecutor === 'opponent') {
                         if(xOpponentWater < 270) {
                             return
@@ -532,7 +544,7 @@ export class BattleScene extends Sprite {
                         yOpponentWater
                     }));
                 } else {
-                    console.log('Animation ended');
+                    //console.log('Animation ended');
                 }
             }
             break;
@@ -571,7 +583,7 @@ export class BattleScene extends Sprite {
                 } else {
                     monster.position.x = originalX;
                     this.monsOriginalPositions = null; 
-                    console.log('Tackle animation complete');
+                    //console.log('Tackle animation complete');
                     return;
                 }
                 requestAnimationFrame(() => this.moveAnimation({
@@ -593,8 +605,11 @@ export class BattleScene extends Sprite {
 
 
     battleKeyDownHandler = (e) => {
-        console.log(e.key, 'e key')
-        if (this.disableInputs) {
+        //console.log(e.key, 'e key')
+        if (this.disableInputs === true) {
+            return
+        }
+        if(this.disableAllInputs === true) {
             return
         }
         if (e.key === "ArrowRight") {
@@ -619,6 +634,7 @@ export class BattleScene extends Sprite {
             }
         }
         if (e.key === " ") {
+            if (e.repeat) return;
             const currentOption = this.currentOption;
             if (this.inBattleTurn === true) {
                 return
@@ -647,10 +663,14 @@ export class BattleScene extends Sprite {
                     }
                     break;
                 case "Move1":
+                    this.disableInputsForUserDuringOpponentMove();
                     this.executeMove("Move1");
+                    this.disableInputsForUserDuringOpponentMove();
                     break;
                 case "Move2":
+                    this.disableInputsForUserDuringOpponentMove();
                     this.executeMove("Move2");
+                    this.disableInputsForUserDuringOpponentMove();
                     break;
             }
         }

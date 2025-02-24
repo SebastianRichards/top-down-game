@@ -77,7 +77,7 @@ export class Player extends Sprite {
         footStep1.volume = 0.06;
         footStep2.volume = 0.06;
         if (this.frames.elapsed > this.target) {
-            console.log(this.frames.elapsed, this.target)
+            //console.log(this.frames.elapsed, this.target)
             footStep1.currentTime = 0;
             footStep1.play()
             this.target += 48;

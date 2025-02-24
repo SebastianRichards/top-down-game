@@ -6,23 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="style.css">
-
+    <link rel="icon" type="image/png" href="assets/images/tabicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="volume-control" id="volume-control">
-        <i class="fa fa-volume-off" id="volUp"></i>
-        <i class="fa fa-volume-up" id="volDown" style="display: none;"></i>
-    </div>
-
     <div style="display: flex; justify-content: center;">
         <canvas id="game-canvas" style="image-rendering: pixelated;"></canvas>
     </div>
 
-    <div class="control-wheel">
+    <div style="display: none" class="control-wheel">
         <button class="btn up" id="up">↑</button>
         <button class="btn left" id="left">←</button>
         <button class="btn down" id="down">↓</button>
-        <button class="btn right" id="right">→</button>
+        <button class="btn right" id="right">→</button> 
     </div>
 
     <script type="module" src="js/main.js"></script>

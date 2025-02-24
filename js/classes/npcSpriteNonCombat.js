@@ -46,6 +46,7 @@ export class NpcSpriteNonCombat extends Sprite {
 
     keydownActionKeyHandler() {
         const keydownActionHandler = (e) => {
+            if (e.repeat) return;
             if (e.key === ' ') {
                 this.lastActionKey = ' ';
                 playSelectSound();
@@ -65,11 +66,11 @@ export class NpcSpriteNonCombat extends Sprite {
             if (this.actionKeyHasInit) return
             document.addEventListener('keydown', this.boundActionKeyHandler);
             this.actionKeyHasInit = true;
-            console.log('initialised')
+            //console.log('initialised')
         } else if(command === 'remove') {
             document.removeEventListener('keydown', this.boundActionKeyHandler);
             this.actionKeyHasInit = false;
-            console.log('removed')
+            //console.log('removed')
         }
     }
 

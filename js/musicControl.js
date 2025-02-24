@@ -7,7 +7,7 @@ export function MusicControl({ command, type }) {
 
 
     if(command === "play") {
-        console.log('play loop called')
+        //console.log('play loop called')
         switch (type) {
             case "backgroundMusic":
                 music = getAudio('backgroundMusic');
@@ -63,7 +63,7 @@ export function playSelectSound() {
     selectSound.volume = 0.1;
     selectSound.currentTime = 0;
     selectSound.play();
-    console.log('sound played')
+    //console.log('sound played')
 }
 
 export function playSelectSoundBattle() {

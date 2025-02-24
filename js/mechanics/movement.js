@@ -34,13 +34,13 @@ export const moveSprites = (spritesObj, solidsObj, c) => {
 
     if (direction && keys[lastKey].pressed) {
         if(!musicStarted) {
-            console.log('playing music')
+            //console.log('playing music')
             MusicControl({
                 command: 'play',
                 type: 'backgroundMusic'
             })
             musicStarted = true;
-            console.log(musicStarted, 'is music started')
+            //console.log(musicStarted, 'is music started')
         }
         spritesObj.playerSprite.moving = true;
         for (let i = 0; i < solidsObj.boundaryData.length; i++) {
